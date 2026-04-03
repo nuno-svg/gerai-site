@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GerAI — Serviço gerido de workflow automation com IA. Configuras uma vez, recebes sempre. Para PMEs, startups e organizações em Portugal.">
+<meta property="og:title" content="GerAI — Workflow Automation">
+<meta property="og:description" content="O trabalho documental repetitivo chega automaticamente. Configuras uma vez, recebes sempre.">
+<meta property="og:url" content="https://gerai.pt">
+<title>GerAI — Workflow Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F2044;
+    --teal: #0D9488;
+    --teal-light: #14B8A6;
+    --teal-bg: #F0FDFA;
+    --slate: #334155;
+    --off-white: #F8FAFC;
+    --text-muted: #64748B;
+    --border: rgba(15,32,68,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--navy);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(248,250,252,0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 6%;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .logo span { color: var(--teal); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--teal); }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 148px 6% 108px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(13,148,136,0.16) 0%, transparent 68%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 1060px; margin: 0 auto; }
+
+  .hero-label {
+    display: inline-block;
+    background: rgba(13,148,136,0.14);
+    color: var(--teal-light);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(13,148,136,0.28);
+    margin-bottom: 30px;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 54px);
+    font-weight: 300;
+    line-height: 1.13;
+    color: #fff;
+    letter-spacing: -0.03em;
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+  .hero h1 strong { font-weight: 500; color: var(--teal-light); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.58);
+    font-weight: 300;
+    max-width: 520px;
+    margin-bottom: 48px;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
+
+  .hero-proof {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.09);
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .proof-item { display: flex; flex-direction: column; gap: 5px; }
+  .proof-num {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--teal-light);
+    letter-spacing: -0.02em;
+    font-family: 'DM Mono', monospace;
+  }
+  .proof-label { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; }
+
+  /* LAYOUT */
+  .section-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 88px 6%;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-size: clamp(26px, 3.5vw, 40px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+
+  .section-intro {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 56px;
+  }
+
+  /* COMO FUNCIONA */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .step { background: var(--off-white); padding: 38px 34px; }
+
+  .step-num {
+    width: 38px; height: 38px;
+    background: var(--teal-bg);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal);
+    margin-bottom: 22px;
+  }
+
+  .step h3 { font-size: 17px; font-weight: 500; margin-bottom: 10px; color: var(--navy); }
+  .step p { font-size: 14px; color: var(--text-muted); line-height: 1.68; }
+
+  /* OUTPUTS */
+  .outputs-section { background: var(--navy); }
+
+  .outputs-section .section-label { color: rgba(20,184,166,0.9); }
+  .outputs-section h2 { color: #fff; }
+  .outputs-section .section-intro { color: rgba(255,255,255,0.5); }
+
+  .outputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .output-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 28px 26px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .output-card:hover {
+    border-color: rgba(13,148,136,0.38);
+    background: rgba(13,148,136,0.07);
+  }
+
+  .output-icon {
+    font-size: 22px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .output-card h4 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 8px; }
+  .output-card p { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.65; }
+
+  /* SEGMENTOS */
+  .segments-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .segment-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px 28px;
+    transition: border-color 0.22s, transform 0.22s;
+  }
+  .segment-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+
+  .segment-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+  }
+  .badge-core { background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(13,148,136,0.22); }
+  .badge-comp { background: #F1F5F9; color: var(--text-muted); border: 1px solid rgba(100,116,139,0.18); }
+
+  .segment-card h4 { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--navy); }
+  .segment-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
+
+  .segment-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  /* CASE */
+  .case-box {
+    background: var(--teal-bg);
+    border: 1px solid rgba(13,148,136,0.18);
+    border-radius: 16px;
+    padding: 44px 48px;
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .case-content { flex: 1; min-width: 240px; }
+
+  .case-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+
+  .case-box h3 {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  .case-box p { font-size: 15px; color: var(--slate); line-height: 1.75; }
+
+  .case-metrics { display: flex; flex-direction: column; gap: 16px; min-width: 180px; }
+
+  .metric {
+    text-align: center;
+    background: #fff;
+    border: 1px solid rgba(13,148,136,0.14);
+    border-radius: 10px;
+    padding: 20px 26px;
+  }
+  .metric-val {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+    display: block;
+    font-family: 'DM Mono', monospace;
+  }
+  .metric-label { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+  /* CTA FINAL */
+  .cta-section {
+    background: var(--navy);
+    text-align: center;
+    padding: 110px 6%;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(13,148,136,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-section h2 { color: #fff; max-width: 520px; margin: 0 auto 16px; }
+  .cta-section p { color: rgba(255,255,255,0.5); font-size: 16px; margin-bottom: 44px; }
+  .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    background: #080F1E;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 30px 6%;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--teal-light); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: 1fr; }
+    .outputs-grid { grid-template-columns: repeat(2, 1fr); }
+    .segments-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 5%; }
+    .hero { padding: 120px 5% 72px; }
+    .section-wrap { padding: 64px 5%; }
+    .hero-proof { gap: 28px; }
+    .outputs-grid { grid-template-columns: 1fr; }
+    .segments-grid { grid-template-columns: 1fr; }
+    .case-box { padding: 30px 26px; gap: 28px; }
+    .case-metrics { flex-direction: row; min-width: unset; }
+    .metric { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Ger<span>AI</span></a>
+  <a href="/cdn-cgi/l/email-protection#2a445f44456a4d4f584b43045a5e15595f48404f495e176e4f47450f181a6d4f586b63" class="nav-cta">Pedir demo</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Workflow Automation · Serviço Gerido</div>
+    <h1>O trabalho documental repetitivo<br><strong>chega automaticamente.</strong></h1>
+    <p class="hero-sub">Configuras uma vez. Recebes sempre. Sem equipa técnica, sem manutenção, sem código.</p>
+    <div class="hero-actions">
+      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Agendar demo — 30 min</a>
+      <a href="#como-funciona" class="btn-ghost">Como funciona</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item">
+        <span class="proof-num">25 min</span>
+        <span class="proof-label">Onboarding — configuras uma vez, nunca mais</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">100%</span>
+        <span class="proof-label">Automático após configuração</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">Em produção</span>
+        <span class="proof-label">Parque Tecnológico de Óbidos desde Mar 2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMO FUNCIONA -->
+<div id="como-funciona">
+  <div class="section-wrap">
+    <div class="section-label">Como funciona</div>
+    <h2>Três passos.<br>Depois é automático.</h2>
+    <p class="section-intro">Não é software que aprendes a usar. É um serviço que opera por ti — todos os meses, sem intervenção.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Configuras uma vez</h3>
+        <p>Preenches um formulário de onboarding com os dados da tua organização. 25 minutos. Sem instalações, sem IT.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>O agente trabalha</h3>
+        <p>O sistema recolhe informação, processa com IA e gera os documentos — relatórios, actas, consentimentos, candidaturas.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Recebes no email</h3>
+        <p>O output chega directamente na tua caixa de correio, no formato correcto, na data certa. Todos os meses.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- O QUE RECEBES -->
+<div class="outputs-section">
+  <div class="section-wrap">
+    <div class="section-label">O que recebes</div>
+    <h2>Outputs concretos.<br>Não relatórios genéricos.</h2>
+    <p class="section-intro">Cada agente é configurado para o teu sector e entrega o documento específico que precisas — no formato certo, na data certa.</p>
+    <div class="outputs-grid">
+      <div class="output-card">
+        <span class="output-icon">📋</span>
+        <h4>Relatórios IAPMEI & EU</h4>
+        <p>Monitorização de financiamentos europeus, alertas de prazos, resumo executivo semanal para as startups incubadas.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">🏢</span>
+        <h4>Actas e convocatórias</h4>
+        <p>Gestão de condomínios — acta completa a partir de notas de reunião. 10 minutos em vez de 2 horas por condomínio.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">📐</span>
+        <h4>Documentação técnica de projecto</h4>
+        <p>Peças escritas estruturadas a partir dos dados de cada projecto — memórias descritivas, cadernos de encargos, relatórios de inspecção.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">🧾</span>
+        <h4>Relatórios e comunicações de contabilidade</h4>
+        <p>Cartas-circulares a clientes, relatórios de gestão periódicos, alertas fiscais — para gabinetes com carteiras alargadas.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">🎓</span>
+        <h4>Gestão administrativa de formação</h4>
+        <p>Convocatórias, certificados, relatórios de execução e dossiers técnico-pedagógicos — gerados automaticamente por acção de formação.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">🏠</span>
+        <h4>Gestão de Alojamento Local</h4>
+        <p>Welcome guide em 4 idiomas, relatório AT/SIBA, resposta automática a reviews. Tudo sem intervenção manual.</p>
+      </div>
+      <div class="output-card">
+        <span class="output-icon">📊</span>
+        <h4>Candidaturas EU</h4>
+        <p>Identificação de financiamentos relevantes, alertas personalizados por elegibilidade, rascunhos prontos a rever.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARA QUEM É -->
+<div>
+  <div class="section-wrap">
+    <div class="section-label">Para quem é</div>
+    <h2>Organizações sem equipa<br>técnica interna.</h2>
+    <p class="section-intro">PMEs, startups e organizações que produzem documentação repetitiva todos os meses — e não têm tempo nem equipa para isso.</p>
+    <div class="segments-grid">
+      <div class="segment-card">
+        <span class="segment-badge badge-core">Core</span>
+        <h4>Incubadoras & Parques Tecnológicos</h4>
+        <p>Relatórios IAPMEI, monitorização de financiamentos EU, comunicações às startups incubadas.</p>
+        <div class="segment-price">substitui 3 a 5 dias de trabalho manual por mês</div>
+      </div>
+      <div class="segment-card">
+        <span class="segment-badge badge-core">Core</span>
+        <h4>Gestores de Condomínios</h4>
+        <p>Actas, convocatórias, circulares e relatórios de manutenção — automatizados para toda a carteira.</p>
+        <div class="segment-price">poupa 60 a 90 horas mensais numa carteira de 30 condomínios</div>
+      </div>
+      <div class="segment-card">
+        <span class="segment-badge badge-comp">Complementar</span>
+        <h4>Profissionais Liberais</h4>
+        <p>Arquitectos, engenheiros e economistas — as peças escritas que se repetem projecto após projecto geradas em minutos. O tempo que poupas vai para trabalho que facturas.</p>
+        <div class="segment-price">cada projecto documentado em minutos, não em horas</div>
+      </div>
+      <div class="segment-card">
+        <span class="segment-badge badge-comp">Complementar</span>
+        <h4>Alojamento Local</h4>
+        <p>Welcome guide multilingue, relatório AT/SIBA, resposta automática a reviews de hóspedes.</p>
+        <div class="segment-price">menos do que 1 hora de gestão administrativa por mês</div>
+      </div>
+      <div class="segment-card">
+        <span class="segment-badge badge-comp">Complementar</span>
+        <h4>Gabinetes de Contabilidade</h4>
+        <p>Comunicações periódicas a clientes, alertas de obrigações fiscais, relatórios de gestão mensais — gerados automaticamente para toda a carteira.</p>
+        <div class="segment-price">cada relatório gerado em segundos, não em horas</div>
+      </div>
+      <div class="segment-card">
+        <span class="segment-badge badge-comp">Complementar</span>
+        <h4>Empresas de Formação</h4>
+        <p>Dossiers técnico-pedagógicos, certificados, convocatórias e relatórios de execução — toda a burocracia de cada acção gerada automaticamente.</p>
+        <div class="segment-price">conformidade administrativa sem esforço manual</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE PTO -->
+<div>
+  <div class="section-wrap">
+    <div class="case-box">
+      <div class="case-content">
+        <div class="case-tag">Case em produção · Março 2026</div>
+        <h3>Parque Tecnológico de Óbidos —<br>Agente de Monitorização EU</h3>
+        <p>O agente monitoriza semanalmente os programas de financiamento europeu relevantes para as startups incubadas no PTO — IAPMEI, PT2030, Horizonte Europa. Entrega um digest executivo por email todas as semanas, com os concursos prioritários e prazos críticos. Zero pesquisa manual. Zero horas de triagem.</p>
+      </div>
+      <div class="case-metrics">
+        <div class="metric">
+          <span class="metric-val">5 min</span>
+          <span class="metric-label">Leitura semanal do digest</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">0h</span>
+          <span class="metric-label">Pesquisa manual substituída</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Mostramos em 30 minutos.</h2>
+    <p>Sem compromisso. Sem instalação. Só o produto a funcionar com dados reais.</p>
+    <div class="cta-group">
+      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Agendar demo — 30 min</a>
+      <a href="mailto:nuno@gerai.pt" class="btn-ghost">nuno@gerai.pt</a>
+    </div>
+  </div>
+</div>
+
+<!--
