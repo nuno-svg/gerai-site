@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GerAI · Dashboard Financeiro · PTO</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --navy: #0F2044;
+    --navy-mid: #1a3366;
+    --navy-light: #243d6e;
+    --teal: #0D9488;
+    --teal-light: #14b8a6;
+    --teal-pale: #ccfbf1;
+    --teal-pale2: #f0fdfa;
+    --white: #ffffff;
+    --grey-50: #f8fafc;
+    --grey-100: #f1f5f9;
+    --grey-200: #e2e8f0;
+    --grey-300: #cbd5e1;
+    --grey-400: #94a3b8;
+    --grey-600: #475569;
+    --grey-800: #1e293b;
+    --red: #ef4444;
+    --red-light: #fef2f2;
+    --amber: #f59e0b;
+    --amber-light: #fffbeb;
+    --green: #22c55e;
+    --green-light: #f0fdf4;
+    --sidebar-w: 220px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--grey-50);
+    color: var(--grey-800);
+    display: flex;
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── SIDEBAR ─────────────────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--navy);
+    min-height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text span { color: var(--teal-light); }
+
+  .logo-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .client-badge {
+    margin: 16px 16px 0;
+    background: rgba(13,148,136,0.15);
+    border: 1px solid rgba(13,148,136,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
+  .client-label {
+    font-size: 10px;
+    color: var(--teal-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+
+  .client-name {
+    font-size: 12px;
+    color: var(--white);
+    font-weight: 500;
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .nav {
+    padding: 20px 12px;
+    flex: 1;
+  }
+
+  .nav-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 500;
+    padding: 0 12px;
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.85);
+  }
+
+  .nav-item.active {
+    background: rgba(13,148,136,0.2);
+    color: var(--teal-light);
+    font-weight: 500;
+  }
+
+  .nav-item .icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .nav-item.active .icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .sidebar-footer strong { color: rgba(255,255,255,0.4); }
+
+  /* ── MAIN ────────────────────────────────────────────────── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--grey-200);
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .year-selector {
+    display: flex;
+    background: var(--grey-100);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .year-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--grey-600);
+    border: none;
+    background: transparent;
+    transition: all 0.15s;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .year-btn.active {
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .update-badge {
+    font-size: 11px;
+    color: var(--grey-400);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dot-green {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .content {
+    padding: 28px 32px;
+    flex: 1;
+  }
+
+  /* ── PAGES ───────────────────────────────────────────────── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── KPI ROW ─────────────────────────────────────────────── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .kpi-card:hover { box-shadow: 0 4px 16px rgba(15,32,68,0.08); }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .kpi-card.alert::before { background: var(--red); }
+  .kpi-card.warning::before { background: var(--amber); }
+
+  .kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--grey-400);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+    line-height: 1;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .kpi-value.alert { color: var(--red); }
+  .kpi-value.warning { color: var(--amber); }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--grey-400);
+    margin-top: 6px;
+  }
+
+  .kpi-trend {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .kpi-trend.up { color: var(--teal); }
+  .kpi-trend.down { color: var(--red); }
+
+  /* ── CHARTS ROW ──────────────────────────────────────────── */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .chart-card {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .chart-card.full { grid-column: 1 / -1; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .card-subtitle {
+    font-size: 11px;
+    color: var(--grey-400);
+    margin-top: 2px;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 220px;
+  }
+
+  /* ── TABLE ───────────────────────────────────────────────── */
+  .table-card {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .table-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--grey-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: var(--grey-50);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--grey-400);
+    border-bottom: 1px solid var(--grey-200);
+    white-space: nowrap;
+  }
+
+  thead th.num { text-align: right; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--grey-100);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--grey-50); }
+
+  tbody td {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--grey-800);
+  }
+
+  tbody td.num {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  tbody td.num.positive { color: var(--teal); font-weight: 500; }
+  tbody td.num.negative { color: var(--red); font-weight: 500; }
+
+  .flag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .flag-chip.critical { background: var(--red-light); color: var(--red); }
+  .flag-chip.warning { background: var(--amber-light); color: #b45309; }
+  .flag-chip.ok { background: var(--green-light); color: #15803d; }
+  .flag-chip.info { background: var(--grey-100); color: var(--grey-600); }
+
+  /* ── EMPRESA SELECTOR ────────────────────────────────────── */
+  .selector-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .emp-btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--grey-200);
+    background: var(--white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--grey-600);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .emp-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .emp-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+  /* ── ALERTAS ─────────────────────────────────────────────── */
+  .alert-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .alert-card {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .alert-card.critical { border-left: 4px solid var(--red); }
+  .alert-card.warning { border-left: 4px solid var(--amber); }
+  .alert-card.info { border-left: 4px solid var(--grey-300); }
+
+  .alert-type {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+
+  .alert-type.critical { color: var(--red); }
+  .alert-type.warning { color: var(--amber); }
+  .alert-type.info { color: var(--grey-400); }
+
+  .alert-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .alert-desc { font-size: 12px; color: var(--grey-600); line-height: 1.5; }
+  .alert-companies { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* ── SECTION TITLE ───────────────────────────────────────── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--grey-400);
+    margin-bottom: 14px;
+    margin-top: 8px;
+  }
+
+  /* ── BENCHMARK ───────────────────────────────────────────── */
+  .bench-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">Ger<span>AI</span></div>
+    <div class="logo-sub">Dashboard Financeiro</div>
+  </div>
+
+  <div class="client-badge">
+    <div class="client-label">Cliente</div>
+    <div class="client-name">Parque Tecnológico de Óbidos</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section">Análise</div>
+    <div class="nav-item active" onclick="showPage('overview', this)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Overview
+    </div>
+    <div class="nav-item" onclick="showPage('ficha', this)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Ficha Individual
+    </div>
+    <div class="nav-item" onclick="showPage('alertas', this)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Alertas
+      <span style="margin-left:auto;background:var(--red);color:#fff;border-radius:20px;padding:1px 7px;font-size:10px;font-weight:600;">3</span>
+    </div>
+    <div class="nav-section">Histórico</div>
+    <div class="nav-item" onclick="showPage('evolucao', this)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Evolução Temporal
+    </div>
+    <div class="nav-item" onclick="showPage('benchmark', this)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Benchmarking
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <strong>Dados:</strong> IES 2023<br>
+    Actualizado Out 2024
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="page-title">Overview da Carteira</div>
+    <div class="topbar-meta">
+      <div class="year-selector">
+        <button class="year-btn" onclick="setYear(2021,this)">2021</button>
+        <button class="year-btn" onclick="setYear(2022,this)">2022</button>
+        <button class="year-btn active" onclick="setYear(2023,this)">2023</button>
+      </div>
+      <div class="update-badge">
+        <span class="dot-green"></span>
+        3 empresas activas
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ PAGE 1: OVERVIEW ══════════════════════════════════ -->
+    <div class="page active" id="page-overview">
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Volume de Negócios</div>
+          <div class="kpi-value" id="kpi-vn">612 k€</div>
+          <div class="kpi-trend up">↑ 23% vs 2022</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Resultado Líquido</div>
+          <div class="kpi-value" id="kpi-rl">60 k€</div>
+          <div class="kpi-trend up">↑ 38% vs 2022</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">EBITDA (proxy)</div>
+          <div class="kpi-value" id="kpi-ebitda">81 k€</div>
+          <div class="kpi-sub">margem média 13,2%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Trabalhadores</div>
+          <div class="kpi-value" id="kpi-nt">14</div>
+          <div class="kpi-sub">+2 vs ano anterior</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">Alertas Activos</div>
+          <div class="kpi-value alert" id="kpi-flags">3</div>
+          <div class="kpi-sub">1 crítico · 2 info</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Volume de Negócios por Empresa</div>
+              <div class="card-subtitle">Exercício 2023 · em euros</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-vn-bar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Resultado Líquido por Empresa</div>
+              <div class="card-subtitle">Exercício 2023 · em euros</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-rl-bar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <div class="card-title">Carteira Completa — Indicadores 2023</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Empresa</th>
+              <th class="num">VN</th>
+              <th class="num">Resultado Líq.</th>
+              <th class="num">EBITDA</th>
+              <th class="num">Aut. Financeira</th>
+              <th class="num">Liquidez Geral</th>
+              <th>Alertas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>TechObidos Lda</strong></td>
+              <td class="num positive">310.000 €</td>
+              <td class="num positive">25.000 €</td>
+              <td class="num positive">35.000 €</td>
+              <td class="num">32,8%</td>
+              <td class="num">1,72</td>
+              <td><span class="flag-chip ok">✓ Sem alertas</span></td>
+            </tr>
+            <tr>
+              <td><strong>GreenStart SA</strong></td>
+              <td class="num positive">210.000 €</td>
+              <td class="num positive">22.000 €</td>
+              <td class="num positive">29.000 €</td>
+              <td class="num">15,6%</td>
+              <td class="num">1,36</td>
+              <td><span class="flag-chip info">↗ Sem exportações</span></td>
+            </tr>
+            <tr>
+              <td><strong>DataFlow Unip</strong></td>
+              <td class="num positive">92.000 €</td>
+              <td class="num positive">13.000 €</td>
+              <td class="num positive">17.000 €</td>
+              <td class="num">52,3%</td>
+              <td class="num">1,73</td>
+              <td><span class="flag-chip info">↗ Sem exportações</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PAGE 2: FICHA INDIVIDUAL ══════════════════════════ -->
+    <div class="page" id="page-ficha">
+      <div class="selector-row">
+        <button class="emp-btn active" onclick="selectEmp('tech', this)">TechObidos Lda</button>
+        <button class="emp-btn" onclick="selectEmp('green', this)">GreenStart SA</button>
+        <button class="emp-btn" onclick="selectEmp('data', this)">DataFlow Unip</button>
+      </div>
+
+      <div class="kpi-row" id="ficha-kpis">
+        <div class="kpi-card">
+          <div class="kpi-label">Volume de Negócios</div>
+          <div class="kpi-value">310 k€</div>
+          <div class="kpi-trend up">↑ 29% vs 2022</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Resultado Líquido</div>
+          <div class="kpi-value">25 k€</div>
+          <div class="kpi-trend up">↑ 39% vs 2022</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Autonomia Financeira</div>
+          <div class="kpi-value">32,8%</div>
+          <div class="kpi-sub">referência sector: 28%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">VN / Trabalhador</div>
+          <div class="kpi-value">51,7 k€</div>
+          <div class="kpi-trend up">↑ vs 2022</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Taxa Internac.</div>
+          <div class="kpi-value">17,7%</div>
+          <div class="kpi-sub">exportações 55 k€</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Evolução VN e Resultado Líquido</div>
+              <div class="card-subtitle">2021 – 2023</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-ficha-line"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Estrutura de Custos 2023</div>
+              <div class="card-subtitle">% sobre VN</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-custos-pie"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="card-title">Indicadores Completos — TechObidos Lda</div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Indicador</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">Var. 22→23</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Volume de Negócios</td><td class="num">180.000 €</td><td class="num">240.000 €</td><td class="num positive">310.000 €</td><td class="num positive">+29,2%</td></tr>
+            <tr><td>Exportações</td><td class="num">20.000 €</td><td class="num">35.000 €</td><td class="num positive">55.000 €</td><td class="num positive">+57,1%</td></tr>
+            <tr><td>Resultado Líquido</td><td class="num">12.000 €</td><td class="num">18.000 €</td><td class="num positive">25.000 €</td><td class="num positive">+38,9%</td></tr>
+            <tr><td>EBITDA (proxy)</td><td class="num">20.000 €</td><td class="num">27.000 €</td><td class="num positive">35.000 €</td><td class="num positive">+29,6%</td></tr>
+            <tr><td>Activo Total</td><td class="num">250.000 €</td><td class="num">310.000 €</td><td class="num">390.000 €</td><td class="num">+25,8%</td></tr>
+            <tr><td>Capital Próprio</td><td class="num">85.000 €</td><td class="num">103.000 €</td><td class="num positive">128.000 €</td><td class="num positive">+24,3%</td></tr>
+            <tr><td>Autonomia Financeira</td><td class="num">34,0%</td><td class="num">33,2%</td><td class="num">32,8%</td><td class="num">−0,4pp</td></tr>
+            <tr><td>Liquidez Geral</td><td class="num">1,50</td><td class="num">1,60</td><td class="num positive">1,72</td><td class="num positive">+0,12</td></tr>
+            <tr><td>N.º Trabalhadores</td><td class="num">4</td><td class="num">5</td><td class="num">6</td><td class="num">+1</td></tr>
+            <tr><td>VN / Trabalhador</td><td class="num">45.000 €</td><td class="num">48.000 €</td><td class="num positive">51.667 €</td><td class="num positive">+7,6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PAGE 3: ALERTAS ════════════════════════════════════ -->
+    <div class="page" id="page-alertas">
+
+      <div class="alert-row">
+        <div class="alert-card critical">
+          <div class="alert-type critical">⚠ Crítico</div>
+          <div class="alert-title">Capital Próprio Negativo</div>
+          <div class="alert-desc">Empresa com capital próprio negativo em exercícios anteriores. Situação recuperada em 2023 mas requer acompanhamento.</div>
+          <div class="alert-companies">
+            <span class="flag-chip warning">GreenStart SA · 2021</span>
+          </div>
+        </div>
+        <div class="alert-card warning">
+          <div class="alert-type warning">↗ Informação</div>
+          <div class="alert-title">Sem Exportações</div>
+          <div class="alert-desc">Empresas sem volume de negócios internacional. Oportunidade de apoio a internacionalização via programas EU.</div>
+          <div class="alert-companies">
+            <span class="flag-chip info">GreenStart SA · 2023</span>
+            <span class="flag-chip info">DataFlow Unip · 2022</span>
+          </div>
+        </div>
+        <div class="alert-card info">
+          <div class="alert-type info">ℹ Info</div>
+          <div class="alert-title">Produtividade Abaixo Referência</div>
+          <div class="alert-desc">VN por trabalhador abaixo de 30.000€. Indicador de fase inicial — normal em startups com menos de 3 anos.</div>
+          <div class="alert-companies">
+            <span class="flag-chip info">GreenStart SA · 2021</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Histórico de Alertas por Empresa</div>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Empresa</th>
+              <th>Ano</th>
+              <th>CP Negativo</th>
+              <th>RL Negativo</th>
+              <th>Aut. Baixa</th>
+              <th>Sem Export.</th>
+              <th>Prod. Baixa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TechObidos Lda</td><td>2021</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>TechObidos Lda</td><td>2022</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>TechObidos Lda</td><td>2023</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>GreenStart SA</td><td>2021</td>
+              <td><span class="flag-chip critical">Crítico</span></td>
+              <td><span class="flag-chip critical">Crítico</span></td>
+              <td><span class="flag-chip warning">Atenção</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+            </tr>
+            <tr>
+              <td>GreenStart SA</td><td>2022</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>GreenStart SA</td><td>2023</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>DataFlow Unip</td><td>2021</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>DataFlow Unip</td><td>2022</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip info">Info</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+            <tr>
+              <td>DataFlow Unip</td><td>2023</td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+              <td><span class="flag-chip ok">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PAGE 4: EVOLUÇÃO TEMPORAL ═════════════════════════ -->
+    <div class="page" id="page-evolucao">
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Volume de Negócios — Evolução</div>
+              <div class="card-subtitle">2021–2023 · por empresa</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-evo-vn"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Resultado Líquido — Evolução</div>
+              <div class="card-subtitle">2021–2023 · por empresa</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-evo-rl"></canvas></div>
+        </div>
+      </div>
+      <div class="chart-card full">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Autonomia Financeira — Evolução</div>
+            <div class="card-subtitle">Capital próprio / Activo total · 2021–2023</div>
+          </div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-evo-af"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE 5: BENCHMARKING ══════════════════════════════ -->
+    <div class="page" id="page-benchmark">
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">VN 2023 — Comparação</div>
+              <div class="card-subtitle">Volume de negócios por empresa</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-bench-vn"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Margem Líquida vs Autonomia Financeira</div>
+              <div class="card-subtitle">Dispersão · exercício 2023</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-bench-scatter"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section-title">Comparativo de Rácios — 2023</div>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Indicador</th>
+              <th class="num">TechObidos</th>
+              <th class="num">GreenStart</th>
+              <th class="num">DataFlow</th>
+              <th class="num">Média Carteira</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Volume de Negócios</td><td class="num">310.000 €</td><td class="num">210.000 €</td><td class="num">92.000 €</td><td class="num">204.000 €</td></tr>
+            <tr><td>Margem Líquida</td><td class="num">8,1%</td><td class="num">10,5%</td><td class="num">14,1%</td><td class="num">10,9%</td></tr>
+            <tr><td>Margem EBITDA</td><td class="num">11,3%</td><td class="num">13,8%</td><td class="num">18,5%</td><td class="num">14,5%</td></tr>
+            <tr><td>Autonomia Financeira</td><td class="num">32,8%</td><td class="num">15,6%</td><td class="num positive">52,3%</td><td class="num">33,6%</td></tr>
+            <tr><td>Liquidez Geral</td><td class="num">1,72</td><td class="num">1,36</td><td class="num positive">1,73</td><td class="num">1,60</td></tr>
+            <tr><td>VN / Trabalhador</td><td class="num">51.667 €</td><td class="num">42.000 €</td><td class="num positive">30.667 €</td><td class="num">41.444 €</td></tr>
+            <tr><td>Taxa Internacionalização</td><td class="num positive">17,7%</td><td class="num">0%</td><td class="num">8,7%</td><td class="num">8,8%</td></tr>
+            <tr><td>N.º Trabalhadores</td><td class="num">6</td><td class="num">5</td><td class="num">3</td><td class="num">4,7</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+const NAVY = '#0F2044';
+const TEAL = '#0D9488';
+const TEAL2 = '#14b8a6';
+const RED = '#ef4444';
+const AMBER = '#f59e0b';
+const GREY = '#94a3b8';
+
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#64748b';
+
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: NAVY,
+      padding: 10,
+      titleFont: { size: 12, weight: '600' },
+      bodyFont: { size: 12 },
+      cornerRadius: 8,
+    }
+  }
+};
+
+// ── OVERVIEW CHARTS ──────────────────────────────────────
+new Chart(document.getElementById('chart-vn-bar'), {
+  type: 'bar',
+  data: {
+    labels: ['TechObidos Lda', 'GreenStart SA', 'DataFlow Unip'],
+    datasets: [{
+      data: [310000, 210000, 92000],
+      backgroundColor: [TEAL, TEAL2, '#5eead4'],
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      x: { grid: { display: false }, border: { display: false } },
+      y: {
+        grid: { color: '#f1f5f9' },
+        border: { display: false },
+        ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart-rl-bar'), {
+  type: 'bar',
+  data: {
+    labels: ['TechObidos Lda', 'GreenStart SA', 'DataFlow Unip'],
+    datasets: [{
+      data: [25000, 22000, 13000],
+      backgroundColor: [NAVY, '#1a3366', '#243d6e'],
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      x: { grid: { display: false }, border: { display: false } },
+      y: {
+        grid: { color: '#f1f5f9' },
+        border: { display: false },
+        ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' }
+      }
+    }
+  }
+});
+
+// ── FICHA CHARTS ─────────────────────────────────────────
+new Chart(document.getElementById('chart-ficha-line'), {
+  type: 'line',
+  data: {
+    labels: ['2021', '2022', '2023'],
+    datasets: [
+      {
+        label: 'VN',
+        data: [180000, 240000, 310000],
+        borderColor: TEAL,
+        backgroundColor: 'rgba(13,148,136,0.08)',
+        fill: true,
+        tension: 0.4,
+        borderWidth: 2,
+        pointBackgroundColor: TEAL,
+        pointRadius: 4,
+      },
+      {
+        label: 'Resultado Líquido',
+        data: [12000, 18000, 25000],
+        borderColor: NAVY,
+        backgroundColor: 'transparent',
+        tension: 0.4,
+        borderWidth: 2,
+        pointBackgroundColor: NAVY,
+        pointRadius: 4,
+      }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: {
+        display: true,
+        position: 'top',
+        labels: { boxWidth: 12, padding: 16, font: { size: 12 } }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, border: { display: false } },
+      y: {
+        grid: { color: '#f1f5f9' },
+        border: { display: false },
+        ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart-custos-pie'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Custos Pessoal', 'FSE', 'Amortizações', 'Resultado'],
+    datasets: [{
+      data: [26.5, 21.0, 3.2, 8.1],
+      backgroundColor: [NAVY, TEAL, TEAL2, '#5eead4'],
+      borderWidth: 0,
+      hoverOffset: 4,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: {
+        display: true,
+        position: 'right',
+        labels: { boxWidth: 12, padding: 12, font: { size: 12 } }
+      },
+      tooltip: {
+        ...chartDefaults.plugins.tooltip,
+        callbacks: { label: ctx => ' ' + ctx.parsed + '% do VN' }
+      }
+    },
+    cutout: '65%',
+  }
+});
+
+// ── EVOLUÇÃO CHARTS ───────────────────────────────────────
+const evoOpts = {
+  ...chartDefaults,
+  plugins: {
+    ...chartDefaults.plugins,
+    legend: {
+      display: true,
+      position: 'top',
+      labels: { boxWidth: 12, padding: 16, font: { size: 12 } }
+    }
+  },
+  scales: {
+    x: { grid: { display: false }, border: { display: false } },
+    y: {
+      grid: { color: '#f1f5f9' },
+      border: { display: false },
+      ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' }
+    }
+  }
+};
+
+new Chart(document.getElementById('chart-evo-vn'), {
+  type: 'line',
+  data: {
+    labels: ['2021', '2022', '2023'],
+    datasets: [
+      { label: 'TechObidos', data: [180000, 240000, 310000], borderColor: TEAL, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: TEAL },
+      { label: 'GreenStart', data: [95000, 145000, 210000], borderColor: NAVY, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: NAVY },
+      { label: 'DataFlow', data: [65000, 78000, 92000], borderColor: AMBER, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: AMBER },
+    ]
+  },
+  options: evoOpts
+});
+
+new Chart(document.getElementById('chart-evo-rl'), {
+  type: 'line',
+  data: {
+    labels: ['2021', '2022', '2023'],
+    datasets: [
+      { label: 'TechObidos', data: [12000, 18000, 25000], borderColor: TEAL, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: TEAL },
+      { label: 'GreenStart', data: [-15000, 5000, 22000], borderColor: NAVY, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: NAVY },
+      { label: 'DataFlow', data: [8000, 10000, 13000], borderColor: AMBER, backgroundColor: 'transparent', tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: AMBER },
+    ]
+  },
+  options: {
+    ...evoOpts,
+    scales: {
+      ...evoOpts.scales,
+      y: {
+        ...evoOpts.scales.y,
+        ticks: { callback: v => v >= 1000 || v <= -1000 ? (v/1000)+'k€' : v+'€' }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart-evo-af'), {
+  type: 'line',
+  data: {
+    labels: ['2021', '2022', '2023'],
+    datasets: [
+      { label: 'TechObidos', data: [34.0, 33.2, 32.8], borderColor: TEAL, backgroundColor: 'rgba(13,148,136,0.05)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: TEAL },
+      { label: 'GreenStart', data: [-4.4, 1.0, 15.6], borderColor: RED, backgroundColor: 'rgba(239,68,68,0.05)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: RED },
+      { label: 'DataFlow', data: [42.1, 47.3, 52.3], borderColor: NAVY, backgroundColor: 'rgba(15,32,68,0.05)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4, pointBackgroundColor: NAVY },
+    ]
+  },
+  options: {
+    ...evoOpts,
+    plugins: { ...evoOpts.plugins },
+    scales: {
+      x: { grid: { display: false }, border: { display: false } },
+      y: {
+        grid: { color: '#f1f5f9' },
+        border: { display: false },
+        ticks: { callback: v => v + '%' }
+      }
+    }
+  }
+});
+
+// ── BENCHMARK CHARTS ──────────────────────────────────────
+new Chart(document.getElementById('chart-bench-vn'), {
+  type: 'bar',
+  data: {
+    labels: ['TechObidos', 'GreenStart', 'DataFlow'],
+    datasets: [
+      { label: '2021', data: [180000, 95000, 65000], backgroundColor: '#e2e8f0', borderRadius: 4 },
+      { label: '2022', data: [240000, 145000, 78000], backgroundColor: TEAL2, borderRadius: 4 },
+      { label: '2023', data: [310000, 210000, 92000], backgroundColor: TEAL, borderRadius: 4 },
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } }
+    },
+    scales: {
+      x: { grid: { display: false }, border: { display: false } },
+      y: { grid: { color: '#f1f5f9' }, border: { display: false }, ticks: { callback: v => (v/1000)+'k€' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart-bench-scatter'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      { label: 'TechObidos', data: [{x: 32.8, y: 8.1}], backgroundColor: TEAL, pointRadius: 10 },
+      { label: 'GreenStart', data: [{x: 15.6, y: 10.5}], backgroundColor: NAVY, pointRadius: 10 },
+      { label: 'DataFlow', data: [{x: 52.3, y: 14.1}], backgroundColor: AMBER, pointRadius: 10 },
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 12, font: { size: 11 } } },
+      tooltip: {
+        ...chartDefaults.plugins.tooltip,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: AF ${ctx.parsed.x}% · Margem ${ctx.parsed.y}%`
+        }
+      }
+    },
+    scales: {
+      x: { title: { display: true, text: 'Autonomia Financeira (%)', font: { size: 11 } }, grid: { color: '#f1f5f9' }, border: { display: false } },
+      y: { title: { display: true, text: 'Margem Líquida (%)', font: { size: 11 } }, grid: { color: '#f1f5f9' }, border: { display: false } }
+    }
+  }
+});
+
+// ── NAVIGATION ────────────────────────────────────────────
+const titles = {
+  overview: 'Overview da Carteira',
+  ficha: 'Ficha Individual',
+  alertas: 'Alertas',
+  evolucao: 'Evolução Temporal',
+  benchmark: 'Benchmarking da Carteira'
+};
+
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('page-title').textContent = titles[id];
+}
+
+function setYear(y, btn) {
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectEmp(emp, btn) {
+  document.querySelectorAll('.emp-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
