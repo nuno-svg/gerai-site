@@ -1,590 +1,497 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="GerAI — Serviço gerido de workflow automation com IA. Configuras uma vez, recebes sempre. Para PMEs, startups e organizações em Portugal.">
-<meta property="og:title" content="GerAI — Workflow Automation">
-<meta property="og:description" content="O trabalho documental repetitivo chega automaticamente. Configuras uma vez, recebes sempre.">
-<meta property="og:url" content="https://gerai.pt">
-<title>GerAI — Workflow Automation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GerAI · Painel de Controlo para Incubadoras</title>
+  <meta name="description" content="Monitorização financeira, alertas EU e prospecção automática para incubadoras e parques tecnológicos. Em produção no Parque Tecnológico de Óbidos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B1629;
+      --navy-mid: #1e3a5f;
+      --teal: #0D9488;
+      --teal-light: #2DD4BF;
+      --teal-bg: #F0FDFA;
+      --off-white: #F8FAFC;
+      --border: #E2E8F0;
+      --slate: #475569;
+      --muted: #64748B;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; color: var(--navy); background: #fff; -webkit-font-smoothing: antialiased; }
 
-  :root {
-    --navy: #0F2044;
-    --teal: #0D9488;
-    --teal-light: #14B8A6;
-    --teal-bg: #F0FDFA;
-    --slate: #334155;
-    --off-white: #F8FAFC;
-    --text-muted: #64748B;
-    --border: rgba(15,32,68,0.12);
-  }
+    /* NAV — branco com borda */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%; height: 64px;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 20px; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: -0.01em; }
+    .logo span { color: var(--teal); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-client {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-client:hover { color: var(--navy); border-color: var(--navy-mid); }
+    .nav-cta {
+      font-size: 13px; font-weight: 500; color: #fff;
+      background: var(--teal); text-decoration: none;
+      padding: 8px 18px; border-radius: 6px; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #0f766e; }
 
-  html { scroll-behavior: smooth; }
+    /* HERO — fundo branco com acentos */
+    .hero {
+      background: #fff;
+      padding: 130px 6% 80px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+      min-height: 100vh;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: linear-gradient(135deg, var(--teal-bg) 0%, #fff 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .hero-label::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--teal); display: block;
+    }
+    h1 {
+      font-size: clamp(32px, 4.5vw, 54px); font-weight: 300;
+      letter-spacing: -0.03em; line-height: 1.1; color: var(--navy); margin-bottom: 22px;
+    }
+    h1 strong { font-weight: 500; color: var(--teal); }
+    .hero-sub {
+      font-size: 17px; color: var(--muted); line-height: 1.75;
+      max-width: 520px; margin-bottom: 36px; font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+    .btn-primary {
+      background: var(--teal); color: #fff; border: none;
+      padding: 14px 28px; border-radius: 8px;
+      font-family: inherit; font-size: 15px; font-weight: 500;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #0f766e; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--navy);
+      border: 1px solid var(--border);
+      padding: 14px 28px; border-radius: 8px;
+      font-family: inherit; font-size: 15px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--navy); }
+    .btn-ghost-dark {
+      background: transparent; color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 14px 28px; border-radius: 8px;
+      font-family: inherit; font-size: 15px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
+    .hero-proof {
+      display: flex; gap: 40px; flex-wrap: wrap;
+      padding-top: 36px; border-top: 1px solid var(--border);
+    }
+    .proof-item { display: flex; flex-direction: column; gap: 4px; }
+    .proof-num {
+      font-size: 20px; font-weight: 500; color: var(--teal);
+      font-family: 'DM Mono', monospace; letter-spacing: -0.02em;
+    }
+    .proof-label { font-size: 12px; color: var(--muted); font-weight: 300; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--navy);
-    font-size: 16px;
-    line-height: 1.6;
-  }
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual svg { width: 100%; max-width: 520px; height: auto; filter: drop-shadow(0 16px 40px rgba(11,22,41,0.14)); }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(248,250,252,0.94);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 6%;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    /* SECTIONS */
+    .section-wrap { max-width: 1100px; margin: 0 auto; padding: 88px 6%; }
+    .section-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(26px, 3.5vw, 40px); font-weight: 400;
+      letter-spacing: -0.025em; line-height: 1.2;
+      margin-bottom: 16px; color: var(--navy);
+    }
+    .section-intro {
+      font-size: 17px; color: var(--muted); max-width: 560px;
+      line-height: 1.75; margin-bottom: 52px; font-weight: 300;
+    }
 
-  .logo {
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--navy);
-    text-decoration: none;
-  }
-  .logo span { color: var(--teal); }
+    /* ONBOARDING — navy escuro */
+    .onboarding-section { background: var(--navy); }
+    .onboarding-section .section-label { color: var(--teal-light); }
+    .onboarding-section h2 { color: #fff; }
+    .onboarding-section .section-intro { color: rgba(255,255,255,0.45); }
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; overflow: hidden;
+    }
+    .step { background: rgba(255,255,255,0.03); padding: 36px 32px; }
+    .step-num {
+      width: 36px; height: 36px; background: rgba(13,148,136,0.18);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+      color: var(--teal-light); margin-bottom: 20px;
+    }
+    .step h3 { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: #fff; }
+    .step p { font-size: 14px; color: rgba(255,255,255,0.42); line-height: 1.68; font-weight: 300; }
 
-  .nav-cta {
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    padding: 9px 22px;
-    border-radius: 7px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--teal); }
+    /* MÓDULOS — fundo off-white */
+    .modules-section { background: var(--off-white); }
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;
+    }
+    .module-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 12px;
+      padding: 28px 26px; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .module-card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(13,148,136,0.08); }
+    .module-icon { font-size: 22px; margin-bottom: 14px; display: block; }
+    .module-card h4 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+    .module-card p { font-size: 13px; color: var(--muted); line-height: 1.68; }
+    .module-freq {
+      display: inline-block; margin-top: 14px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
+      background: var(--teal-bg); color: var(--teal);
+      border: 1px solid rgba(13,148,136,0.18);
+    }
 
-  /* HERO */
-  .hero {
-    background: var(--navy);
-    padding: 148px 6% 108px;
-    position: relative;
-    overflow: hidden;
-  }
+    /* CASE — teal bg claro */
+    .case-box {
+      background: var(--teal-bg); border: 1px solid rgba(13,148,136,0.16);
+      border-radius: 16px; padding: 44px 48px;
+      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start;
+    }
+    .case-tag {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .case-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+    .case-box h3 {
+      font-size: 22px; font-weight: 400; color: var(--navy);
+      margin-bottom: 16px; letter-spacing: -0.02em; line-height: 1.3;
+    }
+    .case-box p { font-size: 15px; color: var(--slate); line-height: 1.75; font-weight: 300; }
+    .case-metrics { display: flex; flex-direction: column; gap: 12px; }
+    .metric {
+      text-align: center; background: #fff;
+      border: 1px solid rgba(13,148,136,0.12); border-radius: 10px;
+      padding: 18px 24px; min-width: 150px;
+    }
+    .metric-val {
+      font-size: 28px; font-weight: 500; color: var(--teal);
+      letter-spacing: -0.02em; display: block; font-family: 'DM Mono', monospace;
+    }
+    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(13,148,136,0.16) 0%, transparent 68%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
+    /* CTA — navy */
+    .cta-section {
+      background: var(--navy); text-align: center; padding: 100px 6%;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(13,148,136,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-section h2 { color: #fff; max-width: 500px; margin: 0 auto 16px; }
+    .cta-section p { color: rgba(255,255,255,0.45); font-size: 16px; margin-bottom: 40px; font-weight: 300; }
+    .cta-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: 10%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
+    /* FOOTER */
+    footer {
+      background: #060e1a; color: rgba(255,255,255,0.28);
+      text-align: center; padding: 28px 6%; font-size: 13px; line-height: 1.8;
+    }
+    footer a { color: rgba(255,255,255,0.38); text-decoration: none; }
+    footer a:hover { color: var(--teal-light); }
 
-  .hero-inner { position: relative; z-index: 1; max-width: 1060px; margin: 0 auto; }
-
-  .hero-label {
-    display: inline-block;
-    background: rgba(13,148,136,0.14);
-    color: var(--teal-light);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 100px;
-    border: 1px solid rgba(13,148,136,0.28);
-    margin-bottom: 30px;
-  }
-
-  .hero h1 {
-    font-size: clamp(30px, 5vw, 54px);
-    font-weight: 300;
-    line-height: 1.13;
-    color: #fff;
-    letter-spacing: -0.03em;
-    max-width: 700px;
-    margin-bottom: 24px;
-  }
-  .hero h1 strong { font-weight: 500; color: var(--teal-light); }
-
-  .hero-sub {
-    font-size: 18px;
-    color: rgba(255,255,255,0.58);
-    font-weight: 300;
-    max-width: 520px;
-    margin-bottom: 48px;
-    line-height: 1.75;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .btn-primary {
-    background: var(--teal);
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
-
-  .btn-ghost {
-    color: rgba(255,255,255,0.65);
-    border: 1px solid rgba(255,255,255,0.18);
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 400;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-ghost:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
-
-  .hero-proof {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.09);
-    display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-
-  .proof-item { display: flex; flex-direction: column; gap: 5px; }
-  .proof-num {
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--teal-light);
-    letter-spacing: -0.02em;
-    font-family: 'DM Mono', monospace;
-  }
-  .proof-label { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; }
-
-  /* LAYOUT */
-  .section-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 88px 6%;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin-bottom: 14px;
-  }
-
-  h2 {
-    font-size: clamp(26px, 3.5vw, 40px);
-    font-weight: 400;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    color: var(--navy);
-  }
-
-  .section-intro {
-    font-size: 17px;
-    color: var(--text-muted);
-    max-width: 560px;
-    line-height: 1.75;
-    margin-bottom: 56px;
-  }
-
-  /* COMO FUNCIONA */
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-
-  .step { background: var(--off-white); padding: 38px 34px; }
-
-  .step-num {
-    width: 38px; height: 38px;
-    background: var(--teal-bg);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--teal);
-    margin-bottom: 22px;
-  }
-
-  .step h3 { font-size: 17px; font-weight: 500; margin-bottom: 10px; color: var(--navy); }
-  .step p { font-size: 14px; color: var(--text-muted); line-height: 1.68; }
-
-  /* OUTPUTS */
-  .outputs-section { background: var(--navy); }
-
-  .outputs-section .section-label { color: rgba(20,184,166,0.9); }
-  .outputs-section h2 { color: #fff; }
-  .outputs-section .section-intro { color: rgba(255,255,255,0.5); }
-
-  .outputs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  .output-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 12px;
-    padding: 28px 26px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .output-card:hover {
-    border-color: rgba(13,148,136,0.38);
-    background: rgba(13,148,136,0.07);
-  }
-
-  .output-icon {
-    font-size: 22px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .output-card h4 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 8px; }
-  .output-card p { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.65; }
-
-  /* SEGMENTOS */
-  .segments-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .segment-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 30px 28px;
-    transition: border-color 0.22s, transform 0.22s;
-  }
-  .segment-card:hover { border-color: var(--teal); transform: translateY(-2px); }
-
-  .segment-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 100px;
-    margin-bottom: 18px;
-  }
-  .badge-core { background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(13,148,136,0.22); }
-  .badge-comp { background: #F1F5F9; color: var(--text-muted); border: 1px solid rgba(100,116,139,0.18); }
-
-  .segment-card h4 { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--navy); }
-  .segment-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
-
-  .segment-price {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--teal);
-    font-weight: 500;
-  }
-
-  /* CASE */
-  .case-box {
-    background: var(--teal-bg);
-    border: 1px solid rgba(13,148,136,0.18);
-    border-radius: 16px;
-    padding: 44px 48px;
-    display: flex;
-    gap: 48px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .case-content { flex: 1; min-width: 240px; }
-
-  .case-tag {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin-bottom: 14px;
-  }
-
-  .case-box h3 {
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--navy);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-  }
-
-  .case-box p { font-size: 15px; color: var(--slate); line-height: 1.75; }
-
-  .case-metrics { display: flex; flex-direction: column; gap: 16px; min-width: 180px; }
-
-  .metric {
-    text-align: center;
-    background: #fff;
-    border: 1px solid rgba(13,148,136,0.14);
-    border-radius: 10px;
-    padding: 20px 26px;
-  }
-  .metric-val {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--teal);
-    letter-spacing: -0.02em;
-    display: block;
-    font-family: 'DM Mono', monospace;
-  }
-  .metric-label { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
-
-  /* CTA FINAL */
-  .cta-section {
-    background: var(--navy);
-    text-align: center;
-    padding: 110px 6%;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px; height: 300px;
-    background: radial-gradient(ellipse, rgba(13,148,136,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .cta-inner { position: relative; z-index: 1; }
-  .cta-section h2 { color: #fff; max-width: 520px; margin: 0 auto 16px; }
-  .cta-section p { color: rgba(255,255,255,0.5); font-size: 16px; margin-bottom: 44px; }
-  .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-  /* FOOTER */
-  footer {
-    background: #080F1E;
-    color: rgba(255,255,255,0.3);
-    text-align: center;
-    padding: 30px 6%;
-    font-size: 13px;
-    line-height: 1.8;
-  }
-  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
-  footer a:hover { color: var(--teal-light); }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .steps { grid-template-columns: 1fr; }
-    .outputs-grid { grid-template-columns: repeat(2, 1fr); }
-    .segments-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 640px) {
-    nav { padding: 0 5%; }
-    .hero { padding: 120px 5% 72px; }
-    .section-wrap { padding: 64px 5%; }
-    .hero-proof { gap: 28px; }
-    .outputs-grid { grid-template-columns: 1fr; }
-    .segments-grid { grid-template-columns: 1fr; }
-    .case-box { padding: 30px 26px; gap: 28px; }
-    .case-metrics { flex-direction: row; min-width: unset; }
-    .metric { flex: 1; }
-  }
-</style>
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero::before { display: none; }
+      .hero-visual { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .case-box { grid-template-columns: 1fr; }
+      .case-metrics { flex-direction: row; }
+      .metric { flex: 1; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 5%; }
+      .hero { padding: 110px 5% 64px; }
+      .section-wrap { padding: 60px 5%; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .case-box { padding: 28px 24px; }
+      .nav-client { display: none; }
+    }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">Ger<span>AI</span></a>
-  <a href="https://calendly.com/nuno-gerai/30min" class="nav-cta">Pedir demo</a>
+  <div class="nav-right">
+    <a href="https://app.gerai.pt" class="nav-client">Área de Cliente</a>
+    <a href="https://calendly.com/nuno-gerai/30min" class="nav-cta">Pedir demo</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">Workflow Automation · Serviço Gerido</div>
-    <h1>O trabalho documental repetitivo<br><strong>chega automaticamente.</strong></h1>
-    <p class="hero-sub">Configuras uma vez. Recebes sempre. Sem equipa técnica, sem manutenção, sem código.</p>
+    <div class="hero-label">Para Incubadoras &amp; Parques Tecnológicos</div>
+    <h1>O painel de controlo<br>da tua <strong>incubadora.</strong></h1>
+    <p class="hero-sub">Monitorização financeira das empresas incubadas, alertas de acompanhamento, oportunidades EU e prospecção automática de novos incubados — num único dashboard.</p>
     <div class="hero-actions">
-      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Agendar demo — 30 min</a>
-      <a href="#como-funciona" class="btn-ghost">Como funciona</a>
+      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Ver demo — 30 min</a>
+      <a href="#modulos" class="btn-outline">O que inclui</a>
     </div>
     <div class="hero-proof">
       <div class="proof-item">
-        <span class="proof-num">25 min</span>
-        <span class="proof-label">Onboarding — configuras uma vez, nunca mais</span>
-      </div>
-      <div class="proof-item">
-        <span class="proof-num">100%</span>
-        <span class="proof-label">Automático após configuração</span>
-      </div>
-      <div class="proof-item">
         <span class="proof-num">Em produção</span>
-        <span class="proof-label">Parque Tecnológico de Óbidos desde Mar 2026</span>
+        <span class="proof-label">Parque Tecnológico de Óbidos</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">6 módulos</span>
+        <span class="proof-label">Num único dashboard</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">Diário</span>
+        <span class="proof-label">Actualizações automáticas</span>
       </div>
     </div>
   </div>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 520 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main card -->
+      <rect x="16" y="16" width="488" height="468" rx="18" fill="#0d1e35" stroke="#1e3a5f" stroke-width="1.5"/>
+      <!-- Top bar -->
+      <rect x="16" y="16" width="488" height="56" rx="18" fill="#0a1628"/>
+      <rect x="16" y="54" width="488" height="18" fill="#0a1628"/>
+      <!-- Logo dot -->
+      <circle cx="48" cy="44" r="10" fill="#0D9488"/>
+      <circle cx="48" cy="44" r="5" fill="#2DD4BF"/>
+      <!-- Nav label -->
+      <rect x="70" y="40" width="55" height="8" rx="3" fill="#2DD4BF" opacity="0.7"/>
+      <!-- Nav right -->
+      <rect x="390" y="34" width="90" height="22" rx="7" fill="#0D9488"/>
+      <rect x="400" y="40" width="70" height="10" rx="3" fill="white" opacity="0.85"/>
+
+      <!-- KPI CARDS -->
+      <rect x="36" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="50" y="104" width="48" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
+      <rect x="50" y="118" width="72" height="18" rx="4" fill="#2DD4BF"/>
+      <rect x="50" y="142" width="36" height="7" rx="2" fill="#1e3a5f"/>
+      <polygon points="118,98 124,108 112,108" fill="#2DD4BF" opacity="0.9"/>
+
+      <rect x="154" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="168" y="104" width="44" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
+      <rect x="168" y="118" width="60" height="18" rx="4" fill="#2DD4BF"/>
+      <rect x="168" y="142" width="42" height="7" rx="2" fill="#1e3a5f"/>
+      <polygon points="236,98 242,108 230,108" fill="#2DD4BF" opacity="0.9"/>
+
+      <rect x="272" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="286" y="104" width="52" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
+      <rect x="286" y="118" width="50" height="18" rx="4" fill="#2DD4BF"/>
+      <rect x="286" y="142" width="38" height="7" rx="2" fill="#1e3a5f"/>
+      <polygon points="354,98 360,108 348,108" fill="#2DD4BF" opacity="0.9"/>
+
+      <!-- Card 4 amber accent -->
+      <rect x="390" y="92" width="106" height="70" rx="10" fill="#191008" stroke="#3d2505" stroke-width="1"/>
+      <rect x="404" y="104" width="50" height="8" rx="3" fill="#fbbf24" opacity="0.7"/>
+      <rect x="404" y="118" width="44" height="18" rx="4" fill="#f59e0b"/>
+      <rect x="404" y="142" width="56" height="7" rx="2" fill="#3d2505"/>
+      <circle cx="484" cy="100" r="5" fill="#f59e0b" opacity="0.4"/>
+      <circle cx="484" cy="100" r="3" fill="#f59e0b" opacity="0.8"/>
+
+      <!-- CHART AREA -->
+      <rect x="36" y="178" width="292" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="52" y="192" width="110" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
+      <rect x="254" y="190" width="30" height="16" rx="5" fill="#0D9488"/>
+      <rect x="260" y="194" width="18" height="8" rx="2" fill="white" opacity="0.8"/>
+      <rect x="218" y="190" width="30" height="16" rx="5" fill="#1e3a5f"/>
+      <rect x="224" y="194" width="18" height="8" rx="2" fill="#2DD4BF" opacity="0.4"/>
+      <!-- Grid lines -->
+      <line x1="52" y1="316" x2="312" y2="316" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="52" y1="296" x2="312" y2="296" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="52" y1="276" x2="312" y2="276" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="52" y1="256" x2="312" y2="256" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="52" y1="236" x2="312" y2="236" stroke="#1e3a5f" stroke-width="0.5"/>
+      <!-- Chart fill -->
+      <path d="M52,305 L104,282 L156,288 L208,262 L260,268 L312,244 L312,316 L52,316 Z" fill="#0D9488" opacity="0.18"/>
+      <polyline points="52,305 104,282 156,288 208,262 260,268 312,244" stroke="#2DD4BF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Secondary line -->
+      <polyline points="52,316 104,310 156,306 208,298 260,303 312,287" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.3"/>
+      <!-- Data points -->
+      <circle cx="104" cy="282" r="3.5" fill="#2DD4BF"/>
+      <circle cx="156" cy="288" r="3.5" fill="#2DD4BF"/>
+      <circle cx="208" cy="262" r="3.5" fill="#2DD4BF"/>
+      <circle cx="260" cy="268" r="3.5" fill="#2DD4BF"/>
+      <!-- Highlighted point -->
+      <circle cx="312" cy="244" r="10" fill="#2DD4BF" opacity="0.15"/>
+      <circle cx="312" cy="244" r="6" fill="#0D9488"/>
+      <circle cx="312" cy="244" r="3.5" fill="#2DD4BF"/>
+      <!-- Tooltip -->
+      <rect x="278" y="222" width="72" height="26" rx="7" fill="#2DD4BF"/>
+      <rect x="286" y="229" width="56" height="12" rx="3" fill="#0B1629" opacity="0.7"/>
+      <polygon points="312,248 308,253 316,253" fill="#2DD4BF"/>
+
+      <!-- COMPANY LIST -->
+      <rect x="344" y="178" width="152" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="358" y="192" width="80" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
+      <circle cx="368" cy="216" r="4" fill="#22c55e"/>
+      <rect x="380" y="212" width="72" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="212" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
+      <circle cx="368" cy="232" r="4" fill="#22c55e"/>
+      <rect x="380" y="228" width="60" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="228" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
+      <circle cx="368" cy="248" r="4" fill="#f59e0b"/>
+      <rect x="380" y="244" width="68" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="244" width="20" height="8" rx="3" fill="#f59e0b" opacity="0.35"/>
+      <circle cx="368" cy="264" r="4" fill="#22c55e"/>
+      <rect x="380" y="260" width="56" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="260" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
+      <circle cx="368" cy="280" r="4" fill="#f59e0b"/>
+      <rect x="380" y="276" width="64" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="276" width="20" height="8" rx="3" fill="#f59e0b" opacity="0.35"/>
+      <circle cx="368" cy="296" r="4" fill="#22c55e"/>
+      <rect x="380" y="292" width="70" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="292" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
+      <circle cx="368" cy="312" r="4" fill="#22c55e"/>
+      <rect x="380" y="308" width="50" height="8" rx="3" fill="#1e3a5f"/>
+      <rect x="462" y="308" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
+
+      <!-- ALERTS BAR -->
+      <rect x="36" y="356" width="460" height="56" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="50" y="366" width="60" height="7" rx="3" fill="#2DD4BF" opacity="0.5"/>
+      <rect x="50" y="380" width="88" height="22" rx="7" fill="#0D9488" opacity="0.25" stroke="#0D9488" stroke-width="1"/>
+      <rect x="60" y="386" width="68" height="10" rx="3" fill="#2DD4BF" opacity="0.7"/>
+      <rect x="148" y="380" width="108" height="22" rx="7" fill="#1e3a5f" stroke="#2a4a6e" stroke-width="1"/>
+      <rect x="158" y="386" width="88" height="10" rx="3" fill="#4a7a9e" opacity="0.6"/>
+      <rect x="266" y="380" width="100" height="22" rx="7" fill="#1e3a5f" stroke="#2a4a6e" stroke-width="1"/>
+      <rect x="276" y="386" width="80" height="10" rx="3" fill="#4a7a9e" opacity="0.6"/>
+      <rect x="376" y="380" width="96" height="22" rx="7" fill="#191008" stroke="#3d2505" stroke-width="1"/>
+      <rect x="386" y="386" width="76" height="10" rx="3" fill="#f59e0b" opacity="0.6"/>
+
+      <!-- BOTTOM ROW -->
+      <rect x="36" y="428" width="222" height="40" rx="10" fill="#0D9488" opacity="0.12" stroke="#0D9488" stroke-width="1"/>
+      <rect x="50" y="440" width="120" height="8" rx="4" fill="#2DD4BF" opacity="0.6"/>
+      <rect x="50" y="452" width="80" height="7" rx="3" fill="#2DD4BF" opacity="0.3"/>
+      <circle cx="228" cy="448" r="3" fill="#2DD4BF" opacity="0.7"/>
+      <circle cx="220" cy="442" r="2" fill="#2DD4BF" opacity="0.5"/>
+      <circle cx="236" cy="442" r="2" fill="#2DD4BF" opacity="0.5"/>
+      <rect x="270" y="428" width="226" height="40" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
+      <rect x="284" y="440" width="90" height="8" rx="4" fill="#1e3a5f"/>
+      <rect x="284" y="452" width="130" height="7" rx="3" fill="#1e3a5f"/>
+      <circle cx="470" cy="448" r="7" fill="#22c55e" opacity="0.15"/>
+      <circle cx="470" cy="448" r="4" fill="#22c55e" opacity="0.5"/>
+      <circle cx="470" cy="448" r="2" fill="#22c55e"/>
+    </svg>
+  </div>
 </div>
 
-<!-- COMO FUNCIONA -->
-<div id="como-funciona">
+<!-- ONBOARDING -->
+<div id="onboarding" class="onboarding-section">
   <div class="section-wrap">
-    <div class="section-label">Como funciona</div>
-    <h2>Três passos.<br>Depois é automático.</h2>
-    <p class="section-intro">Não é software que aprendes a usar. É um serviço que opera por ti — todos os meses, sem intervenção.</p>
+    <div class="section-label">Como começa</div>
+    <h2>Activo em três passos.<br>Depois é automático.</h2>
+    <p class="section-intro">O setup é inteiramente feito pela GerAI. A incubadora só precisa de fornecer os NIFs das empresas incubadas. Nada mais.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>Configuras uma vez</h3>
-        <p>Preenches um formulário de onboarding com os dados da tua organização. 25 minutos. Sem instalações, sem IT.</p>
+        <h3>Lista de NIFs</h3>
+        <p>A incubadora exporta um Excel com os NIFs das empresas incubadas. Um ficheiro simples — sem formatos especiais, sem dados financeiros, sem preparação técnica.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>O agente trabalha</h3>
-        <p>O sistema recolhe informação, processa com IA e gera os documentos — relatórios, actas, consentimentos, candidaturas.</p>
+        <h3>Configuração pela GerAI</h3>
+        <p>A GerAI trata de tudo: recolha de dados, processamento financeiro, configuração dos módulos e ligação às fontes EU. Uma chamada de 30 minutos para definir prioridades.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Recebes no email</h3>
-        <p>O output chega directamente na tua caixa de correio, no formato correcto, na data certa. Todos os meses.</p>
+        <h3>Dashboard activo</h3>
+        <p>Acesso imediato ao painel com login dedicado. Financiamentos EU, parcerias e prospecção chegam automaticamente todos os dias, sem qualquer intervenção.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- O QUE RECEBES -->
-<div class="outputs-section">
+<!-- MÓDULOS -->
+<div id="modulos" class="modules-section">
   <div class="section-wrap">
-    <div class="section-label">O que recebes</div>
-    <h2>Outputs concretos.<br>Não relatórios genéricos.</h2>
-    <p class="section-intro">Cada agente é configurado para o teu sector e entrega o documento específico que precisas — no formato certo, na data certa.</p>
-    <div class="outputs-grid">
-      <div class="output-card">
-        <span class="output-icon">📋</span>
-        <h4>Relatórios IAPMEI & EU</h4>
-        <p>Monitorização de financiamentos europeus, alertas de prazos, resumo executivo semanal para as startups incubadas.</p>
+    <div class="section-label">O que está incluído</div>
+    <h2>Tudo o que a incubadora<br>precisa de saber.</h2>
+    <p class="section-intro">Cada módulo responde a uma pergunta que o director faz todos os meses — e que hoje exige horas de pesquisa manual.</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <span class="module-icon">📊</span>
+        <h4>Saúde financeira da carteira</h4>
+        <p>Uma visão consolidada de toda a carteira — volume de negócios, rentabilidade, solidez financeira e produtividade. Com benchmarking automático entre empresas.</p>
+        <span class="module-freq">Actualizado anualmente com IES</span>
       </div>
-      <div class="output-card">
-        <span class="output-icon">🏢</span>
-        <h4>Actas e convocatórias</h4>
-        <p>Gestão de condomínios — acta completa a partir de notas de reunião. 10 minutos em vez de 2 horas por condomínio.</p>
+      <div class="module-card">
+        <span class="module-icon">🏢</span>
+        <h4>Ficha completa por empresa</h4>
+        <p>Indicadores detalhados de cada empresa incubada, com três anos de histórico e evolução visual. Tudo acessível em segundos, sem consultar ficheiros dispersos.</p>
+        <span class="module-freq">Actualizado anualmente com IES</span>
       </div>
-      <div class="output-card">
-        <span class="output-icon">📐</span>
-        <h4>Documentação técnica de projecto</h4>
-        <p>Peças escritas estruturadas a partir dos dados de cada projecto — memórias descritivas, cadernos de encargos, relatórios de inspecção.</p>
+      <div class="module-card">
+        <span class="module-icon">🔔</span>
+        <h4>Empresas que merecem atenção</h4>
+        <p>Identificação automática das empresas com indicadores que justificam acompanhamento mais próximo — antes de qualquer reunião ou visita.</p>
+        <span class="module-freq">Actualizado anualmente com IES</span>
       </div>
-      <div class="output-card">
-        <span class="output-icon">🧾</span>
-        <h4>Relatórios e comunicações de contabilidade</h4>
-        <p>Cartas-circulares a clientes, relatórios de gestão periódicos, alertas fiscais — para gabinetes com carteiras alargadas.</p>
+      <div class="module-card">
+        <span class="module-icon">🇪🇺</span>
+        <h4>Radar de financiamentos EU</h4>
+        <p>Monitorização diária de concursos abertos relevantes para as empresas da carteira. A incubadora deixa de depender da atenção de cada empresa para não perder prazos.</p>
+        <span class="module-freq">Actualizado diariamente</span>
       </div>
-      <div class="output-card">
-        <span class="output-icon">🎓</span>
-        <h4>Gestão administrativa de formação</h4>
-        <p>Convocatórias, certificados, relatórios de execução e dossiers técnico-pedagógicos — gerados automaticamente por acção de formação.</p>
+      <div class="module-card">
+        <span class="module-icon">🤝</span>
+        <h4>Oportunidades de parceria europeia</h4>
+        <p>Oportunidades do Enterprise Europe Network filtradas por área de actividade. A incubadora torna-se um conector activo entre as suas empresas e o mercado europeu.</p>
+        <span class="module-freq">Actualizado diariamente</span>
       </div>
-      <div class="output-card">
-        <span class="output-icon">🏠</span>
-        <h4>Gestão de Alojamento Local</h4>
-        <p>Welcome guide em 4 idiomas, relatório AT/SIBA, resposta automática a reviews. Tudo sem intervenção manual.</p>
-      </div>
-      <div class="output-card">
-        <span class="output-icon">📊</span>
-        <h4>Candidaturas EU</h4>
-        <p>Identificação de financiamentos relevantes, alertas personalizados por elegibilidade, rascunhos prontos a rever.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PARA QUEM É -->
-<div>
-  <div class="section-wrap">
-    <div class="section-label">Para quem é</div>
-    <h2>Organizações sem equipa<br>técnica interna.</h2>
-    <p class="section-intro">PMEs, startups e organizações que produzem documentação repetitiva todos os meses — e não têm tempo nem equipa para isso.</p>
-    <div class="segments-grid">
-      <div class="segment-card">
-        <span class="segment-badge badge-core">Core</span>
-        <h4>Incubadoras & Parques Tecnológicos</h4>
-        <p>Relatórios IAPMEI, monitorização de financiamentos EU, comunicações às startups incubadas.</p>
-        <div class="segment-price">substitui 3 a 5 dias de trabalho manual por mês</div>
-      </div>
-      <div class="segment-card">
-        <span class="segment-badge badge-core">Core</span>
-        <h4>Gestores de Condomínios</h4>
-        <p>Actas, convocatórias, circulares e relatórios de manutenção — automatizados para toda a carteira.</p>
-        <div class="segment-price">poupa 60 a 90 horas mensais numa carteira de 30 condomínios</div>
-      </div>
-      <div class="segment-card">
-        <span class="segment-badge badge-comp">Complementar</span>
-        <h4>Profissionais Liberais</h4>
-        <p>Arquitectos, engenheiros e economistas — as peças escritas que se repetem projecto após projecto geradas em minutos. O tempo que poupas vai para trabalho que facturas.</p>
-        <div class="segment-price">cada projecto documentado em minutos, não em horas</div>
-      </div>
-      <div class="segment-card">
-        <span class="segment-badge badge-comp">Complementar</span>
-        <h4>Alojamento Local</h4>
-        <p>Welcome guide multilingue, relatório AT/SIBA, resposta automática a reviews de hóspedes.</p>
-        <div class="segment-price">menos do que 1 hora de gestão administrativa por mês</div>
-      </div>
-      <div class="segment-card">
-        <span class="segment-badge badge-comp">Complementar</span>
-        <h4>Gabinetes de Contabilidade</h4>
-        <p>Comunicações periódicas a clientes, alertas de obrigações fiscais, relatórios de gestão mensais — gerados automaticamente para toda a carteira.</p>
-        <div class="segment-price">cada relatório gerado em segundos, não em horas</div>
-      </div>
-      <div class="segment-card">
-        <span class="segment-badge badge-comp">Complementar</span>
-        <h4>Empresas de Formação</h4>
-        <p>Dossiers técnico-pedagógicos, certificados, convocatórias e relatórios de execução — toda a burocracia de cada acção gerada automaticamente.</p>
-        <div class="segment-price">conformidade administrativa sem esforço manual</div>
+      <div class="module-card">
+        <span class="module-icon">🔍</span>
+        <h4>Prospecção de novos incubados</h4>
+        <p>Alerta diário de empresas recém-constituídas na área geográfica com perfil relevante. A incubadora chega primeiro — antes de qualquer concorrente.</p>
+        <span class="module-freq">Actualizado diariamente</span>
       </div>
     </div>
   </div>
@@ -596,17 +503,21 @@
     <div class="case-box">
       <div class="case-content">
         <div class="case-tag">Case em produção · Março 2026</div>
-        <h3>Parque Tecnológico de Óbidos —<br>Agente de Monitorização EU</h3>
-        <p>O agente monitoriza semanalmente os programas de financiamento europeu relevantes para as startups incubadas no PTO — IAPMEI, PT2030, Horizonte Europa. Entrega um digest executivo por email todas as semanas, com os concursos prioritários e prazos críticos. Zero pesquisa manual. Zero horas de triagem.</p>
+        <h3>Parque Tecnológico de Óbidos —<br>Dashboard financeiro da carteira</h3>
+        <p>O PTO monitorizava a situação das empresas incubadas através de conversas individuais e análise manual de documentos. Hoje, o director acede a qualquer empresa em segundos, identifica as que merecem acompanhamento antes das reuniões e acompanha a evolução da carteira sem trabalho de preparação.</p>
       </div>
       <div class="case-metrics">
         <div class="metric">
-          <span class="metric-val">5 min</span>
-          <span class="metric-label">Leitura semanal do digest</span>
+          <span class="metric-val">0h</span>
+          <span class="metric-label">Preparação antes de reuniões</span>
         </div>
         <div class="metric">
-          <span class="metric-val">0h</span>
-          <span class="metric-label">Pesquisa manual substituída</span>
+          <span class="metric-val">3 anos</span>
+          <span class="metric-label">Histórico financeiro acessível</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">Diário</span>
+          <span class="metric-label">Actualizações automáticas EU</span>
         </div>
       </div>
     </div>
@@ -616,11 +527,11 @@
 <!-- CTA FINAL -->
 <div class="cta-section">
   <div class="cta-inner">
-    <h2>Mostramos em 30 minutos.</h2>
-    <p>Sem compromisso. Sem instalação. Só o produto a funcionar com dados reais.</p>
+    <h2>Em produção no PTO.<br>Pronto para a tua incubadora.</h2>
+    <p>Demo com o produto real em 30 minutos. Sem compromisso, sem instalação.</p>
     <div class="cta-group">
       <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Agendar demo — 30 min</a>
-      <a href="mailto:nuno@gerai.pt" class="btn-ghost">nuno@gerai.pt</a>
+      <a href="mailto:nuno@gerai.pt" class="btn-ghost-dark">nuno@gerai.pt</a>
     </div>
   </div>
 </div>
@@ -628,10 +539,11 @@
 <!-- FOOTER -->
 <footer>
   <p>
-    <strong style="color: rgba(255,255,255,0.55);">GerAI</strong> · Workflow Automation · 
-    <a href="https://gerai.pt">gerai.pt</a> · 
-    <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a> · 
-    Parque Tecnológico de Óbidos
+    <strong style="color:rgba(255,255,255,0.5)">GerAI</strong> ·
+    <a href="https://gerai.pt">gerai.pt</a> ·
+    <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a> ·
+    Parque Tecnológico de Óbidos ·
+    <a href="https://app.gerai.pt">Área de Cliente</a>
   </p>
 </footer>
 
