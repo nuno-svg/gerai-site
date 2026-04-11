@@ -24,7 +24,6 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; color: var(--navy); background: #fff; -webkit-font-smoothing: antialiased; }
 
-    /* NAV — branco com borda */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -35,20 +34,11 @@
     .logo { font-size: 20px; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: -0.01em; }
     .logo span { color: var(--teal); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
-    .nav-client {
-      font-size: 13px; color: var(--muted); text-decoration: none;
-      padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px;
-      transition: all 0.2s;
-    }
+    .nav-client { font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
     .nav-client:hover { color: var(--navy); border-color: var(--navy-mid); }
-    .nav-cta {
-      font-size: 13px; font-weight: 500; color: #fff;
-      background: var(--teal); text-decoration: none;
-      padding: 8px 18px; border-radius: 6px; transition: background 0.2s;
-    }
+    .nav-cta { font-size: 13px; font-weight: 500; color: #fff; background: var(--teal); text-decoration: none; padding: 8px 18px; border-radius: 6px; transition: background 0.2s; }
     .nav-cta:hover { background: #0f766e; }
 
-    /* HERO — fundo branco com acentos */
     .hero {
       background: #fff;
       padding: 130px 6% 80px;
@@ -64,181 +54,99 @@
       pointer-events: none;
     }
     .hero-inner { position: relative; z-index: 1; }
-    .hero-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .hero-label::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--teal); display: block;
-    }
-    h1 {
-      font-size: clamp(32px, 4.5vw, 54px); font-weight: 300;
-      letter-spacing: -0.03em; line-height: 1.1; color: var(--navy); margin-bottom: 22px;
-    }
+    .hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
+    .hero-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); display: block; }
+    h1 { font-size: clamp(32px, 4.5vw, 54px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; color: var(--navy); margin-bottom: 22px; }
     h1 strong { font-weight: 500; color: var(--teal); }
-    .hero-sub {
-      font-size: 17px; color: var(--muted); line-height: 1.75;
-      max-width: 520px; margin-bottom: 36px; font-weight: 300;
-    }
+    .hero-sub { font-size: 17px; color: var(--muted); line-height: 1.75; max-width: 520px; margin-bottom: 36px; font-weight: 300; }
     .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
-    .btn-primary {
-      background: var(--teal); color: #fff; border: none;
-      padding: 14px 28px; border-radius: 8px;
-      font-family: inherit; font-size: 15px; font-weight: 500;
-      cursor: pointer; text-decoration: none; display: inline-block;
-      transition: background 0.2s, transform 0.15s;
-    }
+    .btn-primary { background: var(--teal); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: #0f766e; transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--navy);
-      border: 1px solid var(--border);
-      padding: 14px 28px; border-radius: 8px;
-      font-family: inherit; font-size: 15px;
-      cursor: pointer; text-decoration: none; display: inline-block;
-      transition: all 0.2s;
-    }
+    .btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--border); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
     .btn-outline:hover { border-color: var(--navy); }
-    .btn-ghost-dark {
-      background: transparent; color: rgba(255,255,255,0.7);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 14px 28px; border-radius: 8px;
-      font-family: inherit; font-size: 15px;
-      cursor: pointer; text-decoration: none; display: inline-block;
-      transition: all 0.2s;
-    }
+    .btn-ghost-dark { background: transparent; color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
     .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
-    .hero-proof {
-      display: flex; gap: 40px; flex-wrap: wrap;
-      padding-top: 36px; border-top: 1px solid var(--border);
-    }
+    .hero-proof { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 36px; border-top: 1px solid var(--border); }
     .proof-item { display: flex; flex-direction: column; gap: 4px; }
-    .proof-num {
-      font-size: 20px; font-weight: 500; color: var(--teal);
-      font-family: 'DM Mono', monospace; letter-spacing: -0.02em;
-    }
+    .proof-num { font-size: 20px; font-weight: 500; color: var(--teal); font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
     .proof-label { font-size: 12px; color: var(--muted); font-weight: 300; }
 
-    /* HERO VISUAL */
-    .hero-visual {
-      position: relative; z-index: 1;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .pain-section { background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border-radius: 14px; overflow: hidden; }
+    .pain-card { background: #fff; padding: 32px 28px; }
+    .pain-icon { font-size: 24px; margin-bottom: 14px; display: block; }
+    .pain-card h4 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+    .pain-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
     .hero-visual svg { width: 100%; max-width: 520px; height: auto; filter: drop-shadow(0 16px 40px rgba(11,22,41,0.14)); }
 
-    /* SECTIONS */
     .section-wrap { max-width: 1100px; margin: 0 auto; padding: 88px 6%; }
-    .section-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
-    }
-    h2 {
-      font-size: clamp(26px, 3.5vw, 40px); font-weight: 400;
-      letter-spacing: -0.025em; line-height: 1.2;
-      margin-bottom: 16px; color: var(--navy);
-    }
-    .section-intro {
-      font-size: 17px; color: var(--muted); max-width: 560px;
-      line-height: 1.75; margin-bottom: 52px; font-weight: 300;
-    }
+    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+    h2 { font-size: clamp(26px, 3.5vw, 40px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 16px; color: var(--navy); }
+    .section-intro { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 52px; font-weight: 300; }
 
-    /* ONBOARDING — navy escuro */
     .onboarding-section { background: var(--navy); }
     .onboarding-section .section-label { color: var(--teal-light); }
     .onboarding-section h2 { color: #fff; }
     .onboarding-section .section-intro { color: rgba(255,255,255,0.45); }
-    .steps {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; overflow: hidden;
-    }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
     .step { background: rgba(255,255,255,0.03); padding: 36px 32px; }
-    .step-num {
-      width: 36px; height: 36px; background: rgba(13,148,136,0.18);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
-      color: var(--teal-light); margin-bottom: 20px;
-    }
+    .step-num { width: 36px; height: 36px; background: rgba(13,148,136,0.18); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--teal-light); margin-bottom: 20px; }
     .step h3 { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: #fff; }
     .step p { font-size: 14px; color: rgba(255,255,255,0.42); line-height: 1.68; font-weight: 300; }
 
-    /* MÓDULOS — fundo off-white */
     .modules-section { background: var(--off-white); }
-    .modules-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;
-    }
-    .module-card {
-      background: #fff; border: 1px solid var(--border); border-radius: 12px;
-      padding: 28px 26px; transition: border-color 0.2s, box-shadow 0.2s;
-    }
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .module-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px 26px; transition: border-color 0.2s, box-shadow 0.2s; }
     .module-card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(13,148,136,0.08); }
     .module-icon { font-size: 22px; margin-bottom: 14px; display: block; }
     .module-card h4 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
     .module-card p { font-size: 13px; color: var(--muted); line-height: 1.68; }
-    .module-freq {
-      display: inline-block; margin-top: 14px;
-      font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
-      background: var(--teal-bg); color: var(--teal);
-      border: 1px solid rgba(13,148,136,0.18);
-    }
+    .module-freq { display: inline-block; margin-top: 14px; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(13,148,136,0.18); }
 
-    /* CASE — teal bg claro */
-    .case-box {
-      background: var(--teal-bg); border: 1px solid rgba(13,148,136,0.16);
-      border-radius: 16px; padding: 44px 48px;
-      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start;
-    }
-    .case-tag {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .security-section { background: var(--navy); }
+    .security-section .section-label { color: var(--teal-light); }
+    .security-section h2 { color: #fff; }
+    .security-section .section-intro { color: rgba(255,255,255,0.45); }
+    .security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+    .security-card { background: rgba(255,255,255,0.03); padding: 32px 28px; }
+    .security-card .sec-icon { font-size: 22px; margin-bottom: 14px; display: block; }
+    .security-card h4 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 10px; }
+    .security-card p { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.68; font-weight: 300; }
+
+    .pricing-section { background: var(--off-white); }
+    .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 36px; max-width: 520px; margin: 0 auto; }
+    .pricing-tier { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+    .pricing-price { font-size: 48px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; }
+    .pricing-period { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 20px; }
+    .pricing-desc { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .pricing-features li { font-size: 14px; color: var(--slate); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+    .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+    .pricing-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 20px; }
+
+    .case-box { background: var(--teal-bg); border: 1px solid rgba(13,148,136,0.16); border-radius: 16px; padding: 44px 48px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start; }
+    .case-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .case-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-    .case-box h3 {
-      font-size: 22px; font-weight: 400; color: var(--navy);
-      margin-bottom: 16px; letter-spacing: -0.02em; line-height: 1.3;
-    }
+    .case-box h3 { font-size: 22px; font-weight: 400; color: var(--navy); margin-bottom: 16px; letter-spacing: -0.02em; line-height: 1.3; }
     .case-box p { font-size: 15px; color: var(--slate); line-height: 1.75; font-weight: 300; }
     .case-metrics { display: flex; flex-direction: column; gap: 12px; }
-    .metric {
-      text-align: center; background: #fff;
-      border: 1px solid rgba(13,148,136,0.12); border-radius: 10px;
-      padding: 18px 24px; min-width: 150px;
-    }
-    .metric-val {
-      font-size: 28px; font-weight: 500; color: var(--teal);
-      letter-spacing: -0.02em; display: block; font-family: 'DM Mono', monospace;
-    }
+    .metric { text-align: center; background: #fff; border: 1px solid rgba(13,148,136,0.12); border-radius: 10px; padding: 18px 24px; min-width: 150px; }
+    .metric-val { font-size: 28px; font-weight: 500; color: var(--teal); letter-spacing: -0.02em; display: block; font-family: 'DM Mono', monospace; }
     .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-    /* CTA — navy */
-    .cta-section {
-      background: var(--navy); text-align: center; padding: 100px 6%;
-      position: relative; overflow: hidden;
-    }
-    .cta-section::before {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%); width: 600px; height: 300px;
-      background: radial-gradient(ellipse, rgba(13,148,136,0.14) 0%, transparent 70%);
-      pointer-events: none;
-    }
+    .cta-section { background: var(--navy); text-align: center; padding: 100px 6%; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(13,148,136,0.14) 0%, transparent 70%); pointer-events: none; }
     .cta-inner { position: relative; z-index: 1; }
     .cta-section h2 { color: #fff; max-width: 500px; margin: 0 auto 16px; }
     .cta-section p { color: rgba(255,255,255,0.45); font-size: 16px; margin-bottom: 40px; font-weight: 300; }
     .cta-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    /* FOOTER */
-    footer {
-      background: #060e1a; color: rgba(255,255,255,0.28);
-      text-align: center; padding: 28px 6%; font-size: 13px; line-height: 1.8;
-    }
+    footer { background: #060e1a; color: rgba(255,255,255,0.28); text-align: center; padding: 28px 6%; font-size: 13px; line-height: 1.8; }
     footer a { color: rgba(255,255,255,0.38); text-decoration: none; }
     footer a:hover { color: var(--teal-light); }
 
-    /* RESPONSIVE */
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero::before { display: none; }
@@ -247,6 +155,7 @@
       .case-box { grid-template-columns: 1fr; }
       .case-metrics { flex-direction: row; }
       .metric { flex: 1; }
+      .pain-grid, .security-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       nav { padding: 0 5%; }
@@ -260,7 +169,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="logo">Ger<span>AI</span></a>
   <div class="nav-right">
@@ -273,11 +181,11 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-label">Para Incubadoras &amp; Parques Tecnológicos</div>
-    <h1>O painel de controlo<br>da tua <strong>incubadora.</strong></h1>
-    <p class="hero-sub">Monitorização financeira das empresas incubadas, alertas de acompanhamento, oportunidades EU e prospecção automática de novos incubados — num único dashboard.</p>
+    <h1>A informação das tuas<br>empresas incubadas<br><strong>num só lugar.</strong></h1>
+    <p class="hero-sub">Hoje, acompanhar a situação financeira das empresas incubadas, monitorizar prazos EU e identificar novos candidatos exige horas de pesquisa manual em fontes dispersas. A GerAI faz tudo isso automaticamente — e entrega no teu painel todos os dias.</p>
     <div class="hero-actions">
       <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Ver demo — 30 min</a>
-      <a href="#modulos" class="btn-outline">O que inclui</a>
+      <a href="#dor" class="btn-outline">O que resolve</a>
     </div>
     <div class="hero-proof">
       <div class="proof-item">
@@ -297,80 +205,55 @@
 
   <div class="hero-visual">
     <svg viewBox="0 0 520 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Main card -->
       <rect x="16" y="16" width="488" height="468" rx="18" fill="#0d1e35" stroke="#1e3a5f" stroke-width="1.5"/>
-      <!-- Top bar -->
       <rect x="16" y="16" width="488" height="56" rx="18" fill="#0a1628"/>
       <rect x="16" y="54" width="488" height="18" fill="#0a1628"/>
-      <!-- Logo dot -->
       <circle cx="48" cy="44" r="10" fill="#0D9488"/>
       <circle cx="48" cy="44" r="5" fill="#2DD4BF"/>
-      <!-- Nav label -->
       <rect x="70" y="40" width="55" height="8" rx="3" fill="#2DD4BF" opacity="0.7"/>
-      <!-- Nav right -->
       <rect x="390" y="34" width="90" height="22" rx="7" fill="#0D9488"/>
       <rect x="400" y="40" width="70" height="10" rx="3" fill="white" opacity="0.85"/>
-
-      <!-- KPI CARDS -->
       <rect x="36" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="50" y="104" width="48" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
       <rect x="50" y="118" width="72" height="18" rx="4" fill="#2DD4BF"/>
       <rect x="50" y="142" width="36" height="7" rx="2" fill="#1e3a5f"/>
       <polygon points="118,98 124,108 112,108" fill="#2DD4BF" opacity="0.9"/>
-
       <rect x="154" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="168" y="104" width="44" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
       <rect x="168" y="118" width="60" height="18" rx="4" fill="#2DD4BF"/>
       <rect x="168" y="142" width="42" height="7" rx="2" fill="#1e3a5f"/>
       <polygon points="236,98 242,108 230,108" fill="#2DD4BF" opacity="0.9"/>
-
       <rect x="272" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="286" y="104" width="52" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
       <rect x="286" y="118" width="50" height="18" rx="4" fill="#2DD4BF"/>
       <rect x="286" y="142" width="38" height="7" rx="2" fill="#1e3a5f"/>
       <polygon points="354,98 360,108 348,108" fill="#2DD4BF" opacity="0.9"/>
-
-      <!-- Card 4 amber accent -->
       <rect x="390" y="92" width="106" height="70" rx="10" fill="#191008" stroke="#3d2505" stroke-width="1"/>
       <rect x="404" y="104" width="50" height="8" rx="3" fill="#fbbf24" opacity="0.7"/>
       <rect x="404" y="118" width="44" height="18" rx="4" fill="#f59e0b"/>
       <rect x="404" y="142" width="56" height="7" rx="2" fill="#3d2505"/>
       <circle cx="484" cy="100" r="5" fill="#f59e0b" opacity="0.4"/>
       <circle cx="484" cy="100" r="3" fill="#f59e0b" opacity="0.8"/>
-
-      <!-- CHART AREA -->
       <rect x="36" y="178" width="292" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="52" y="192" width="110" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
-      <rect x="254" y="190" width="30" height="16" rx="5" fill="#0D9488"/>
-      <rect x="260" y="194" width="18" height="8" rx="2" fill="white" opacity="0.8"/>
-      <rect x="218" y="190" width="30" height="16" rx="5" fill="#1e3a5f"/>
-      <rect x="224" y="194" width="18" height="8" rx="2" fill="#2DD4BF" opacity="0.4"/>
-      <!-- Grid lines -->
       <line x1="52" y1="316" x2="312" y2="316" stroke="#1e3a5f" stroke-width="0.5"/>
       <line x1="52" y1="296" x2="312" y2="296" stroke="#1e3a5f" stroke-width="0.5"/>
       <line x1="52" y1="276" x2="312" y2="276" stroke="#1e3a5f" stroke-width="0.5"/>
       <line x1="52" y1="256" x2="312" y2="256" stroke="#1e3a5f" stroke-width="0.5"/>
       <line x1="52" y1="236" x2="312" y2="236" stroke="#1e3a5f" stroke-width="0.5"/>
-      <!-- Chart fill -->
       <path d="M52,305 L104,282 L156,288 L208,262 L260,268 L312,244 L312,316 L52,316 Z" fill="#0D9488" opacity="0.18"/>
       <polyline points="52,305 104,282 156,288 208,262 260,268 312,244" stroke="#2DD4BF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- Secondary line -->
       <polyline points="52,316 104,310 156,306 208,298 260,303 312,287" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.3"/>
-      <!-- Data points -->
       <circle cx="104" cy="282" r="3.5" fill="#2DD4BF"/>
       <circle cx="156" cy="288" r="3.5" fill="#2DD4BF"/>
       <circle cx="208" cy="262" r="3.5" fill="#2DD4BF"/>
       <circle cx="260" cy="268" r="3.5" fill="#2DD4BF"/>
-      <!-- Highlighted point -->
       <circle cx="312" cy="244" r="10" fill="#2DD4BF" opacity="0.15"/>
       <circle cx="312" cy="244" r="6" fill="#0D9488"/>
       <circle cx="312" cy="244" r="3.5" fill="#2DD4BF"/>
-      <!-- Tooltip -->
       <rect x="278" y="222" width="72" height="26" rx="7" fill="#2DD4BF"/>
       <rect x="286" y="229" width="56" height="12" rx="3" fill="#0B1629" opacity="0.7"/>
       <polygon points="312,248 308,253 316,253" fill="#2DD4BF"/>
-
-      <!-- COMPANY LIST -->
       <rect x="344" y="178" width="152" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="358" y="192" width="80" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
       <circle cx="368" cy="216" r="4" fill="#22c55e"/>
@@ -394,8 +277,6 @@
       <circle cx="368" cy="312" r="4" fill="#22c55e"/>
       <rect x="380" y="308" width="50" height="8" rx="3" fill="#1e3a5f"/>
       <rect x="462" y="308" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-
-      <!-- ALERTS BAR -->
       <rect x="36" y="356" width="460" height="56" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="50" y="366" width="60" height="7" rx="3" fill="#2DD4BF" opacity="0.5"/>
       <rect x="50" y="380" width="88" height="22" rx="7" fill="#0D9488" opacity="0.25" stroke="#0D9488" stroke-width="1"/>
@@ -406,14 +287,9 @@
       <rect x="276" y="386" width="80" height="10" rx="3" fill="#4a7a9e" opacity="0.6"/>
       <rect x="376" y="380" width="96" height="22" rx="7" fill="#191008" stroke="#3d2505" stroke-width="1"/>
       <rect x="386" y="386" width="76" height="10" rx="3" fill="#f59e0b" opacity="0.6"/>
-
-      <!-- BOTTOM ROW -->
       <rect x="36" y="428" width="222" height="40" rx="10" fill="#0D9488" opacity="0.12" stroke="#0D9488" stroke-width="1"/>
       <rect x="50" y="440" width="120" height="8" rx="4" fill="#2DD4BF" opacity="0.6"/>
       <rect x="50" y="452" width="80" height="7" rx="3" fill="#2DD4BF" opacity="0.3"/>
-      <circle cx="228" cy="448" r="3" fill="#2DD4BF" opacity="0.7"/>
-      <circle cx="220" cy="442" r="2" fill="#2DD4BF" opacity="0.5"/>
-      <circle cx="236" cy="442" r="2" fill="#2DD4BF" opacity="0.5"/>
       <rect x="270" y="428" width="226" height="40" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
       <rect x="284" y="440" width="90" height="8" rx="4" fill="#1e3a5f"/>
       <rect x="284" y="452" width="130" height="7" rx="3" fill="#1e3a5f"/>
@@ -421,6 +297,32 @@
       <circle cx="470" cy="448" r="4" fill="#22c55e" opacity="0.5"/>
       <circle cx="470" cy="448" r="2" fill="#22c55e"/>
     </svg>
+  </div>
+</div>
+
+<!-- O PROBLEMA -->
+<div id="dor" class="pain-section">
+  <div class="section-wrap">
+    <div class="section-label">O problema</div>
+    <h2>Gerir uma incubadora<br>é difícil com informação dispersa.</h2>
+    <p class="section-intro">Os dados existem — estão em ficheiros IES, portais EU, bases de dados públicas e fontes dispersas. O problema é o tempo e esforço para os reunir.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-icon">⏱</span>
+        <h4>Horas de pesquisa manual</h4>
+        <p>Acompanhar a situação financeira das empresas incubadas exige consultar ficheiros IES, extrair dados e consolidar manualmente — antes de cada reunião ou relatório.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">🧩</span>
+        <h4>Informação fragmentada</h4>
+        <p>Os dados financeiros estão num sítio, os concursos EU noutro, as novas empresas da área noutro ainda. Não há nenhuma ferramenta no mercado que reúna tudo para uma incubadora.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">📉</span>
+        <h4>Oportunidades que se perdem</h4>
+        <p>Prazos de financiamento EU, novas empresas elegíveis para incubação, parcerias europeias relevantes — sem monitorização activa, passam ao lado sem que ninguém saiba.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -497,6 +399,32 @@
   </div>
 </div>
 
+<!-- SEGURANÇA -->
+<div class="security-section">
+  <div class="section-wrap">
+    <div class="section-label">Segurança e privacidade</div>
+    <h2>Os dados da tua incubadora<br>são só teus.</h2>
+    <p class="section-intro">Dados financeiros de empresas incubadas são sensíveis. A GerAI foi construída com isolamento total entre clientes e conformidade RGPD desde o primeiro dia.</p>
+    <div class="security-grid">
+      <div class="security-card">
+        <span class="sec-icon">🔒</span>
+        <h4>Isolamento total por cliente</h4>
+        <p>Cada incubadora acede apenas aos seus próprios dados. O acesso é controlado ao nível da base de dados — é tecnicamente impossível ver dados de outro cliente.</p>
+      </div>
+      <div class="security-card">
+        <span class="sec-icon">🇪🇺</span>
+        <h4>Servidores europeus · RGPD</h4>
+        <p>Todos os dados são processados e armazenados em servidores europeus. Conformidade total com o RGPD. Nenhum dado é partilhado com terceiros ou usado para treinar modelos.</p>
+      </div>
+      <div class="security-card">
+        <span class="sec-icon">🛡</span>
+        <h4>Credenciais encriptadas</h4>
+        <p>Acesso por login dedicado com credenciais encriptadas. As chaves de API e dados de autenticação nunca são expostos. Auditoria de acessos disponível a pedido.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CASE PTO -->
 <div>
   <div class="section-wrap">
@@ -524,6 +452,33 @@
   </div>
 </div>
 
+<!-- PREÇOS -->
+<div class="pricing-section">
+  <div class="section-wrap">
+    <div class="section-label">Preços</div>
+    <h2>Um preço simples.<br>Sem surpresas.</h2>
+    <p class="section-intro">99,90€ por mês, tudo incluído. Setup, configuração, actualizações automáticas e suporte — sem custos adicionais.</p>
+    <div class="pricing-card">
+      <div class="pricing-tier">Suite Incubadoras</div>
+      <div class="pricing-price">99,90€</div>
+      <div class="pricing-period">por mês · por incubadora · tudo incluído</div>
+      <div class="pricing-desc">Todos os módulos activos desde o primeiro dia. Setup completo feito pela GerAI. Sem permanência mínima.</div>
+      <ul class="pricing-features">
+        <li>Dashboard financeiro completo da carteira</li>
+        <li>Ficha individual por empresa com histórico de 3 anos</li>
+        <li>Alertas de acompanhamento automáticos</li>
+        <li>Radar de financiamentos EU — actualizado diariamente</li>
+        <li>Contratos PT2030 e PRR da carteira</li>
+        <li>Parcerias EEN filtradas por área de actividade</li>
+        <li>Prospecção de novos incubados — actualizada diariamente</li>
+        <li>Setup, onboarding e suporte incluídos</li>
+      </ul>
+      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary" style="display:block;text-align:center;margin-top:28px;">Agendar demo gratuita — 30 min</a>
+    </div>
+    <p class="pricing-note">Período de teste gratuito de 30 dias. Sem permanência mínima. Cancelamento a qualquer momento.</p>
+  </div>
+</div>
+
 <!-- CTA FINAL -->
 <div class="cta-section">
   <div class="cta-inner">
@@ -536,7 +491,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p>
     <strong style="color:rgba(255,255,255,0.5)">GerAI</strong> ·
