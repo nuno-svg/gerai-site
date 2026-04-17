@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GerAI · Painel de Controlo para Incubadoras</title>
-  <meta name="description" content="Monitorização financeira, alertas EU e prospecção automática para incubadoras e parques tecnológicos. Em produção no Parque Tecnológico de Óbidos." />
+  <meta name="description" content="Monitorização de financiamentos EU, prazos regulatórios e parcerias europeias para incubadoras. Em produção no Parque Tecnológico de Óbidos." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #0B1629;
+      --navy: #0F2044;
       --navy-mid: #1e3a5f;
       --teal: #0D9488;
       --teal-light: #2DD4BF;
@@ -37,7 +37,7 @@
     .nav-client { font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
     .nav-client:hover { color: var(--navy); border-color: var(--navy-mid); }
     .nav-cta { font-size: 13px; font-weight: 500; color: #fff; background: var(--teal); text-decoration: none; padding: 8px 18px; border-radius: 6px; transition: background 0.2s; }
-    .nav-cta:hover { background: #0f766e; }
+    .nav-cta:hover { background: var(--navy); }
 
     .hero {
       background: #fff;
@@ -59,26 +59,13 @@
     h1 { font-size: clamp(32px, 4.5vw, 54px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; color: var(--navy); margin-bottom: 22px; }
     h1 strong { font-weight: 500; color: var(--teal); }
     .hero-sub { font-size: 17px; color: var(--muted); line-height: 1.75; max-width: 520px; margin-bottom: 36px; font-weight: 300; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
-    .btn-primary { background: var(--teal); color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
-    .btn-primary:hover { background: #0f766e; transform: translateY(-1px); }
-    .btn-activate { background: var(--teal); color: #fff; border: none; padding: 16px 34px; border-radius: 8px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 6px 18px rgba(13,148,136,0.28); }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-activate { background: var(--teal); color: #fff; border: none; padding: 16px 34px; border-radius: 8px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 6px 18px rgba(13,148,136,0.28); }
     .btn-activate:hover { background: var(--navy); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(11,22,41,0.28); }
     .btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--border); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
     .btn-outline:hover { border-color: var(--navy); }
-    .btn-ghost-dark { background: transparent; color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
-    .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
-    .hero-proof { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 36px; border-top: 1px solid var(--border); }
-    .proof-item { display: flex; flex-direction: column; gap: 4px; }
-    .proof-num { font-size: 20px; font-weight: 500; color: var(--teal); font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
-    .proof-label { font-size: 12px; color: var(--muted); font-weight: 300; }
-
-    .pain-section { background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border-radius: 14px; overflow: hidden; }
-    .pain-card { background: #fff; padding: 32px 28px; }
-    .pain-icon { font-size: 24px; margin-bottom: 14px; display: block; }
-    .pain-card h4 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
-    .pain-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .btn-ghost-dark { background: transparent; color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.25); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; text-decoration: none; display: inline-block; transition: all 0.2s; }
+    .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
 
     .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
     .hero-visual svg { width: 100%; max-width: 520px; height: auto; filter: drop-shadow(0 16px 40px rgba(11,22,41,0.14)); }
@@ -86,85 +73,54 @@
     .section-wrap { max-width: 1100px; margin: 0 auto; padding: 88px 6%; }
     .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
     h2 { font-size: clamp(26px, 3.5vw, 40px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 16px; color: var(--navy); }
-    .section-intro { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 52px; font-weight: 300; }
-
-    .onboarding-section { background: var(--navy); }
-    .onboarding-section .section-label { color: var(--teal-light); }
-    .onboarding-section h2 { color: #fff; }
-    .onboarding-section .section-intro { color: rgba(255,255,255,0.45); }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
-    .step { background: rgba(255,255,255,0.03); padding: 36px 32px; }
-    .step-num { width: 36px; height: 36px; background: rgba(13,148,136,0.18); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--teal-light); margin-bottom: 20px; }
-    .step h3 { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: #fff; }
-    .step p { font-size: 14px; color: rgba(255,255,255,0.42); line-height: 1.68; font-weight: 300; }
+    .section-intro { font-size: 17px; color: var(--muted); max-width: 620px; line-height: 1.75; margin-bottom: 52px; font-weight: 300; }
 
     .modules-section { background: var(--off-white); }
-    .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-    .module-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px 26px; transition: border-color 0.2s, box-shadow 0.2s; }
-    .module-card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(13,148,136,0.08); }
-    .module-icon { font-size: 22px; margin-bottom: 14px; display: block; }
-    .module-card h4 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
-    .module-card p { font-size: 13px; color: var(--muted); line-height: 1.68; }
-    .module-freq { display: inline-block; margin-top: 14px; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(13,148,136,0.18); }
+    .modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .module-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 30px 28px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .module-card:hover { border-color: var(--teal); box-shadow: 0 6px 24px rgba(13,148,136,0.08); }
+    .module-num { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--teal); letter-spacing: 0.06em; margin-bottom: 10px; }
+    .module-card h4 { font-size: 17px; font-weight: 500; color: var(--navy); margin-bottom: 10px; letter-spacing: -0.01em; }
+    .module-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
 
-    .security-section { background: var(--navy); }
-    .security-section .section-label { color: var(--teal-light); }
-    .security-section h2 { color: #fff; }
-    .security-section .section-intro { color: rgba(255,255,255,0.45); }
-    .security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
-    .security-card { background: rgba(255,255,255,0.03); padding: 32px 28px; }
-    .security-card .sec-icon { font-size: 22px; margin-bottom: 14px; display: block; }
-    .security-card h4 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 10px; }
-    .security-card p { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.68; font-weight: 300; }
+    .case-section { background: var(--navy); }
+    .case-section .section-label { color: var(--teal-light); }
+    .case-section h2 { color: #fff; }
+    .case-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+    .case-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px 24px; }
+    .case-stat-val { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; color: var(--teal-light); letter-spacing: -0.02em; display: block; }
+    .case-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; font-weight: 300; }
+    .case-body { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.75; font-weight: 300; margin-bottom: 28px; max-width: 720px; }
+    .case-quote { border-left: 2px solid var(--teal); padding: 6px 0 6px 20px; max-width: 720px; }
+    .case-quote p { font-size: 16px; color: #fff; line-height: 1.65; font-weight: 300; font-style: italic; margin-bottom: 8px; }
+    .case-quote cite { font-size: 13px; color: var(--teal-light); font-style: normal; letter-spacing: 0.02em; }
 
-    .pricing-section { background: var(--off-white); }
-    .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 36px; max-width: 520px; margin: 0 auto; }
-    .pricing-tier { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
-    .pricing-price { font-size: 48px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; }
-    .pricing-period { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 20px; }
-    .pricing-desc { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-    .pricing-features li { font-size: 14px; color: var(--slate); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
-    .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-    .pricing-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 20px; }
+    .pricing-section { background: var(--off-white); text-align: center; }
+    .pricing-section .section-wrap { max-width: 620px; }
+    .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 44px 40px; text-align: center; box-shadow: 0 8px 32px rgba(11,22,41,0.06); }
+    .pricing-price { font-size: 56px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; }
+    .pricing-period { font-size: 14px; color: var(--muted); margin-top: 8px; margin-bottom: 32px; font-weight: 300; }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; text-align: left; max-width: 320px; margin-left: auto; margin-right: auto; }
+    .pricing-features li { font-size: 14px; color: var(--slate); display: flex; align-items: center; gap: 10px; }
+    .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 600; }
+    .pricing-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    .case-box { background: var(--teal-bg); border: 1px solid rgba(13,148,136,0.16); border-radius: 16px; padding: 44px 48px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start; }
-    .case-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    .case-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-    .case-box h3 { font-size: 22px; font-weight: 400; color: var(--navy); margin-bottom: 16px; letter-spacing: -0.02em; line-height: 1.3; }
-    .case-box p { font-size: 15px; color: var(--slate); line-height: 1.75; font-weight: 300; }
-    .case-metrics { display: flex; flex-direction: column; gap: 12px; }
-    .metric { text-align: center; background: #fff; border: 1px solid rgba(13,148,136,0.12); border-radius: 10px; padding: 18px 24px; min-width: 150px; }
-    .metric-val { font-size: 28px; font-weight: 500; color: var(--teal); letter-spacing: -0.02em; display: block; font-family: 'DM Mono', monospace; }
-    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-    .cta-section { background: var(--navy); text-align: center; padding: 100px 6%; position: relative; overflow: hidden; }
-    .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(13,148,136,0.14) 0%, transparent 70%); pointer-events: none; }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-section h2 { color: #fff; max-width: 500px; margin: 0 auto 16px; }
-    .cta-section p { color: rgba(255,255,255,0.45); font-size: 16px; margin-bottom: 40px; font-weight: 300; }
-    .cta-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-    footer { background: #060e1a; color: rgba(255,255,255,0.28); text-align: center; padding: 28px 6%; font-size: 13px; line-height: 1.8; }
-    footer a { color: rgba(255,255,255,0.38); text-decoration: none; }
+    footer { background: #060e1a; color: rgba(255,255,255,0.45); text-align: center; padding: 32px 6%; font-size: 13px; line-height: 1.8; }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
     footer a:hover { color: var(--teal-light); }
+    footer .sep { color: rgba(255,255,255,0.2); margin: 0 8px; }
 
     @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 110px 6% 64px; }
       .hero::before { display: none; }
       .hero-visual { display: none; }
-      .steps { grid-template-columns: 1fr; }
-      .case-box { grid-template-columns: 1fr; }
-      .case-metrics { flex-direction: row; }
-      .metric { flex: 1; }
-      .pain-grid, .security-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .case-stats { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       nav { padding: 0 5%; }
-      .hero { padding: 110px 5% 64px; }
       .section-wrap { padding: 60px 5%; }
-      .modules-grid { grid-template-columns: 1fr; }
-      .case-box { padding: 28px 24px; }
+      .pricing-card { padding: 32px 24px; }
       .nav-client { display: none; }
     }
   </style>
@@ -175,7 +131,7 @@
   <a href="#" class="logo">Ger<span>AI</span></a>
   <div class="nav-right">
     <a href="https://app.gerai.pt" class="nav-client">Área de Cliente</a>
-    <a href="https://calendly.com/nuno-gerai/30min" class="nav-cta">Pedir demo</a>
+    <a href="https://app.gerai.pt/?onboarding" class="nav-cta">Activar Acesso</a>
   </div>
 </nav>
 
@@ -183,25 +139,11 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-label">Para Incubadoras &amp; Parques Tecnológicos</div>
-    <h1>A informação das tuas<br>empresas incubadas<br><strong>num só lugar.</strong></h1>
-    <p class="hero-sub">Hoje, acompanhar a situação financeira das empresas incubadas, monitorizar prazos EU e identificar novos candidatos exige horas de pesquisa manual em fontes dispersas. A GerAI faz tudo isso automaticamente — e entrega no teu painel todos os dias.</p>
+    <h1>A tua incubadora,<br><strong>sempre um passo à frente.</strong></h1>
+    <p class="hero-sub">GerAI monitoriza financiamentos EU, prazos regulatórios e parcerias europeias — e entrega tudo automaticamente ao director. Zero trabalho manual.</p>
     <div class="hero-actions">
-      <a href="https://app.gerai.pt/?onboarding" class="btn-activate">Activar Acesso</a>
-      <a href="https://calendly.com/nuno-gerai/30min" class="btn-outline">Ver demo — 30 min</a>
-    </div>
-    <div class="hero-proof">
-      <div class="proof-item">
-        <span class="proof-num">Em produção</span>
-        <span class="proof-label">Parque Tecnológico de Óbidos</span>
-      </div>
-      <div class="proof-item">
-        <span class="proof-num">6 módulos</span>
-        <span class="proof-label">Num único dashboard</span>
-      </div>
-      <div class="proof-item">
-        <span class="proof-num">Diário</span>
-        <span class="proof-label">Actualizações automáticas</span>
-      </div>
+      <a href="https://app.gerai.pt/?onboarding" class="btn-activate">Activar Acesso →</a>
+      <a href="https://calendly.com/nuno-gerai/30min" class="btn-outline">Ver demo</a>
     </div>
   </div>
 
@@ -302,205 +244,95 @@
   </div>
 </div>
 
-<!-- O PROBLEMA -->
-<div id="dor" class="pain-section">
-  <div class="section-wrap">
-    <div class="section-label">O problema</div>
-    <h2>Gerir uma incubadora<br>é difícil com informação dispersa.</h2>
-    <p class="section-intro">Os dados existem — estão em ficheiros IES, portais EU, bases de dados públicas e fontes dispersas. O problema é o tempo e esforço para os reunir.</p>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <span class="pain-icon">⏱</span>
-        <h4>Horas de pesquisa manual</h4>
-        <p>Acompanhar a situação financeira das empresas incubadas exige consultar ficheiros IES, extrair dados e consolidar manualmente — antes de cada reunião ou relatório.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">🧩</span>
-        <h4>Informação fragmentada</h4>
-        <p>Os dados financeiros estão num sítio, os concursos EU noutro, as novas empresas da área noutro ainda. Não há nenhuma ferramenta no mercado que reúna tudo para uma incubadora.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">📉</span>
-        <h4>Oportunidades que se perdem</h4>
-        <p>Prazos de financiamento EU, novas empresas elegíveis para incubação, parcerias europeias relevantes — sem monitorização activa, passam ao lado sem que ninguém saiba.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ONBOARDING -->
-<div id="onboarding" class="onboarding-section">
-  <div class="section-wrap">
-    <div class="section-label">Como começa</div>
-    <h2>Activo em três passos.<br>Depois é automático.</h2>
-    <p class="section-intro">O setup é inteiramente feito pela GerAI. A incubadora só precisa de fornecer os NIFs das empresas incubadas. Nada mais.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Lista de NIFs</h3>
-        <p>A incubadora exporta um Excel com os NIFs das empresas incubadas. Um ficheiro simples — sem formatos especiais, sem dados financeiros, sem preparação técnica.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>Configuração pela GerAI</h3>
-        <p>A GerAI trata de tudo: recolha de dados, processamento financeiro, configuração dos módulos e ligação às fontes EU. Uma chamada de 30 minutos para definir prioridades.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Dashboard activo</h3>
-        <p>Acesso imediato ao painel com login dedicado. Financiamentos EU, parcerias e prospecção chegam automaticamente todos os dias, sem qualquer intervenção.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- MÓDULOS -->
-<div id="modulos" class="modules-section">
+<div class="modules-section">
   <div class="section-wrap">
-    <div class="section-label">O que está incluído</div>
-    <h2>Tudo o que a incubadora<br>precisa de saber.</h2>
-    <p class="section-intro">Cada módulo responde a uma pergunta que o director faz todos os meses — e que hoje exige horas de pesquisa manual.</p>
+    <div class="section-label">O que faz</div>
+    <h2>Quatro módulos. Um painel.<br>Tudo automático.</h2>
     <div class="modules-grid">
       <div class="module-card">
-        <span class="module-icon">📊</span>
-        <h4>Saúde financeira da carteira</h4>
-        <p>Uma visão consolidada de toda a carteira — volume de negócios, rentabilidade, solidez financeira e produtividade. Com benchmarking automático entre empresas.</p>
-        <span class="module-freq">Actualizado anualmente com IES</span>
+        <div class="module-num">01</div>
+        <h4>Financiamentos EU</h4>
+        <p>Todos os concursos abertos filtrados pela carteira da tua incubadora — entregues por email todas as manhãs com as empresas elegíveis identificadas.</p>
       </div>
       <div class="module-card">
-        <span class="module-icon">🏢</span>
-        <h4>Ficha completa por empresa</h4>
-        <p>Indicadores detalhados de cada empresa incubada, com três anos de histórico e evolução visual. Tudo acessível em segundos, sem consultar ficheiros dispersos.</p>
-        <span class="module-freq">Actualizado anualmente com IES</span>
+        <div class="module-num">02</div>
+        <h4>Prazos e Obrigações</h4>
+        <p>IVA, IRS, IRC, PME Certificação, StartUP Visa — todos os prazos críticos monitorizados e alertados com antecedência.</p>
       </div>
       <div class="module-card">
-        <span class="module-icon">🔔</span>
-        <h4>Empresas que merecem atenção</h4>
-        <p>Identificação automática das empresas com indicadores que justificam acompanhamento mais próximo — antes de qualquer reunião ou visita.</p>
-        <span class="module-freq">Actualizado anualmente com IES</span>
+        <div class="module-num">03</div>
+        <h4>Parcerias Europeias</h4>
+        <p>Oportunidades EEN filtradas por perfil de empresa. A tua carteira ligada à rede europeia sem esforço.</p>
       </div>
       <div class="module-card">
-        <span class="module-icon">🇪🇺</span>
-        <h4>Radar de financiamentos EU</h4>
-        <p>Monitorização diária de concursos abertos relevantes para as empresas da carteira. A incubadora deixa de depender da atenção de cada empresa para não perder prazos.</p>
-        <span class="module-freq">Actualizado diariamente</span>
-      </div>
-      <div class="module-card">
-        <span class="module-icon">🤝</span>
-        <h4>Oportunidades de parceria europeia</h4>
-        <p>Oportunidades do Enterprise Europe Network filtradas por área de actividade. A incubadora torna-se um conector activo entre as suas empresas e o mercado europeu.</p>
-        <span class="module-freq">Actualizado diariamente</span>
-      </div>
-      <div class="module-card">
-        <span class="module-icon">🔍</span>
-        <h4>Prospecção de novos incubados</h4>
-        <p>Alerta diário de empresas recém-constituídas na área geográfica com perfil relevante. A incubadora chega primeiro — antes de qualquer concorrente.</p>
-        <span class="module-freq">Actualizado diariamente</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SEGURANÇA -->
-<div class="security-section">
-  <div class="section-wrap">
-    <div class="section-label">Segurança e privacidade</div>
-    <h2>Os dados da tua incubadora<br>são só teus.</h2>
-    <p class="section-intro">Dados financeiros de empresas incubadas são sensíveis. A GerAI foi construída com isolamento total entre clientes e conformidade RGPD desde o primeiro dia.</p>
-    <div class="security-grid">
-      <div class="security-card">
-        <span class="sec-icon">🔒</span>
-        <h4>Isolamento total por cliente</h4>
-        <p>Cada incubadora acede apenas aos seus próprios dados. O acesso é controlado ao nível da base de dados — é tecnicamente impossível ver dados de outro cliente.</p>
-      </div>
-      <div class="security-card">
-        <span class="sec-icon">🇪🇺</span>
-        <h4>Servidores europeus · RGPD</h4>
-        <p>Todos os dados são processados e armazenados em servidores europeus. Conformidade total com o RGPD. Nenhum dado é partilhado com terceiros ou usado para treinar modelos.</p>
-      </div>
-      <div class="security-card">
-        <span class="sec-icon">🛡</span>
-        <h4>Credenciais encriptadas</h4>
-        <p>Acesso por login dedicado com credenciais encriptadas. As chaves de API e dados de autenticação nunca são expostos. Auditoria de acessos disponível a pedido.</p>
+        <div class="module-num">04</div>
+        <h4>Relatórios de Portfolio</h4>
+        <p>Fichas por empresa e relatório de carteira gerados automaticamente — prontos para investidores, IAPMEI e stakeholders institucionais.</p>
       </div>
     </div>
   </div>
 </div>
 
 <!-- CASE PTO -->
-<div>
+<div class="case-section">
   <div class="section-wrap">
-    <div class="case-box">
-      <div class="case-content">
-        <div class="case-tag">Case em produção · Março 2026</div>
-        <h3>Parque Tecnológico de Óbidos —<br>Dashboard financeiro da carteira</h3>
-        <p>O PTO monitorizava a situação das empresas incubadas através de conversas individuais e análise manual de documentos. Hoje, o director acede a qualquer empresa em segundos, identifica as que merecem acompanhamento antes das reuniões e acompanha a evolução da carteira sem trabalho de preparação.</p>
+    <div class="section-label">Case em produção</div>
+    <h2>Em produção no Parque<br>Tecnológico de Óbidos.</h2>
+    <div class="case-stats">
+      <div class="case-stat">
+        <span class="case-stat-val">94</span>
+        <div class="case-stat-label">Empresas monitorizadas</div>
       </div>
-      <div class="case-metrics">
-        <div class="metric">
-          <span class="metric-val">0h</span>
-          <span class="metric-label">Preparação antes de reuniões</span>
-        </div>
-        <div class="metric">
-          <span class="metric-val">3 anos</span>
-          <span class="metric-label">Histórico financeiro acessível</span>
-        </div>
-        <div class="metric">
-          <span class="metric-val">Diário</span>
-          <span class="metric-label">Actualizações automáticas EU</span>
-        </div>
+      <div class="case-stat">
+        <span class="case-stat-val">3 anos</span>
+        <div class="case-stat-label">Dados financeiros</div>
+      </div>
+      <div class="case-stat">
+        <span class="case-stat-val">30</span>
+        <div class="case-stat-label">Concursos EU / dia</div>
       </div>
     </div>
+    <p class="case-body">
+      O director recebe todas as manhãs um Excel com as empresas elegíveis por concurso — sem tocar num só ficheiro.
+    </p>
+    <blockquote class="case-quote">
+      <p>"A GerAI transformou a forma como acompanhamos as oportunidades de financiamento para as nossas empresas."</p>
+      <cite>— Parque Tecnológico de Óbidos</cite>
+    </blockquote>
   </div>
 </div>
 
-<!-- PREÇOS -->
+<!-- PREÇO -->
 <div class="pricing-section">
   <div class="section-wrap">
-    <div class="section-label">Preços</div>
-    <h2>Um preço simples.<br>Sem surpresas.</h2>
-    <p class="section-intro">99,90€ por mês, tudo incluído. Setup, configuração, actualizações automáticas e suporte — sem custos adicionais.</p>
+    <div class="section-label">Preço</div>
+    <h2>Simples. Sem surpresas.</h2>
+    <p class="section-intro" style="margin-left:auto;margin-right:auto;">&nbsp;</p>
     <div class="pricing-card">
-      <div class="pricing-tier">Suite Incubadoras</div>
-      <div class="pricing-price">99,90€</div>
-      <div class="pricing-period">por mês · por incubadora · tudo incluído</div>
-      <div class="pricing-desc">Todos os módulos activos desde o primeiro dia. Setup completo feito pela GerAI. Sem permanência mínima.</div>
+      <div class="pricing-price">€99.90</div>
+      <div class="pricing-period">por mês · por incubadora</div>
       <ul class="pricing-features">
-        <li>Dashboard financeiro completo da carteira</li>
-        <li>Ficha individual por empresa com histórico de 3 anos</li>
-        <li>Alertas de acompanhamento automáticos</li>
-        <li>Radar de financiamentos EU — actualizado diariamente</li>
-        <li>Contratos PT2030 e PRR da carteira</li>
-        <li>Parcerias EEN filtradas por área de actividade</li>
-        <li>Prospecção de novos incubados — actualizada diariamente</li>
-        <li>Setup, onboarding e suporte incluídos</li>
+        <li>Activo em 24 horas</li>
+        <li>Sem permanência</li>
+        <li>Inclui onboarding assistido</li>
       </ul>
-      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary" style="display:block;text-align:center;margin-top:28px;">Agendar demo gratuita — 30 min</a>
-    </div>
-    <p class="pricing-note">Período de teste gratuito de 30 dias. Sem permanência mínima. Cancelamento a qualquer momento.</p>
-  </div>
-</div>
-
-<!-- CTA FINAL -->
-<div class="cta-section">
-  <div class="cta-inner">
-    <h2>Em produção no PTO.<br>Pronto para a tua incubadora.</h2>
-    <p>Demo com o produto real em 30 minutos. Sem compromisso, sem instalação.</p>
-    <div class="cta-group">
-      <a href="https://calendly.com/nuno-gerai/30min" class="btn-primary">Agendar demo — 30 min</a>
-      <a href="mailto:nuno@gerai.pt" class="btn-ghost-dark">nuno@gerai.pt</a>
+      <div class="pricing-actions">
+        <a href="https://app.gerai.pt/?onboarding" class="btn-activate">Activar Acesso →</a>
+        <a href="mailto:nuno@gerai.pt" class="btn-outline">Falar connosco</a>
+      </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>
-    <strong style="color:rgba(255,255,255,0.5)">GerAI</strong> ·
-    <a href="https://gerai.pt">gerai.pt</a> ·
-    <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a> ·
-    Parque Tecnológico de Óbidos ·
-    <a href="https://app.gerai.pt">Área de Cliente</a>
-  </p>
+  <strong style="color:rgba(255,255,255,0.65)">GerAI</strong>
+  <span class="sep">·</span>
+  <a href="https://gerai.pt">gerai.pt</a>
+  <span class="sep">·</span>
+  <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a>
+  <span class="sep">·</span>
+  Parque Tecnológico de Óbidos
 </footer>
 
 </body>
