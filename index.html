@@ -77,8 +77,53 @@
     .btn-ghost-dark { background: transparent; color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.25); padding: 14px 28px; border-radius: 8px; font-family: inherit; font-size: 15px; text-decoration: none; display: inline-block; transition: all 0.2s; }
     .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
 
-    .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
-    .hero-visual svg { width: 100%; max-width: 520px; height: auto; filter: drop-shadow(0 16px 40px rgba(11,22,41,0.14)); }
+    .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 30px 0; }
+    .hero-mockup { position: relative; width: 100%; max-width: 560px; aspect-ratio: 16/10; perspective: 1500px; }
+    .hero-mockup-glow {
+      position: absolute; inset: -15% -10% -10% -10%; z-index: 0;
+      background: radial-gradient(circle at 55% 45%, rgba(13,148,136,0.32), transparent 65%);
+      filter: blur(48px);
+    }
+    .hero-mockup-img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(11,22,41,0.32), 0 8px 24px rgba(11,22,41,0.16);
+      border: 1px solid rgba(255,255,255,0.5);
+      transform: rotateY(-4deg) rotateX(2deg);
+      transform-origin: center center;
+      transition: transform 0.4s ease;
+    }
+    .hero-mockup:hover .hero-mockup-img { transform: rotateY(-2deg) rotateX(1deg); }
+    .hero-callout {
+      position: absolute; z-index: 2;
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 18px;
+      box-shadow: 0 12px 28px rgba(11,22,41,0.18);
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .hero-callout-label {
+      font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500;
+      color: var(--teal); letter-spacing: -0.02em; line-height: 1;
+    }
+    .hero-callout-text {
+      font-size: 10px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500;
+    }
+    .hero-callout-1 { top: 8%; left: -6%; }
+    .hero-callout-2 { bottom: 12%; right: -8%; }
+    .hero-pulse {
+      position: absolute; top: 14%; right: 12%; z-index: 2;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--teal); box-shadow: 0 0 0 0 rgba(13,148,136,0.6);
+      animation: heroPulse 2.4s infinite;
+    }
+    @keyframes heroPulse {
+      0%   { box-shadow: 0 0 0 0   rgba(13,148,136,0.6); }
+      70%  { box-shadow: 0 0 0 14px rgba(13,148,136,0); }
+      100% { box-shadow: 0 0 0 0   rgba(13,148,136,0); }
+    }
 
     .section-wrap { max-width: 1100px; margin: 0 auto; padding: 88px 6%; }
     .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
@@ -204,100 +249,21 @@
   </div>
 
   <div class="hero-visual">
-    <svg viewBox="0 0 520 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="16" y="16" width="488" height="468" rx="18" fill="#0d1e35" stroke="#1e3a5f" stroke-width="1.5"/>
-      <rect x="16" y="16" width="488" height="56" rx="18" fill="#0a1628"/>
-      <rect x="16" y="54" width="488" height="18" fill="#0a1628"/>
-      <circle cx="48" cy="44" r="10" fill="#0D9488"/>
-      <circle cx="48" cy="44" r="5" fill="#2DD4BF"/>
-      <rect x="70" y="40" width="55" height="8" rx="3" fill="#2DD4BF" opacity="0.7"/>
-      <rect x="390" y="34" width="90" height="22" rx="7" fill="#0D9488"/>
-      <rect x="400" y="40" width="70" height="10" rx="3" fill="white" opacity="0.85"/>
-      <rect x="36" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="50" y="104" width="48" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
-      <rect x="50" y="118" width="72" height="18" rx="4" fill="#2DD4BF"/>
-      <rect x="50" y="142" width="36" height="7" rx="2" fill="#1e3a5f"/>
-      <polygon points="118,98 124,108 112,108" fill="#2DD4BF" opacity="0.9"/>
-      <rect x="154" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="168" y="104" width="44" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
-      <rect x="168" y="118" width="60" height="18" rx="4" fill="#2DD4BF"/>
-      <rect x="168" y="142" width="42" height="7" rx="2" fill="#1e3a5f"/>
-      <polygon points="236,98 242,108 230,108" fill="#2DD4BF" opacity="0.9"/>
-      <rect x="272" y="92" width="106" height="70" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="286" y="104" width="52" height="8" rx="3" fill="#2DD4BF" opacity="0.5"/>
-      <rect x="286" y="118" width="50" height="18" rx="4" fill="#2DD4BF"/>
-      <rect x="286" y="142" width="38" height="7" rx="2" fill="#1e3a5f"/>
-      <polygon points="354,98 360,108 348,108" fill="#2DD4BF" opacity="0.9"/>
-      <rect x="390" y="92" width="106" height="70" rx="10" fill="#191008" stroke="#3d2505" stroke-width="1"/>
-      <rect x="404" y="104" width="50" height="8" rx="3" fill="#fbbf24" opacity="0.7"/>
-      <rect x="404" y="118" width="44" height="18" rx="4" fill="#f59e0b"/>
-      <rect x="404" y="142" width="56" height="7" rx="2" fill="#3d2505"/>
-      <circle cx="484" cy="100" r="5" fill="#f59e0b" opacity="0.4"/>
-      <circle cx="484" cy="100" r="3" fill="#f59e0b" opacity="0.8"/>
-      <rect x="36" y="178" width="292" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="52" y="192" width="110" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
-      <line x1="52" y1="316" x2="312" y2="316" stroke="#1e3a5f" stroke-width="0.5"/>
-      <line x1="52" y1="296" x2="312" y2="296" stroke="#1e3a5f" stroke-width="0.5"/>
-      <line x1="52" y1="276" x2="312" y2="276" stroke="#1e3a5f" stroke-width="0.5"/>
-      <line x1="52" y1="256" x2="312" y2="256" stroke="#1e3a5f" stroke-width="0.5"/>
-      <line x1="52" y1="236" x2="312" y2="236" stroke="#1e3a5f" stroke-width="0.5"/>
-      <path d="M52,305 L104,282 L156,288 L208,262 L260,268 L312,244 L312,316 L52,316 Z" fill="#0D9488" opacity="0.18"/>
-      <polyline points="52,305 104,282 156,288 208,262 260,268 312,244" stroke="#2DD4BF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline points="52,316 104,310 156,306 208,298 260,303 312,287" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" opacity="0.3"/>
-      <circle cx="104" cy="282" r="3.5" fill="#2DD4BF"/>
-      <circle cx="156" cy="288" r="3.5" fill="#2DD4BF"/>
-      <circle cx="208" cy="262" r="3.5" fill="#2DD4BF"/>
-      <circle cx="260" cy="268" r="3.5" fill="#2DD4BF"/>
-      <circle cx="312" cy="244" r="10" fill="#2DD4BF" opacity="0.15"/>
-      <circle cx="312" cy="244" r="6" fill="#0D9488"/>
-      <circle cx="312" cy="244" r="3.5" fill="#2DD4BF"/>
-      <rect x="278" y="222" width="72" height="26" rx="7" fill="#2DD4BF"/>
-      <rect x="286" y="229" width="56" height="12" rx="3" fill="#0B1629" opacity="0.7"/>
-      <polygon points="312,248 308,253 316,253" fill="#2DD4BF"/>
-      <rect x="344" y="178" width="152" height="162" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="358" y="192" width="80" height="9" rx="4" fill="#2DD4BF" opacity="0.6"/>
-      <circle cx="368" cy="216" r="4" fill="#22c55e"/>
-      <rect x="380" y="212" width="72" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="212" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-      <circle cx="368" cy="232" r="4" fill="#22c55e"/>
-      <rect x="380" y="228" width="60" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="228" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-      <circle cx="368" cy="248" r="4" fill="#f59e0b"/>
-      <rect x="380" y="244" width="68" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="244" width="20" height="8" rx="3" fill="#f59e0b" opacity="0.35"/>
-      <circle cx="368" cy="264" r="4" fill="#22c55e"/>
-      <rect x="380" y="260" width="56" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="260" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-      <circle cx="368" cy="280" r="4" fill="#f59e0b"/>
-      <rect x="380" y="276" width="64" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="276" width="20" height="8" rx="3" fill="#f59e0b" opacity="0.35"/>
-      <circle cx="368" cy="296" r="4" fill="#22c55e"/>
-      <rect x="380" y="292" width="70" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="292" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-      <circle cx="368" cy="312" r="4" fill="#22c55e"/>
-      <rect x="380" y="308" width="50" height="8" rx="3" fill="#1e3a5f"/>
-      <rect x="462" y="308" width="20" height="8" rx="3" fill="#22c55e" opacity="0.35"/>
-      <rect x="36" y="356" width="460" height="56" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="50" y="366" width="60" height="7" rx="3" fill="#2DD4BF" opacity="0.5"/>
-      <rect x="50" y="380" width="88" height="22" rx="7" fill="#0D9488" opacity="0.25" stroke="#0D9488" stroke-width="1"/>
-      <rect x="60" y="386" width="68" height="10" rx="3" fill="#2DD4BF" opacity="0.7"/>
-      <rect x="148" y="380" width="108" height="22" rx="7" fill="#1e3a5f" stroke="#2a4a6e" stroke-width="1"/>
-      <rect x="158" y="386" width="88" height="10" rx="3" fill="#4a7a9e" opacity="0.6"/>
-      <rect x="266" y="380" width="100" height="22" rx="7" fill="#1e3a5f" stroke="#2a4a6e" stroke-width="1"/>
-      <rect x="276" y="386" width="80" height="10" rx="3" fill="#4a7a9e" opacity="0.6"/>
-      <rect x="376" y="380" width="96" height="22" rx="7" fill="#191008" stroke="#3d2505" stroke-width="1"/>
-      <rect x="386" y="386" width="76" height="10" rx="3" fill="#f59e0b" opacity="0.6"/>
-      <rect x="36" y="428" width="222" height="40" rx="10" fill="#0D9488" opacity="0.12" stroke="#0D9488" stroke-width="1"/>
-      <rect x="50" y="440" width="120" height="8" rx="4" fill="#2DD4BF" opacity="0.6"/>
-      <rect x="50" y="452" width="80" height="7" rx="3" fill="#2DD4BF" opacity="0.3"/>
-      <rect x="270" y="428" width="226" height="40" rx="10" fill="#0f2033" stroke="#1e3a5f" stroke-width="1"/>
-      <rect x="284" y="440" width="90" height="8" rx="4" fill="#1e3a5f"/>
-      <rect x="284" y="452" width="130" height="7" rx="3" fill="#1e3a5f"/>
-      <circle cx="470" cy="448" r="7" fill="#22c55e" opacity="0.15"/>
-      <circle cx="470" cy="448" r="4" fill="#22c55e" opacity="0.5"/>
-      <circle cx="470" cy="448" r="2" fill="#22c55e"/>
-    </svg>
+    <div class="hero-mockup">
+      <div class="hero-mockup-glow"></div>
+      <img src="screenshots/overview.jpg" alt="Painel GerAI — overview da carteira" class="hero-mockup-img" loading="eager" width="1600" height="1040" />
+      <div class="hero-pulse" aria-hidden="true"></div>
+      <div class="hero-callout hero-callout-1">
+        <span class="hero-callout-label">71</span>
+        <span class="hero-callout-text">empresas activas</span>
+      </div>
+      <div class="hero-callout hero-callout-2">
+        <span class="hero-callout-label">22</span>
+        <span class="hero-callout-text">alertas hoje</span>
+      </div>
+    </div>
   </div>
+
 </div>
 
 <!-- MÓDULOS -->
