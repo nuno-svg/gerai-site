@@ -198,7 +198,8 @@
     .pricing-section { background: var(--off-white); text-align: center; }
     .pricing-section .section-wrap { max-width: 620px; }
     .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 44px 40px; text-align: center; box-shadow: 0 8px 32px rgba(11,22,41,0.06); }
-    .pricing-price { font-size: 56px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; }
+    .pricing-price { font-size: 56px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; display: inline-flex; align-items: baseline; gap: 8px; }
+    .pricing-price .pricing-vat { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
     .pricing-period { font-size: 14px; color: var(--muted); margin-top: 8px; margin-bottom: 32px; font-weight: 300; }
     .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; text-align: left; max-width: 320px; margin-left: auto; margin-right: auto; }
     .pricing-features li { font-size: 14px; color: var(--slate); display: flex; align-items: center; gap: 10px; }
@@ -254,6 +255,7 @@
     footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
     footer a:hover { color: var(--teal-light); }
     footer .sep { color: rgba(255,255,255,0.2); margin: 0 8px; }
+    footer .footer-meta { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 8px; line-height: 1.6; }
 
     /* Scroll reveal */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1); }
@@ -625,7 +627,7 @@
     <div class="section-label">Preço</div>
     <h2 style="margin-bottom:32px;">Simples. Sem surpresas.</h2>
     <div class="pricing-card reveal">
-      <div class="pricing-price">€99.90</div>
+      <div class="pricing-price">€99,90<span class="pricing-vat">+ IVA</span></div>
       <div class="pricing-period">por mês · por incubadora</div>
       <ul class="pricing-features">
         <li>Activo em 24 horas</li>
@@ -687,13 +689,16 @@
 </div>
 
 <footer>
-  <strong style="color:rgba(255,255,255,0.65)">GerAI</strong>
-  <span class="sep">·</span>
-  <a href="https://gerai.pt">gerai.pt</a>
-  <span class="sep">·</span>
-  <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a>
-  <span class="sep">·</span>
-  Parque Tecnológico de Óbidos
+  <div>
+    <strong style="color:rgba(255,255,255,0.65)">GerAI</strong>
+    <span class="sep">·</span>
+    <a href="mailto:nuno@gerai.pt">nuno@gerai.pt</a>
+    <span class="sep">·</span>
+    <a href="/legal.html">Privacidade &amp; Termos</a>
+  </div>
+  <div class="footer-meta">
+    39 Norte – Consultoria, Lda. · NIF 510 850 596 · Parque Tecnológico de Óbidos, 2510-216 Óbidos
+  </div>
 </footer>
 
 <script>
