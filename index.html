@@ -164,6 +164,37 @@
     .case-quote p { font-size: 16px; color: #fff; line-height: 1.65; font-weight: 300; font-style: italic; margin-bottom: 8px; }
     .case-quote cite { font-size: 13px; color: var(--teal-light); font-style: normal; letter-spacing: 0.02em; }
 
+    .compare-section { background: #fff; }
+    .compare-section .section-wrap { max-width: 920px; }
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(11,22,41,0.04);
+    }
+    .compare-col { display: flex; flex-direction: column; }
+    .compare-col + .compare-col { border-left: 1px solid var(--border); }
+    .compare-col-header {
+      padding: 20px 26px; font-size: 14px; font-weight: 600;
+      letter-spacing: -0.01em; border-bottom: 1px solid var(--border);
+    }
+    .compare-col-before .compare-col-header { background: #f8fafc; color: var(--slate); }
+    .compare-col-after  .compare-col-header { background: var(--teal-bg); color: var(--teal); }
+    .compare-row {
+      padding: 14px 26px; font-size: 14px; line-height: 1.55;
+      display: flex; align-items: flex-start; gap: 12px;
+      border-bottom: 1px solid var(--border); min-height: 56px;
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-col-before .compare-row { color: var(--muted); }
+    .compare-col-after  .compare-row { color: var(--navy); }
+    .compare-row::before {
+      content: ''; flex-shrink: 0; margin-top: 8px;
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .compare-col-before .compare-row::before { background: #cbd5e1; }
+    .compare-col-after  .compare-row::before { background: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+
     .pricing-section { background: var(--off-white); text-align: center; }
     .pricing-section .section-wrap { max-width: 620px; }
     .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 44px 40px; text-align: center; box-shadow: 0 8px 32px rgba(11,22,41,0.06); }
@@ -244,6 +275,8 @@
       .modules-grid { grid-template-columns: 1fr; }
       .case-stats { grid-template-columns: 1fr; }
       .demo-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-col + .compare-col { border-left: none; border-top: 1px solid var(--border); }
     }
     @media (max-width: 640px) {
       nav { padding: 0 5%; }
@@ -440,6 +473,35 @@
       <p>"A GerAI transformou a forma como acompanhamos as oportunidades de financiamento para as nossas empresas."</p>
       <cite>— Parque Tecnológico de Óbidos</cite>
     </blockquote>
+  </div>
+</div>
+
+<!-- COMPARAÇÃO -->
+<div class="compare-section">
+  <div class="section-wrap">
+    <div class="section-label">O que muda na tua semana</div>
+    <h2>Antes e depois.</h2>
+    <p class="section-intro">Como o trabalho do director da incubadora se transforma com GerAI activo.</p>
+    <div class="compare-grid reveal">
+      <div class="compare-col compare-col-before">
+        <div class="compare-col-header">Sem GerAI</div>
+        <div class="compare-row">4 a 6 horas por semana a procurar concursos EU em portais oficiais</div>
+        <div class="compare-row">Prazos fiscais geridos manualmente em folha Excel</div>
+        <div class="compare-row">Múltiplas ferramentas e sites a abrir todas as manhãs</div>
+        <div class="compare-row">Risco real de perder oportunidades por falta de monitorização</div>
+        <div class="compare-row">Visibilidade pontual da carteira — só quando alguém pede</div>
+        <div class="compare-row">Relatórios feitos à mão a cada solicitação institucional</div>
+      </div>
+      <div class="compare-col compare-col-after">
+        <div class="compare-col-header">Com GerAI</div>
+        <div class="compare-row">Pipeline automático diário — zero horas de pesquisa manual</div>
+        <div class="compare-row">Calendário fiscal monitorizado e alertado por categoria</div>
+        <div class="compare-row">Painel único integrado, acessível em qualquer dispositivo</div>
+        <div class="compare-row">Alertas proactivos por email com empresas elegíveis identificadas</div>
+        <div class="compare-row">Dashboard ao vivo com KPIs agregados e por empresa</div>
+        <div class="compare-row">Relatório PDF de carteira gerado automaticamente para investidores e IAPMEI</div>
+      </div>
+    </div>
   </div>
 </div>
 
