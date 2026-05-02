@@ -115,6 +115,28 @@
     .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 600; }
     .pricing-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+    .demo-section { background: #fff; }
+    .demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 12px; }
+    .demo-card {
+      margin: 0; background: var(--off-white);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .demo-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(11,22,41,0.10); border-color: var(--teal); }
+    .demo-card-img-wrap { aspect-ratio: 16/10; overflow: hidden; background: #0F2044; }
+    .demo-card img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      display: block;
+    }
+    .demo-card figcaption {
+      padding: 16px 18px;
+      font-size: 14px; font-weight: 500; color: var(--navy);
+      border-top: 1px solid var(--border); background: #fff;
+    }
+    .demo-card figcaption span { display: block; font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 4px; line-height: 1.5; }
+    .demo-footnote { font-size: 12px; color: var(--muted); text-align: center; margin-top: 24px; font-style: italic; font-weight: 300; }
+
     .faq-section { background: #fff; }
     .faq-section .section-wrap { max-width: 760px; }
     .faq-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); margin-top: 12px; }
@@ -149,6 +171,7 @@
       .hero-visual { display: none; }
       .modules-grid { grid-template-columns: 1fr; }
       .case-stats { grid-template-columns: 1fr; }
+      .demo-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       nav { padding: 0 5%; }
@@ -307,6 +330,47 @@
   </div>
 </div>
 
+<!-- DEMO -->
+<div class="demo-section">
+  <div class="section-wrap">
+    <div class="section-label">O painel</div>
+    <h2>A consola que o director acede<br>todas as manhãs.</h2>
+    <p class="section-intro">Três vistas que o director consulta em segundos.</p>
+    <div class="demo-grid">
+      <figure class="demo-card">
+        <div class="demo-card-img-wrap">
+          <img src="screenshots/overview.jpg" alt="Overview financeiro da carteira" loading="lazy" width="1600" height="1040" />
+        </div>
+        <figcaption>
+          Overview da carteira
+          <span>KPIs agregados, top performers e distribuição de resultados — actualizado todas as manhãs.</span>
+        </figcaption>
+      </figure>
+
+      <figure class="demo-card">
+        <div class="demo-card-img-wrap">
+          <img src="screenshots/prazos.jpg" alt="Prazos e obrigações monitorizados" loading="lazy" width="1600" height="1040" />
+        </div>
+        <figcaption>
+          Prazos e obrigações
+          <span>Calendário fiscal e regulatório — críticos, próximos e em prazo, organizados por urgência.</span>
+        </figcaption>
+      </figure>
+
+      <figure class="demo-card">
+        <div class="demo-card-img-wrap">
+          <img src="screenshots/pt2030.jpg" alt="Execução financeira de contratos PT2030" loading="lazy" width="1600" height="1040" />
+        </div>
+        <figcaption>
+          Contratos PT2030
+          <span>Fundo aprovado, executado e taxa de execução por empresa — visibilidade total do portfolio.</span>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="demo-footnote">Carteira de demonstração com dados fictícios. Estrutura igual à instalação em produção.</p>
+  </div>
+</div>
+
 <!-- CASE PTO -->
 <div class="case-section">
   <div class="section-wrap">
@@ -314,8 +378,8 @@
     <h2>Em produção no Parque<br>Tecnológico de Óbidos.</h2>
     <div class="case-stats">
       <div class="case-stat">
-        <span class="case-stat-val">96</span>
-        <div class="case-stat-label">Empresas monitorizadas</div>
+        <span class="case-stat-val">71</span>
+        <div class="case-stat-label">Empresas activas</div>
       </div>
       <div class="case-stat">
         <span class="case-stat-val">3 anos</span>
