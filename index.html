@@ -224,6 +224,19 @@
     footer a:hover { color: var(--teal-light); }
     footer .sep { color: rgba(255,255,255,0.2); margin: 0 8px; }
 
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(.2,.7,.2,1), transform 0.6s cubic-bezier(.2,.7,.2,1); }
+    .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms; }
+    .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms; }
+    .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; }
+    .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; }
+    .reveal-stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; min-height: auto; padding: 110px 6% 64px; }
       .hero::before { display: none; }
@@ -305,7 +318,7 @@
   <div class="section-wrap">
     <div class="section-label">O que faz</div>
     <h2>Quatro módulos. Um painel.<br>Tudo automático.</h2>
-    <div class="modules-grid">
+    <div class="modules-grid reveal-stagger">
       <div class="module-card">
         <div class="module-icon" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -366,7 +379,7 @@
     <div class="section-label">O painel</div>
     <h2>A consola que o director acede<br>todas as manhãs.</h2>
     <p class="section-intro">Três vistas que o director consulta em segundos.</p>
-    <div class="demo-grid">
+    <div class="demo-grid reveal-stagger">
       <figure class="demo-card">
         <div class="demo-card-img-wrap">
           <img src="screenshots/overview.jpg" alt="Overview financeiro da carteira" loading="lazy" width="1600" height="1040" />
@@ -406,7 +419,7 @@
   <div class="section-wrap">
     <div class="section-label">Case em produção</div>
     <h2>Em produção no Parque<br>Tecnológico de Óbidos.</h2>
-    <div class="case-stats">
+    <div class="case-stats reveal-stagger">
       <div class="case-stat">
         <span class="case-stat-val">71</span>
         <div class="case-stat-label">Empresas activas</div>
@@ -435,7 +448,7 @@
   <div class="section-wrap">
     <div class="section-label">Preço</div>
     <h2 style="margin-bottom:32px;">Simples. Sem surpresas.</h2>
-    <div class="pricing-card">
+    <div class="pricing-card reveal">
       <div class="pricing-price">€99.90</div>
       <div class="pricing-period">por mês · por incubadora</div>
       <ul class="pricing-features">
@@ -456,7 +469,7 @@
   <div class="section-wrap">
     <div class="section-label">Dúvidas frequentes</div>
     <h2>Perguntas comuns.</h2>
-    <div class="faq-list">
+    <div class="faq-list reveal">
 
       <details class="faq-item">
         <summary>Quanto tempo demora a estar operacional?</summary>
@@ -506,6 +519,26 @@
   <span class="sep">·</span>
   Parque Tecnológico de Óbidos
 </footer>
+
+<script>
+  // Scroll reveal — IntersectionObserver, single-fire por elemento
+  (function () {
+    var els = document.querySelectorAll('.reveal, .reveal-stagger');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
