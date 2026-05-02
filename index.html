@@ -285,6 +285,120 @@
       .nav-client { display: none; }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.gerai.pt/#organization",
+        "name": "GerAI",
+        "url": "https://www.gerai.pt/",
+        "email": "nuno@gerai.pt",
+        "description": "Painel de controlo para incubadoras e parques tecnológicos. Monitorização automática de financiamentos EU, prazos regulatórios e parcerias europeias.",
+        "areaServed": { "@type": "Country", "name": "Portugal" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.gerai.pt/#website",
+        "url": "https://www.gerai.pt/",
+        "name": "GerAI",
+        "inLanguage": "pt-PT",
+        "publisher": { "@id": "https://www.gerai.pt/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.gerai.pt/#software",
+        "name": "GerAI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Monitorização automática de financiamentos EU, prazos regulatórios e parcerias europeias — entregue todas as manhãs ao director da incubadora.",
+        "url": "https://www.gerai.pt/",
+        "image": "https://www.gerai.pt/screenshots/overview.jpg",
+        "inLanguage": "pt-PT",
+        "offers": {
+          "@type": "Offer",
+          "price": "99.90",
+          "priceCurrency": "EUR",
+          "category": "Subscription",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "99.90",
+            "priceCurrency": "EUR",
+            "billingIncrement": 1,
+            "unitCode": "MON"
+          }
+        },
+        "publisher": { "@id": "https://www.gerai.pt/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.gerai.pt/#faq",
+        "inLanguage": "pt-PT",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Quanto tempo demora a estar operacional?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Activação em 24 horas. O onboarding é online e tem 4 passos: dados da incubadora, upload de NIFs (CSV ou colado), validação automática e confirmação. A partir desse momento o pipeline diário começa a popular o painel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Que dados preciso de fornecer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Apenas a lista de NIFs das empresas em portfolio (CSV ou linha-a-linha) e o contacto da incubadora. Os dados públicos das empresas — CAE, sede, dados financeiros — são extraídos automaticamente de fontes oficiais."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Onde ficam os dados das empresas monitorizadas?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Em infraestrutura Supabase alojada na União Europeia, com encriptação em repouso e em trânsito. Cada incubadora vê apenas os dados da sua carteira (isolamento por Row Level Security). Conformidade com RGPD; dados nunca são partilhados com terceiros."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Posso cancelar a qualquer momento?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. Sem permanência, sem penalizações. O cancelamento é feito na área de cliente e tem efeito no fim do período já pago. Os dados podem ser exportados em Excel antes do encerramento da conta."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Há período experimental?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim — 30 dias gratuitos para validar o serviço com a tua carteira real. É necessário registar um cartão na activação, mas a primeira cobrança só acontece depois dos 30 dias se não cancelares."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Para que tipo de organizações faz sentido?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Incubadoras, parques tecnológicos e aceleradoras em Portugal — independentemente do tamanho do portfolio. As oportunidades de financiamento e parcerias incluem programas europeus (acessíveis a empresas portuguesas) e prazos regulatórios nacionais."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que está incluído nos 99,90 euros por mês?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Os quatro módulos (financiamentos EU, prazos e obrigações, parcerias EEN, relatórios de portfolio), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
