@@ -199,6 +199,92 @@
 
     .pricing-section { background: var(--off-white); text-align: center; }
     .pricing-section .section-wrap { max-width: 620px; }
+
+    /* Steps "Como começar" */
+    .steps-section { background: #fff; }
+    .steps-section .section-wrap { text-align: center; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 36px;
+      margin-top: 40px;
+      position: relative;
+    }
+    .step-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: left;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13,148,136,0.08);
+      border-color: var(--teal);
+    }
+    .step-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .step-icon { font-size: 24px; line-height: 1; margin-bottom: 14px; }
+    .step-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .step-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+      margin: 0;
+    }
+    /* Setas entre cards */
+    .step-card:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -26px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--teal);
+      font-size: 22px;
+      font-weight: 300;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .steps-cta {
+      margin-top: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--teal);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .steps-cta:hover { background: #0B7F73; transform: translateY(-1px); }
+    @media (max-width: 960px) {
+      .steps-grid { grid-template-columns: 1fr; gap: 28px; }
+      .step-card:not(:last-child)::after {
+        content: '↓';
+        right: 50%;
+        transform: translateX(50%);
+        top: auto;
+        bottom: -22px;
+      }
+    }
     .pricing-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 44px 40px; text-align: center; box-shadow: 0 8px 32px rgba(11,22,41,0.06); }
     .pricing-price { font-size: 56px; font-weight: 500; color: var(--navy); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; line-height: 1; display: inline-flex; align-items: baseline; gap: 8px; }
     .pricing-price .pricing-vat { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
@@ -267,6 +353,8 @@
     .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms; }
     .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; }
     .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; }
+    .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 320ms; }
+    .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 400ms; }
     .reveal-stagger.is-visible > * { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) {
       .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -336,6 +424,51 @@
           }
         },
         "publisher": { "@id": "https://www.gerai.pt/#organization" }
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://www.gerai.pt/#howto",
+        "name": "Como começar a usar o GerAI",
+        "description": "5 passos para activar o GerAI na tua incubadora — desde a criação de conta até à decisão de activar a subscrição no fim do trial gratuito de 30 dias.",
+        "inLanguage": "pt-PT",
+        "totalTime": "PT2M",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Cria conta",
+            "text": "Cria conta em app.gerai.pt com email e password. Sem cartão de crédito. Demora 2 minutos.",
+            "url": "https://www.gerai.pt/#howto"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Adiciona portfolio",
+            "text": "Cola os NIFs das empresas da tua incubadora. Validação automática.",
+            "url": "https://www.gerai.pt/#howto"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Dados em preparação",
+            "text": "Em até 48 horas os dados financeiros das tuas empresas estão prontos no painel.",
+            "url": "https://www.gerai.pt/#howto"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "30 dias gratuitos",
+            "text": "Explora todos os módulos durante 30 dias. Recebes digest semanal e relatório mensal automaticamente.",
+            "url": "https://www.gerai.pt/#howto"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Decide",
+            "text": "No fim do trial decides: activar a subscrição (€99,90 + IVA por mês) ou cancelar. Sem permanência.",
+            "url": "https://www.gerai.pt/#howto"
+          }
+        ]
       },
       {
         "@type": "FAQPage",
@@ -620,6 +753,48 @@
         <div class="compare-row">Relatório PDF de carteira gerado automaticamente para investidores e IAPMEI</div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- COMO COMEÇAR -->
+<div class="steps-section">
+  <div class="section-wrap">
+    <div class="section-label">Como começar</div>
+    <h2>5 passos. 30 dias para experimentar.</h2>
+    <p class="section-intro">Activação em minutos, sem cartão. Decides no fim do trial.</p>
+    <div class="steps-grid reveal-stagger">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon" aria-hidden="true">📝</div>
+        <h4>Cria conta</h4>
+        <p>Email + password. Sem cartão de crédito. 2 minutos.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon" aria-hidden="true">🏢</div>
+        <h4>Adiciona portfolio</h4>
+        <p>Cola os NIFs das tuas empresas. Validação automática.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon" aria-hidden="true">⏳</div>
+        <h4>Dados em preparação</h4>
+        <p>Em até 48h os dados financeiros estão prontos no painel.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon" aria-hidden="true">🚀</div>
+        <h4>30 dias gratuitos</h4>
+        <p>Explora todos os módulos. Recebes digest semanal e relatório mensal.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">05</div>
+        <div class="step-icon" aria-hidden="true">✓</div>
+        <h4>Decide</h4>
+        <p>No fim do trial: activar (€99,90/mês) ou cancelar. Sem permanência.</p>
+      </div>
+    </div>
+    <a href="https://app.gerai.pt/?onboarding" class="steps-cta">Começar agora →</a>
   </div>
 </div>
 
