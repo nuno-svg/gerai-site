@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GerAI · Painel de Controlo para Incubadoras</title>
-  <meta name="description" content="Monitorização de financiamentos EU, prazos regulatórios e parcerias europeias para incubadoras. Em produção no Parque Tecnológico de Óbidos." />
+  <meta name="description" content="Monitorização de financiamentos EU, prazos regulatórios, parcerias europeias e eventos do ecossistema para incubadoras. Em produção no Parque Tecnológico de Óbidos." />
   <link rel="canonical" href="https://www.gerai.pt/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="googlebot" content="index, follow" />
@@ -12,11 +12,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.gerai.pt/" />
   <meta property="og:title" content="GerAI · Painel de Controlo para Incubadoras" />
-  <meta property="og:description" content="Monitorização de financiamentos EU, prazos regulatórios e parcerias europeias — entregue todas as manhãs ao director da incubadora." />
+  <meta property="og:description" content="Monitorização de financiamentos EU, prazos regulatórios, parcerias europeias e eventos do ecossistema — entregue todas as manhãs ao director da incubadora." />
   <meta property="og:locale" content="pt_PT" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="GerAI · Painel de Controlo para Incubadoras" />
-  <meta name="twitter:description" content="Monitorização de financiamentos EU, prazos regulatórios e parcerias europeias — entregue todas as manhãs ao director da incubadora." />
+  <meta name="twitter:description" content="Monitorização de financiamentos EU, prazos regulatórios, parcerias europeias e eventos do ecossistema — entregue todas as manhãs ao director da incubadora." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -141,8 +141,11 @@
 
     .modules-section { background: var(--off-white); }
     .modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .module-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 28px 28px 30px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .module-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 28px 28px 30px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; position: relative; }
     .module-card:hover { border-color: var(--teal); box-shadow: 0 6px 24px rgba(13,148,136,0.10); transform: translateY(-2px); }
+    .module-card-novo { grid-column: span 2; border-color: var(--teal); background: linear-gradient(135deg, #fff 0%, var(--teal-bg) 100%); }
+    .module-card-novo:hover { box-shadow: 0 8px 28px rgba(13,148,136,0.16); }
+    .module-novo-badge { position: absolute; top: 16px; right: 16px; background: var(--teal); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 12px; }
     .module-icon {
       width: 40px; height: 40px;
       display: inline-flex; align-items: center; justify-content: center;
@@ -366,6 +369,7 @@
       .hero::before { display: none; }
       .hero-visual { display: none; }
       .modules-grid { grid-template-columns: 1fr; }
+      .module-card-novo { grid-column: 1; }
       .case-stats { grid-template-columns: 1fr; }
       .demo-grid { grid-template-columns: 1fr; }
       .compare-grid { grid-template-columns: 1fr; }
@@ -389,7 +393,7 @@
         "name": "GerAI",
         "url": "https://www.gerai.pt/",
         "email": "nuno@gerai.pt",
-        "description": "Painel de controlo para incubadoras e parques tecnológicos. Monitorização automática de financiamentos EU, prazos regulatórios e parcerias europeias.",
+        "description": "Painel de controlo para incubadoras e parques tecnológicos. Monitorização automática de financiamentos EU, prazos regulatórios, parcerias europeias e eventos do ecossistema.",
         "areaServed": { "@type": "Country", "name": "Portugal" }
       },
       {
@@ -406,7 +410,7 @@
         "name": "GerAI",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
-        "description": "Monitorização automática de financiamentos EU, prazos regulatórios e parcerias europeias — entregue todas as manhãs ao director da incubadora.",
+        "description": "Monitorização automática de financiamentos EU, prazos regulatórios, parcerias europeias e eventos do ecossistema — entregue todas as manhãs ao director da incubadora.",
         "url": "https://www.gerai.pt/",
         "image": "https://www.gerai.pt/screenshots/overview.jpg",
         "inLanguage": "pt-PT",
@@ -529,7 +533,7 @@
             "name": "O que está incluído nos 99,90 euros por mês?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Os quatro módulos (financiamentos EU, prazos e obrigações, parcerias EEN, relatórios de portfolio), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio."
+              "text": "Os cinco módulos (financiamentos EU, prazos e obrigações, parcerias europeias EEN, relatórios de portfolio e eventos do ecossistema), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio."
             }
           }
         ]
@@ -564,7 +568,7 @@
         <span class="hero-stat-label">concursos EU activos</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">4</span>
+        <span class="hero-stat-num">5</span>
         <span class="hero-stat-label">módulos automáticos</span>
       </div>
     </div>
@@ -644,7 +648,7 @@
 <div class="modules-section">
   <div class="section-wrap">
     <div class="section-label">O que faz</div>
-    <h2>Quatro módulos. Um painel.<br>Tudo automático.</h2>
+    <h2>Cinco módulos. Um painel.<br>Tudo automático.</h2>
     <div class="modules-grid reveal-stagger">
       <div class="module-card">
         <div class="module-icon" aria-hidden="true">
@@ -695,6 +699,21 @@
         <div class="module-num">04</div>
         <h4>Relatórios de Portfolio</h4>
         <p>Fichas por empresa e relatório de carteira gerados automaticamente — prontos para investidores, IAPMEI e stakeholders institucionais.</p>
+      </div>
+      <div class="module-card module-card-novo">
+        <span class="module-novo-badge">Novo</span>
+        <div class="module-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h2 M14 14h2 M8 18h2 M14 18h2"/>
+          </svg>
+        </div>
+        <div class="module-num">05</div>
+        <h4>Eventos do Ecossistema</h4>
+        <p>Workshops, conferências, sessões de financiamento e networking PT — filtrados pelo perfil sectorial da tua carteira. Adiciona ao Google Calendar / Outlook / Apple Calendar com 1 click.</p>
       </div>
     </div>
   </div>
@@ -860,7 +879,7 @@
 
       <details class="faq-item">
         <summary>O que está incluído nos €99,90/mês?</summary>
-        <p>Os quatro módulos (financiamentos EU, prazos e obrigações, parcerias EEN, relatórios de portfolio), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio.</p>
+        <p>Os cinco módulos (financiamentos EU, prazos e obrigações, parcerias europeias EEN, relatórios de portfolio e eventos do ecossistema), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio.</p>
       </details>
 
     </div>
