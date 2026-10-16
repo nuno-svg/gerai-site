@@ -20,8 +20,12 @@ test('Internal anchors and tab associations resolve to unique IDs', () => {
     assert.ok(ids.includes(match[1]), `Missing target: ${match[1]}`);
   }
 });
-test('Examples are labelled and source limitations are retained', () => {
-  for (const text of ['VISTA ILUSTRATIVA','não capturas da aplicação','não é um mapa real','Projetos fictícios','não significa novos dados diários','ausência no mapa não significa ausência de atividade']) assert.ok(html.includes(text), text);
+test('Real screenshots are disclosed, present and replace illustrative mockups', () => {
+  for (const text of ['Capturas reais da interface','identificação municipal neutralizada','formulário de projetos vazio','não dados em tempo real','não significa novos dados diários','ausência no mapa não significa ausência de atividade']) assert.ok(html.includes(text), text);
+  assert.doesNotMatch(html, /map-illustration|hero-chart|class="pipeline"|Projetos fictícios|VISTA ILUSTRATIVA/);
+  const images=[...html.matchAll(/<img[^>]+src="([^"]+)"/g)];
+  assert.equal(images.length,4);
+  for(const [,src] of images){const bytes=readFileSync(new URL('../municipios/'+src,import.meta.url));assert.equal(bytes[0],255);assert.equal(bytes[1],216);}
   assert.match(css, /prefers-reduced-motion:reduce/);
   assert.match(html, /O botão abre o seu email/);
   assert.equal((html.match(/class="feature reveal"/g) || []).length, 6);

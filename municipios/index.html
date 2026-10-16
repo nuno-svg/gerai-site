@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="municipios.css?v=20261016b">
+  <link rel="stylesheet" href="municipios.css?v=20261016c">
   <script src="municipios.js?v=20261016" defer></script>
 </head>
 <body>
@@ -49,51 +49,45 @@
         <div class="actions"><a class="button" href="#demonstracao">Explorar a plataforma <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="text-link" href="#contacto">Falar com a equipa </a></div>
         <p class="trust">Fontes públicas identificadas <span>·</span> Contexto local <span>·</span> Acesso por equipa</p>
       </div>
-      <div class="hero-visual" aria-label="Ilustração das áreas da plataforma, sem dados reais">
-        <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
-        <article class="hero-window">
-          <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>GERAI / MUNICÍPIOS</span><span class="sample-label">VISTA ILUSTRATIVA</span></div>
-          <div class="window-body"><div class="window-heading"><div><p class="eyebrow">DA EVIDÊNCIA À AÇÃO</p><h2>O pulso do território</h2></div><svg class="icon large-icon" aria-hidden="true"><use href="#i-chart"/></svg></div>
-            <div class="visual-metrics"><div><svg class="icon" aria-hidden="true"><use href="#i-building"/></svg><strong>Conhecer</strong><small>Empresas e atividade</small></div><div><svg class="icon" aria-hidden="true"><use href="#i-radar"/></svg><strong>Antecipar</strong><small>Sinais e oportunidades</small></div></div>
-            <div class="hero-chart" aria-hidden="true"><div class="chart-grid"></div><svg viewBox="0 0 400 120" preserveAspectRatio="none"><path class="chart-area" d="M0 104 45 85 90 92 135 62 180 69 225 40 270 51 315 22 360 33 400 9V120H0Z"/><path class="chart-line" d="M0 104 45 85 90 92 135 62 180 69 225 40 270 51 315 22 360 33 400 9"/></svg></div>
-            <div class="visual-task"><span class="task-check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><div><strong>Preparar a próxima decisão</strong><small>Fonte, contexto e ação no mesmo lugar.</small></div></div>
-          </div>
-        </article>
-        <div class="float-note note-top"><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg><span>Uma visão<br><strong>do seu território</strong></span></div>
-        <div class="float-note note-bottom"><span class="dot"></span><span>Mais contexto.<br><strong>Menos informação dispersa.</strong></span></div>
+      <div class="hero-visual real-platform">
+        <figure class="platform-capture hero-capture">
+          <a href="images/painel-executivo.jpg" target="_blank" rel="noopener" aria-label="Abrir captura do painel executivo em tamanho real, numa nova janela">
+            <img src="images/painel-executivo.jpg" width="1440" height="1000" alt="Interface real do painel executivo GERAI Municípios, com resumo semanal, prazos de financiamento e indicadores do território. Identificação municipal neutralizada e sem projetos privados." fetchpriority="high">
+          </a>
+          <figcaption><strong>O painel executivo, por dentro.</strong><span>Captura real da interface em ambiente local. Sem registos privados.</span><a href="images/painel-executivo.jpg" target="_blank" rel="noopener">Ver em tamanho real</a></figcaption>
+        </figure>
       </div>
     </div>
   </section>
   <div class="principles wrap"><p><span>01</span> Conhecer o território</p><p><span>02</span> Antecipar oportunidades</p><p><span>03</span> Acompanhar o investimento</p></div>
 
   <section class="section wrap" id="demonstracao">
-    <div class="section-heading reveal"><p class="eyebrow">A PLATAFORMA, EM PERSPETIVA</p><h2>Da pergunta certa<br><em>ao próximo passo.</em></h2><p>Explore três formas de trabalhar a informação municipal. Selecione uma vista para conhecer o que pode apoiar a sua equipa.</p></div>
+    <div class="section-heading reveal"><p class="eyebrow">DENTRO DA GERAI MUNICÍPIOS</p><h2>Da pergunta certa<br><em>ao próximo passo.</em></h2><p>Veja os ecrãs reais da plataforma. Selecione uma área para explorar a informação e as ferramentas disponíveis à equipa municipal.</p></div>
     <div class="demo-layout reveal">
-      <div class="demo-tabs" role="tablist" aria-orientation="vertical" aria-label="Vistas ilustrativas da plataforma">
+      <div class="demo-tabs" role="tablist" aria-orientation="vertical" aria-label="Capturas reais da plataforma">
         <button id="tab-territorio" type="button" role="tab" aria-selected="true" aria-controls="panel-territorio" tabindex="0"><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg><span><strong>Conhecer o território</strong><small>O que está a mudar no concelho?</small></span></button>
         <button id="tab-oportunidades" type="button" role="tab" aria-selected="false" aria-controls="panel-oportunidades" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="#i-radar"/></svg><span><strong>Antecipar oportunidades</strong><small>Onde concentrar a nossa atenção?</small></span></button>
         <button id="tab-investimento" type="button" role="tab" aria-selected="false" aria-controls="panel-investimento" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg><span><strong>Acompanhar o investimento</strong><small>Quem faz o quê, e até quando?</small></span></button>
-        <p class="demo-note">Representações ilustrativas, não capturas da aplicação. A cobertura e os módulos disponíveis dependem dos dados e da configuração de cada município.</p>
+        <p class="demo-note">Capturas reais da interface, obtidas em ambiente local a 16/10/2026, com identificação municipal neutralizada. Indicadores de fontes públicas e formulário de projetos vazio. São imagens, não dados em tempo real. A cobertura depende de cada município.</p>
       </div>
-      <div class="demo-screen">
-        <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>GERAI MUNICÍPIOS</span><span class="sample-label">EXEMPLO</span></div>
-        <section class="demo-panel" id="panel-territorio" role="tabpanel" aria-labelledby="tab-territorio" tabindex="0">
-          <div class="panel-heading"><div><p class="eyebrow">TERRITÓRIO / LEITURA ECONÓMICA</p><h3>As atividades no mapa.</h3></div><svg class="icon" aria-hidden="true"><use href="#i-map"/></svg></div>
-          <div class="map-illustration" role="img" aria-label="Mapa esquemático de distribuição de atividades, sem correspondência com um território real"><svg viewBox="0 0 520 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="blocks" width="60" height="50" patternUnits="userSpaceOnUse"><rect x="5" y="5" width="48" height="38" rx="5" fill="#e0e9e4"/></pattern><radialGradient id="heat"><stop stop-color="#4c9c8e" stop-opacity=".45"/><stop offset="1" stop-color="#4c9c8e" stop-opacity="0"/></radialGradient></defs><rect width="520" height="190" fill="#f1f5f1"/><rect width="520" height="190" fill="url(#blocks)"/><path d="M-10 180 180 80 290 100 440-10M80-10l120 220M350-10l-30 220" stroke="#fff" stroke-width="14" fill="none"/><ellipse cx="175" cy="104" rx="100" ry="72" fill="url(#heat)"/><ellipse cx="376" cy="67" rx="90" ry="67" fill="url(#heat)"/><g fill="#287667" stroke="white" stroke-width="3"><circle cx="130" cy="100" r="7"/><circle cx="164" cy="68" r="7"/><circle cx="196" cy="122" r="7"/><circle cx="350" cy="45" r="7"/><circle cx="405" cy="87" r="7"/></g><g fill="#bb8539" stroke="white" stroke-width="3"><circle cx="251" cy="60" r="7"/><circle cx="299" cy="145" r="7"/><circle cx="435" cy="155" r="7"/></g></svg><span class="map-caption">Distribuição ilustrativa · não é um mapa real</span></div>
-          <div class="legend"><span><i></i> Comércio e serviços</span><span><i class="gold"></i> Indústria e outras atividades</span></div>
-          <div class="panel-insight"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg><p><strong>Uma leitura com contexto.</strong> Cruze localização, setor e evolução. Identifique concentrações de atividade e lacunas na informação disponível.</p></div>
+      <div class="demo-screen real-screens">
+        <section class="demo-panel capture-panel" id="panel-territorio" role="tabpanel" aria-labelledby="tab-territorio" tabindex="0">
+          <figure class="platform-capture">
+            <a href="images/evolucao-territorial.jpg" target="_blank" rel="noopener" aria-label="Abrir captura de evolução e comparação em tamanho real, numa nova janela"><img src="images/evolucao-territorial.jpg" width="1440" height="1081" loading="lazy" alt="Interface real de evolução e comparação: indicadores de desemprego registado e gráfico mensal do IEFP, com identificação municipal neutralizada."></a>
+            <figcaption><h3>Evolução e comparação</h3><p>Série mensal do emprego, variações e períodos de referência, no ecrã real da plataforma.</p><a href="images/evolucao-territorial.jpg" target="_blank" rel="noopener">Ver captura em tamanho real</a></figcaption>
+          </figure>
         </section>
-        <section class="demo-panel" id="panel-oportunidades" role="tabpanel" aria-labelledby="tab-oportunidades" tabindex="0" hidden>
-          <div class="panel-heading"><div><p class="eyebrow">RADAR / FINANCIAMENTO E PROMOÇÃO</p><h3>Da oportunidade à preparação.</h3></div><svg class="icon" aria-hidden="true"><use href="#i-radar"/></svg></div>
-          <div class="opportunity-row"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-radar"/></svg></span><div><strong>Aviso de financiamento</strong><small>Destinatários, prazo e fonte oficial</small></div><span class="status amber">Analisar</span></div>
-          <div class="opportunity-row"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span><div><strong>Evento de captação</strong><small>Setor, localização e preparação</small></div><span class="status">Preparar</span></div>
-          <div class="opportunity-row"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-building"/></svg></span><div><strong>Oportunidade de instalação</strong><small>Características e condições a verificar</small></div><span class="status">Qualificar</span></div>
-          <div class="panel-insight"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><p><strong>Primeiro o enquadramento.</strong> A relevância de um aviso é um ponto de partida; a elegibilidade e as condições exigem confirmação.</p></div>
+        <section class="demo-panel capture-panel" id="panel-oportunidades" role="tabpanel" aria-labelledby="tab-oportunidades" tabindex="0" hidden>
+          <figure class="platform-capture">
+            <a href="images/radar-financiamento.jpg" target="_blank" rel="noopener" aria-label="Abrir captura de radar de financiamento em tamanho real, numa nova janela"><img src="images/radar-financiamento.jpg" width="1440" height="1081" loading="lazy" alt="Interface real do radar de financiamento, com filtros por destinatário e prazo e ficha de aviso público com indicação de revalidação necessária."></a>
+            <figcaption><h3>Radar de financiamento</h3><p>Filtros, destinatários, prazos e estado de validação dos avisos. Os prazos visíveis são os da captura e devem ser reconfirmados na fonte.</p><a href="images/radar-financiamento.jpg" target="_blank" rel="noopener">Ver captura em tamanho real</a></figcaption>
+          </figure>
         </section>
-        <section class="demo-panel" id="panel-investimento" role="tabpanel" aria-labelledby="tab-investimento" tabindex="0" hidden>
-          <div class="panel-heading"><div><p class="eyebrow">INVESTIMENTO / ACOMPANHAMENTO</p><h3>Cada projeto, um próximo passo.</h3></div><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg></div>
-          <div class="pipeline"><div><span class="stage-dot"></span><h4>Contacto</h4><article><strong>Projeto A</strong><p>Qualificar a necessidade</p><small>Responsável · equipa municipal</small></article></div><div><span class="stage-dot"></span><h4>Análise</h4><article><strong>Projeto B</strong><p>Reunir informação técnica</p><small>Próxima ação · reunião</small></article></div><div><span class="stage-dot"></span><h4>Instalação</h4><article><strong>Projeto C</strong><p>Acompanhar os passos</p><small>Estado · em acompanhamento</small></article></div></div>
-          <div class="panel-insight"><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg><p><strong>Continuidade, não apenas contacto.</strong> Fase, responsável e próxima ação num registo de equipa. Projetos fictícios, apenas para ilustração.</p></div>
+        <section class="demo-panel capture-panel" id="panel-investimento" role="tabpanel" aria-labelledby="tab-investimento" tabindex="0" hidden>
+          <figure class="platform-capture">
+            <a href="images/acompanhamento-projetos.jpg" target="_blank" rel="noopener" aria-label="Abrir captura de acompanhamento de investimento em tamanho real, numa nova janela"><img src="images/acompanhamento-projetos.jpg" width="1440" height="1081" loading="lazy" alt="Interface real de investidores e projetos com formulário vazio e campos de fase, responsável, próximo passo e investimento, sem registos privados."></a>
+            <figcaption><h3>Acompanhamento de investimento</h3><p>Formulário real, sem preenchimento: fase, responsável, próximo passo e evidência. Nenhum investidor, contacto ou negociação foi carregado.</p><a href="images/acompanhamento-projetos.jpg" target="_blank" rel="noopener">Ver captura em tamanho real</a></figcaption>
+          </figure>
         </section>
       </div>
     </div>

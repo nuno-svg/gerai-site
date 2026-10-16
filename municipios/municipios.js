@@ -1,4 +1,4 @@
-// Progressive enhancement: the first illustration and all core content work without JS.
+// Progressive enhancement: the first screenshot and all core content work without JS.
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 function selectTab(tab, focus = false) {
   tabs.forEach(item => {
