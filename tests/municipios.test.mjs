@@ -7,6 +7,7 @@ const css = readFileSync(new URL('../municipios/municipios.css', import.meta.url
 const js = readFileSync(new URL('../municipios/municipios.js', import.meta.url), 'utf8');
 
 test('Landing neutral to municipality, including links and metadata', () => {
+  assert.doesNotMatch(html, /↗/);
   assert.doesNotMatch(html + css + js, /caldas|rainha|caldasready|municipio=/i);
   assert.match(html, /<html lang="pt-PT">/);
   assert.equal((html.match(/<h1>/g) || []).length, 1);
