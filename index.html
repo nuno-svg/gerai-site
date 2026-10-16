@@ -416,17 +416,9 @@
         "inLanguage": "pt-PT",
         "offers": {
           "@type": "Offer",
-          "price": "99.90",
-          "priceCurrency": "EUR",
           "category": "Subscription",
           "availability": "https://schema.org/InStock",
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "price": "99.90",
-            "priceCurrency": "EUR",
-            "billingIncrement": 1,
-            "unitCode": "MON"
-          }
+          "url": "https://www.gerai.pt/#preco"
         },
         "publisher": { "@id": "https://www.gerai.pt/#organization" }
       },
@@ -434,7 +426,7 @@
         "@type": "HowTo",
         "@id": "https://www.gerai.pt/#howto",
         "name": "Como começar a usar o GerAI",
-        "description": "5 passos para activar o GerAI na tua incubadora — desde a criação de conta até à decisão de activar a subscrição no fim do trial gratuito de 30 dias.",
+        "description": "5 passos para activar o GerAI na tua incubadora — desde a criação de conta até ao contacto para formalizar a subscrição antes do fim do trial gratuito de 30 dias.",
         "inLanguage": "pt-PT",
         "totalTime": "PT2M",
         "step": [
@@ -470,7 +462,7 @@
             "@type": "HowToStep",
             "position": 5,
             "name": "Decide",
-            "text": "No fim do trial decides: activar a subscrição (€99,90 + IVA por mês) ou cancelar. Sem permanência.",
+            "text": "Antes do fim do trial, contacta-nos para formalizar a subscrição. Se não o fizeres, o acesso termina sem qualquer cobrança. Sem permanência.",
             "url": "https://www.gerai.pt/#howto"
           }
         ]
@@ -517,7 +509,7 @@
             "name": "Há período experimental?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sim — 30 dias gratuitos para validar o serviço com a tua carteira real. É necessário registar um cartão na activação, mas a primeira cobrança só acontece depois dos 30 dias se não cancelares."
+              "text": "Sim — 30 dias gratuitos para validar o serviço com a tua carteira real, sem cartão. Antes do fim do trial, contacta-nos para formalizar a subscrição; se não o fizeres, o acesso termina simplesmente no fim dos 30 dias, sem qualquer cobrança."
             }
           },
           {
@@ -530,7 +522,7 @@
           },
           {
             "@type": "Question",
-            "name": "O que está incluído nos 99,90 euros por mês?",
+            "name": "O que está incluído na subscrição?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Os cinco módulos (financiamentos EU, prazos e obrigações, parcerias europeias EEN, relatórios de portfolio e eventos do ecossistema), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio."
@@ -607,7 +599,7 @@
   <div class="section-wrap">
     <div class="section-label">Como começar</div>
     <h2>5 passos. 30 dias para experimentar.</h2>
-    <p class="section-intro">Activação em minutos, sem cartão. Decides no fim do trial.</p>
+    <p class="section-intro">Activação em minutos, sem cartão. Antes do fim do trial, falas connosco para subscrever.</p>
     <div class="steps-grid reveal-stagger">
       <div class="step-card">
         <div class="step-num">01</div>
@@ -637,7 +629,7 @@
         <div class="step-num">05</div>
         <div class="step-icon" aria-hidden="true">✓</div>
         <h4>Decide</h4>
-        <p>No fim do trial: activar (€99,90/mês) ou cancelar. Sem permanência.</p>
+        <p>Antes do fim do trial, contacta-nos para formalizar a subscrição. Caso contrário o acesso termina, sem cobrança. Sem permanência.</p>
       </div>
     </div>
     <a href="https://app.gerai.pt/?onboarding" class="steps-cta">Começar agora →</a>
@@ -819,13 +811,12 @@
 </div>
 
 <!-- PREÇO -->
-<div class="pricing-section">
+<div class="pricing-section" id="preco">
   <div class="section-wrap">
-    <div class="section-label">Preço</div>
-    <h2 style="margin-bottom:32px;">Simples. Sem surpresas.</h2>
+    <div class="section-label">Subscrição</div>
+    <h2 style="margin-bottom:32px;">Uma subscrição à medida da tua incubadora.</h2>
     <div class="pricing-card reveal">
-      <div class="pricing-price">€99,90<span class="pricing-vat">+ IVA</span></div>
-      <div class="pricing-period">por mês · por incubadora</div>
+      <div class="pricing-period" style="margin-top:0;">Avaliação inicial sem compromisso · proposta ajustada à dimensão do portfolio</div>
       <ul class="pricing-features">
         <li><strong>30 dias gratuitos</strong> para validar com a tua carteira</li>
         <li>Activo em 24 horas</li>
@@ -833,8 +824,8 @@
         <li>Inclui onboarding assistido</li>
       </ul>
       <div class="pricing-actions">
-        <a href="https://app.gerai.pt/?onboarding" class="btn-activate">Activar trial · 30 dias grátis →</a>
-        <a href="mailto:nuno@gerai.pt" class="btn-outline">Falar connosco</a>
+        <a href="mailto:nuno@gerai.pt?subject=GerAI%20%E2%80%94%20pedido%20de%20avalia%C3%A7%C3%A3o%20e%20subscri%C3%A7%C3%A3o" class="btn-activate">Pedir avaliação e informação sobre subscrição →</a>
+        <a href="https://app.gerai.pt/?onboarding" class="btn-outline">Activar trial · 30 dias grátis</a>
       </div>
     </div>
   </div>
@@ -869,7 +860,7 @@
 
       <details class="faq-item">
         <summary>Há período experimental?</summary>
-        <p>Sim — 30 dias gratuitos para validar o serviço com a tua carteira real. No fim do trial decides se queres activar a subscrição.</p>
+        <p>Sim — 30 dias gratuitos para validar o serviço com a tua carteira real, sem cartão. Antes do fim do trial, contacta-nos para formalizar a subscrição; se não o fizeres, o acesso termina simplesmente no fim dos 30 dias, sem qualquer cobrança.</p>
       </details>
 
       <details class="faq-item">
@@ -878,7 +869,7 @@
       </details>
 
       <details class="faq-item">
-        <summary>O que está incluído nos €99,90/mês?</summary>
+        <summary>O que está incluído na subscrição?</summary>
         <p>Os cinco módulos (financiamentos EU, prazos e obrigações, parcerias europeias EEN, relatórios de portfolio e eventos do ecossistema), envio diário automático ao director, onboarding assistido e suporte por email. Sem limite de empresas no portfolio.</p>
       </details>
 
