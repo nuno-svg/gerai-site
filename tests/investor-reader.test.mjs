@@ -26,7 +26,7 @@ test('self-hosted reader has no remote runtime scripts and no general landing en
   const html = readFileSync(new URL('index.html', root), 'utf8');
   assert.doesNotMatch(html, /<script[^>]*src="https?:/);
   assert.match(html, /noindex,nofollow/);
-  assert.match(html, /municipio=caldas-da-rainha/);
+  assert.match(html, /href="\.\.\/"/);
   const landing = readFileSync(new URL('../municipios/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(landing, /investor-guide|caldas-da-rainha/i);
   assert.ok(existsSync(new URL('vendor/LICENSE-page-flip.txt', root)));
@@ -35,5 +35,14 @@ test('reader preserves selected page when rebuilding layout', () => {
   const js = readFileSync(new URL('reader.js', root), 'utf8');
   assert.match(js, /const requestedPage = page/);
   assert.match(js, /flip.turnToPage\(requestedPage\)/);
+  assert.match(js, /startPage:requestedPage/);
   assert.doesNotMatch(js, /innerHTML\s*=/);
+});
+test('Caldas public page offers the library independently of team login', () => {
+  const html = readFileSync(new URL('../index.html', root), 'utf8');
+  assert.match(html, /Acesso público · Sem conta ou palavra-passe/);
+  assert.match(html, /href="investor-guide\/"/);
+  assert.match(html, /Entrar no painel municipal/);
+  assert.doesNotMatch(html, /<form|<script|type="password"/);
+  for (const doc of docs) assert.ok(html.includes(`?doc=${doc.id}`));
 });
