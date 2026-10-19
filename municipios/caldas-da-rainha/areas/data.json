@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "municipalityId": "caldas-da-rainha",
+  "reviewedAt": "2026-10-19",
+  "areas": [
+    {
+      "id": "cidade",
+      "name": {
+        "pt": "Caldas da Rainha",
+        "en": "Caldas da Rainha"
+      },
+      "currentHa": 155.7073,
+      "proposedHa": 304.9449,
+      "pdf": "areas/assets/a4_caldas.pdf",
+      "image": "areas/assets/caldas.png",
+      "mapDate": "2025-12",
+      "road": "A8",
+      "distance": "1–3 km",
+      "time": "1–4 min",
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "tornada",
+      "name": {
+        "pt": "Tornada",
+        "en": "Tornada"
+      },
+      "currentHa": 85.6306,
+      "proposedHa": 147.4857,
+      "pdf": "areas/assets/a4_tornada.pdf",
+      "image": "areas/assets/tornada.png",
+      "mapDate": "2025-12",
+      "road": "A8",
+      "distance": "1,7–3 km",
+      "time": "2–5 min",
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "santa-cecilia",
+      "name": {
+        "pt": "Casal de Santa Cecília",
+        "en": "Casal de Santa Cecília"
+      },
+      "currentHa": 25.7254,
+      "proposedHa": 28.4763,
+      "pdf": "areas/assets/a4_sta_cecilia.pdf",
+      "image": "areas/assets/sta_cecilia.png",
+      "mapDate": "2025-12",
+      "road": "A8 / A15",
+      "distance": "7–8 km",
+      "time": "9–10 min",
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "sao-gregorio-i",
+      "name": {
+        "pt": "São Gregório I",
+        "en": "São Gregório I"
+      },
+      "currentHa": 11.1608,
+      "proposedHa": 21.9233,
+      "pdf": "areas/assets/a4_s_gregorio.pdf",
+      "image": "areas/assets/s_gregorio.png",
+      "mapDate": "2025-12",
+      "road": "A15",
+      "distance": "800 m",
+      "time": "2 min",
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "sao-gregorio-ii",
+      "name": {
+        "pt": "São Gregório II",
+        "en": "São Gregório II"
+      },
+      "currentHa": null,
+      "proposedHa": 39.4987,
+      "pdf": "areas/assets/a4_s_gregorio.pdf",
+      "image": "areas/assets/s_gregorio.png",
+      "mapDate": "2025-12",
+      "road": "A15",
+      "distance": null,
+      "time": null,
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "santa-catarina",
+      "name": {
+        "pt": "Santa Catarina",
+        "en": "Santa Catarina"
+      },
+      "currentHa": 18.6873,
+      "proposedHa": 24.106,
+      "pdf": "areas/assets/a4_sta_catarina.pdf",
+      "image": "areas/assets/sta_catarina.png",
+      "mapDate": "2025-12",
+      "road": "A15",
+      "distance": "17–19 km",
+      "time": "21–22 min",
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "zambujeiro",
+      "name": {
+        "pt": "Zambujeiro",
+        "en": "Zambujeiro"
+      },
+      "currentHa": null,
+      "proposedHa": 5.0353,
+      "pdf": "areas/assets/a3_geral.pdf",
+      "image": "areas/assets/geral.png",
+      "mapDate": "2026-10",
+      "road": null,
+      "distance": null,
+      "time": null,
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "mouraria",
+      "name": {
+        "pt": "Mouraria",
+        "en": "Mouraria"
+      },
+      "currentHa": null,
+      "proposedHa": 4.3147,
+      "pdf": "areas/assets/a3_geral.pdf",
+      "image": "areas/assets/geral.png",
+      "mapDate": "2026-10",
+      "road": null,
+      "distance": null,
+      "time": null,
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": null
+    },
+    {
+      "id": "casal-do-rei",
+      "name": {
+        "pt": "Casal do Rei",
+        "en": "Casal do Rei"
+      },
+      "currentHa": null,
+      "proposedHa": 10.2435,
+      "pdf": "areas/assets/a4_casal_rei.pdf",
+      "image": "areas/assets/casal_rei.png",
+      "mapDate": "2025-12",
+      "road": "A15",
+      "distance": null,
+      "time": null,
+      "availability": null,
+      "price": null,
+      "lots": null,
+      "source": "ZIndustriais.xlsx · Folha1; cartografia DPTG / Município",
+      "status": "proposal",
+      "note": {
+        "pt": "Área do PDM em vigor omitida: valor a reconciliar na folha de origem.",
+        "en": "Current-plan area withheld: source spreadsheet requires reconciliation."
+      }
+    }
+  ],
+  "limitations": {
+    "pt": "Áreas de planeamento, não terrenos disponíveis. A revisão do PDM é apresentada como proposta na documentação recebida. Disponibilidade, preços, lotes, infraestruturas e viabilidade não confirmados. Distâncias e tempos são aproximações da fonte, não percursos calculados. Mapas originais em português; fichas e navegação em PT/EN. Não existem polígonos georreferenciados neste conjunto.",
+    "en": "Planning areas, not available plots. The PDM revision is labelled as a proposal in the supplied documentation. Availability, prices, plots, infrastructure and feasibility are unconfirmed. Distances and times are source estimates, not calculated routes. Original maps are in Portuguese; factsheets and navigation are available in PT/EN. No georeferenced polygons were supplied."
+  }
+}
