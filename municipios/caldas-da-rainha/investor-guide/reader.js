@@ -95,7 +95,7 @@
     current = doc; page = initial;
     $('publication').value = doc.id;
     $('title').textContent = doc.title; $('language').textContent = doc.language;
-    $('document-info').textContent = `${doc.pages.length} páginas · ${doc.language} · Edição 18.10.2026`;
+    $('document-info').textContent = `${doc.pages.length} páginas · ${doc.language} · Edição 19.10.2026`;
     $('download').href = doc.pdf;
     document.title = `${doc.title} · Caldas da Rainha`;
     $('chapters').replaceChildren();

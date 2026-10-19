@@ -6,10 +6,10 @@ const root = new URL('../municipios/caldas-da-rainha/investor-guide/', import.me
 const context = { window: {} };
 runInNewContext(readFileSync(new URL('catalog.js', root), 'utf8'), context);
 const docs = context.window.INVESTOR_CATALOG;
-test('six publications, 88 pages, complete local images and original PDFs', () => {
-  assert.equal(docs.length, 6);
-  assert.equal(docs.reduce((n,d) => n+d.pages.length, 0), 88);
-  assert.equal(new Set(docs.map(d => d.id)).size, 6);
+test('nine revised publications, complete local images and source PDFs', () => {
+  assert.equal(docs.length, 9);
+  assert.equal(docs.reduce((n,d) => n+d.pages.length, 0), 118);
+  assert.equal(new Set(docs.map(d => d.id)).size, 9);
   for (const doc of docs) {
     assert.equal(readFileSync(new URL(doc.pdf, root)).subarray(0,5).toString(), '%PDF-');
     for (const [i,p] of doc.pages.entries()) {
@@ -21,6 +21,14 @@ test('six publications, 88 pages, complete local images and original PDFs', () =
     }
     for (const chapter of doc.chapters) assert.ok(chapter.page>=1 && chapter.page<=doc.pages.length);
   }
+});
+test('revision includes industrial data, softlanding and current contact', () => {
+  const all = docs.flatMap(d => d.pages.map(p => p.text)).join('\n');
+  assert.match(all, /586/);
+  assert.match(all, /economia@mcr\.pt/);
+  assert.doesNotMatch(all, /via\.expresso@mcr\.pt|≈550 ha/);
+  assert.ok(docs.some(d => d.id === 'industrial-en'));
+  assert.ok(docs.some(d => d.id === 'industrial-pt'));
 });
 test('self-hosted reader has no remote runtime scripts and no general landing entry', () => {
   const html = readFileSync(new URL('index.html', root), 'utf8');
