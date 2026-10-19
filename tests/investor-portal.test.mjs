@@ -4,6 +4,17 @@ import fs from 'node:fs';
 import {validateRequest,areaIds} from '../municipios/caldas-da-rainha/intake-model.js';
 const base=new URL('../municipios/caldas-da-rainha/',import.meta.url);
 const valid={kind:'project',language:'en',name:'Test User',email:'test@example.invalid',organisation:'Test entity',country:'Portugal',sector:'Industry',title:'Test project',message:'A request with sufficient detail.',spaceNeeds:'',timeline:'',businessAreaId:'cidade',forecastValue:'1200.50',estimatedJobs:'3',privacyAccepted:true,website:''};
+test('opening prioritises a project enquiry while preserving guide and space routes in PT/EN',()=>{
+ const source=fs.readFileSync(new URL('investor-portal.js',base),'utf8');
+ const hero=source.slice(source.indexOf('root.innerHTML='),source.indexOf('<nav class="portal-nav"'));
+ assert.match(hero,/class="primary" href="#pedido" data-kind="project"/);
+ assert.match(hero,/Apresentar o meu projeto','Introduce my project/);
+ assert.match(hero,/href="#espacos"/);
+ assert.match(hero,/href="#pedido" data-kind="information"/);
+ assert.match(hero,/hero-guide/);assert.match(hero,/Descarregar PDF','Download PDF/);
+ assert.doesNotMatch(hero,/↗|48h|14 days/);
+ assert.match(source,/if\(busy\|\|submitted\)return;document.querySelector\(`input\[name=kind\]/);
+});
 test('intake validates both languages and optional figures without inventing zero',()=>{for(const language of ['pt','en']){const r=validateRequest({...valid,language});assert.equal(r.valid,true);assert.equal(r.value.forecastValue,1200.5)}assert.equal(validateRequest({...valid,forecastValue:'',estimatedJobs:''}).value.forecastValue,null)});
 test('intake rejects missing consent, bad email, invalid numbers and unknown areas',()=>{for(const change of [{privacyAccepted:false},{email:'bad'},{message:'short'},{businessAreaId:'other'},{estimatedJobs:2.5},{forecastValue:-1},{website:'spam'},{name:'x'.repeat(161)},{language:'xx'},{kind:'licensing'}])assert.equal(validateRequest({...valid,...change}).valid,false,JSON.stringify(change))});
 test('all nine area maps and previews exist locally',()=>{const data=JSON.parse(fs.readFileSync(new URL('areas/data.json',base)));assert.deepEqual(data.areas.map(a=>a.id),areaIds);for(const a of data.areas){assert.ok(fs.existsSync(new URL(a.pdf,base)));assert.ok(fs.existsSync(new URL(a.image,base)));assert.equal(a.availability,null)}});
