@@ -66,6 +66,8 @@ test('Caldas public page offers the library independently of team login', () => 
   assert.match(html, /Acesso público · Sem conta ou palavra-passe/);
   assert.match(html, /href="investor-guide\/\?doc=guide-pt"/);
   assert.match(html, /Entrar no painel municipal/);
-  assert.doesNotMatch(html, /<form|<script|type="password"/);
+  assert.doesNotMatch(html, /type="password"/);
+  assert.match(html, /<script type="module" src="investor-portal.js"><\/script>/);
+  assert.doesNotMatch(html, /<script[^>]+src="https?:/);
   for (const doc of docs) assert.ok(html.includes(`?doc=${doc.id}`));
 });
