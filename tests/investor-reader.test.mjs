@@ -6,10 +6,15 @@ const root = new URL('../municipios/caldas-da-rainha/investor-guide/', import.me
 const context = { window: {} };
 runInNewContext(readFileSync(new URL('catalog.js', root), 'utf8'), context);
 const docs = context.window.INVESTOR_CATALOG;
-test('nine revised publications, complete local images and source PDFs', () => {
-  assert.equal(docs.length, 9);
-  assert.equal(docs.reduce((n,d) => n+d.pages.length, 0), 118);
-  assert.equal(new Set(docs.map(d => d.id)).size, 9);
+test('fourteen monolingual publications, complete local images and source PDFs', () => {
+  assert.equal(docs.length, 14);
+  assert.equal(docs.reduce((n,d) => n+d.pages.length, 0), 156);
+  assert.equal(new Set(docs.map(d => d.id)).size, 14);
+  for (const language of ['PT','EN']) {
+    const edition = docs.filter(d => d.language === language);
+    assert.equal(edition.length, 7);
+    assert.equal(Array.from(edition,d => d.group).join(','),'guide,facts,assets,industrial,sectors,pitch,welcome');
+  }
   for (const doc of docs) {
     assert.equal(readFileSync(new URL(doc.pdf, root)).subarray(0,5).toString(), '%PDF-');
     for (const [i,p] of doc.pages.entries()) {
@@ -31,10 +36,14 @@ test('revision includes industrial data, softlanding and current contact', () =>
   assert.ok(docs.some(d => d.id === 'industrial-pt'));
 });
 test('consolidated dossier and industrial sections follow the location material', () => {
-  assert.equal(Array.from(docs,d => d.id).join(','), 'guide,facts,assets,industrial-pt,industrial-en,sectors,pitch,pitch-en,welcome');
+  assert.equal(Array.from(docs,d => d.id).join(','), 'guide-pt,facts-pt,assets-pt,industrial-pt,sectors-pt,pitch,welcome-pt,guide,facts-en,assets-en,industrial-en,sectors-en,pitch-en,welcome-en');
   const html = readFileSync(new URL('index.html', root), 'utf8');
-  assert.match(html, /id="download-dossier"[^>]*href="assets\/dossier\/document.pdf"/);
-  assert.equal(readFileSync(new URL('assets/dossier/document.pdf', root)).subarray(0,5).toString(), '%PDF-');
+  assert.match(html, /id="download-dossier"[^>]*href="assets\/dossier-pt\/document.pdf"/);
+  assert.match(html, /id="edition-language"/);
+  for (const lang of ['PT','EN']) {
+    assert.equal(readFileSync(new URL(`assets/dossier-${lang.toLowerCase()}/document.pdf`, root)).subarray(0,5).toString(), '%PDF-');
+    assert.equal(readFileSync(new URL(`assets/dossier-${lang.toLowerCase()}/Kit_Caldas_${lang}.zip`, root)).subarray(0,2).toString(), 'PK');
+  }
 });
 test('self-hosted reader has no remote runtime scripts and no general landing entry', () => {
   const html = readFileSync(new URL('index.html', root), 'utf8');
@@ -55,7 +64,7 @@ test('reader preserves selected page when rebuilding layout', () => {
 test('Caldas public page offers the library independently of team login', () => {
   const html = readFileSync(new URL('../index.html', root), 'utf8');
   assert.match(html, /Acesso público · Sem conta ou palavra-passe/);
-  assert.match(html, /href="investor-guide\/"/);
+  assert.match(html, /href="investor-guide\/\?doc=guide-pt"/);
   assert.match(html, /Entrar no painel municipal/);
   assert.doesNotMatch(html, /<form|<script|type="password"/);
   for (const doc of docs) assert.ok(html.includes(`?doc=${doc.id}`));
