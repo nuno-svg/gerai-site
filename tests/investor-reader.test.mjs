@@ -30,6 +30,12 @@ test('revision includes industrial data, softlanding and current contact', () =>
   assert.ok(docs.some(d => d.id === 'industrial-en'));
   assert.ok(docs.some(d => d.id === 'industrial-pt'));
 });
+test('consolidated dossier and industrial sections follow the location material', () => {
+  assert.equal(Array.from(docs,d => d.id).join(','), 'guide,facts,assets,industrial-pt,industrial-en,sectors,pitch,pitch-en,welcome');
+  const html = readFileSync(new URL('index.html', root), 'utf8');
+  assert.match(html, /id="download-dossier"[^>]*href="assets\/dossier\/document.pdf"/);
+  assert.equal(readFileSync(new URL('assets/dossier/document.pdf', root)).subarray(0,5).toString(), '%PDF-');
+});
 test('self-hosted reader has no remote runtime scripts and no general landing entry', () => {
   const html = readFileSync(new URL('index.html', root), 'utf8');
   assert.doesNotMatch(html, /<script[^>]*src="https?:/);
