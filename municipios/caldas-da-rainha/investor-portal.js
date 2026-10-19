@@ -1,12 +1,16 @@
 import config from './public-config.js';
 import {validateRequest} from './intake-model.js';
+import tenant from './tenant-config.js';
+import {readCatalogue,filterSpaces,spaceLabel} from './spaces-catalogue.js';
+import {propertyNeedsLimit} from './property-interest.js';
+let catalogue=null,catalogueError=false,catalogueLoading=false,spaceFilters={},spaceLimit=6;
 const base=new URL('.',import.meta.url),root=document.querySelector('main');
 const data=await fetch(new URL('areas/data.json',base)).then(r=>{if(!r.ok)throw Error();return r.json()});
 let lang=new URL(location.href).searchParams.get('lang')==='en'?'en':'pt',draft={},selected='cidade',busy=false,requestKey=null,submitted=null;
 const t=(pt,en)=>lang==='pt'?pt:en;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const url=p=>new URL(p,base).href;
-const team='https://app.gerai.pt/?canal=municipios&municipio=caldas-da-rainha';
+const team=tenant.teamUrl;
 const ha=v=>v==null?t('Por confirmar','Unconfirmed'):new Intl.NumberFormat(lang==='pt'?'pt-PT':'en-GB',{maximumFractionDigits:2}).format(v)+' ha';
 const areas=()=>data.areas.map(a=>`<option value="${a.id}" ${draft.businessAreaId===a.id?'selected':''}>${a.name[lang]}</option>`).join('');
 const publications=[['guide-pt','guide','Guia do Investidor','Investor Guide'],['facts-pt','facts-en','O concelho e os apoios','Municipality and support'],['assets-pt','assets-en','Ativos e espaços','Business locations'],['industrial-pt','industrial-en','Zonas industriais e PDM','Industrial areas and PDM'],['sectors-pt','sectors-en','Fichas setoriais','Sector factsheets'],['pitch','pitch-en','Apresentação de investimento','Investment presentation'],['welcome-pt','welcome-en','Acolhimento ao investidor','Investor welcome and support']];
@@ -31,6 +35,7 @@ document.querySelector('#area-select').onchange=e=>{selected=e.target.value;docu
 document.querySelectorAll('[data-kind]').forEach(a=>a.onclick=()=>{document.querySelector(`input[name=kind][value=${a.dataset.kind}]`).checked=true;toggleProject()});
 document.querySelectorAll('[name=kind]').forEach(el=>el.onchange=toggleProject);
 document.querySelector('#investor-request').onsubmit=submit;
+mountSpaces();
 if(submitted)showReceipt();else checkConnection();
 }
 function toggleProject(){document.querySelector('.project-fields').hidden=document.querySelector('[name=kind]:checked').value!=='project'}
@@ -43,4 +48,33 @@ busy=true;document.querySelector('#send-request').disabled=true;document.querySe
 try{requestKey ||= crypto.randomUUID();const challenge=await rpc('municipal_intake_challenge',{});const solution=await solve(challenge);const result=await rpc('municipal_submit_inquiry',{p_payload:checked.value,p_challenge:challenge,p_solution:solution,p_request_key:requestKey});if(!/^CR-\d{8}-[A-F0-9]{12}$/.test(result.reference)||!result.receivedAt)throw Error('Invalid receipt');submitted=result;showReceipt()}catch(error){status.textContent=error.code==='P0429'?t('Limite temporário de envios atingido. Tente mais tarde.','Temporary submission limit reached. Please try later.'):t('Não foi possível confirmar a receção. Os campos foram preservados. Tente novamente sem alterar os dados para evitar duplicações, ou contacte nuno@gerai.pt.','Receipt could not be confirmed. Your fields have been preserved. Retry without changing the details to avoid duplicates, or contact nuno@gerai.pt.');document.querySelector('#send-request').disabled=false}
 finally{busy=false;document.querySelectorAll('[data-language]').forEach(b=>b.disabled=false)}}
 function showReceipt(){document.querySelector('#investor-request').hidden=true;const box=document.querySelector('#receipt');box.hidden=false;box.innerHTML=`<h3>${t('Pedido recebido','Request received')}</h3><p>${t('Guarde esta referência:','Save this reference:')} <strong>${esc(submitted.reference)}</strong></p><p>${t('O pedido está registado na área privada da equipa de Caldas da Rainha. A receção não constitui aprovação do projeto.','Your request is recorded in the private Caldas da Rainha team workspace. Receipt does not mean project approval.')}</p><p>${t('Não foi enviado um email automático. O contacto continuará pelo email que indicou.','No automatic email has been sent. Further contact will use the email you provided.')}</p>`;box.focus()}
+function dateLabel(value){return value?new Date(value).toLocaleDateString(lang==='pt'?'pt-PT':'en-GB'):t('Sem confirmação','Unconfirmed')}
+function spacesHtml(){
+ const items=filterSpaces(catalogue?.items||[],spaceFilters),options=k=>[...new Set((catalogue?.items||[]).map(r=>r[k]).filter(Boolean))];
+ const select=(key,label)=>`<label>${label}<select data-space-filter="${key}"><option value="">${t('Todos','All')}</option>${options(key).map(v=>`<option value="${esc(v)}" ${spaceFilters[key]===v?'selected':''}>${esc(spaceLabel(v,lang))}</option>`).join('')}</select></label>`;
+ return `<p class="eyebrow">CALDASESPAÇOS</p><h2>${t('Espaços para o seu investimento.','Spaces for your investment.')}</h2><p>${t('Explore os anúncios e associe um espaço ao seu pedido. Disponibilidade, condições e adequação carecem de confirmação junto da fonte.','Explore listings and attach a property to your enquiry. Availability, terms and suitability must be confirmed with the source.')}</p><p class="source">${t('Cobertura parcial do mercado. Não constitui reserva nem recomendação imobiliária.','Partial market coverage. This is not a reservation or a property recommendation.')} ${catalogue?t('Dados consultados em ','Data retrieved on ')+dateLabel(catalogue.retrievedAt):''}</p>
+ ${catalogue?`<div class="space-filters"><label>${t('Pesquisar','Search')}<input type="search" data-space-filter="query" value="${esc(spaceFilters.query||'')}" placeholder="${t('Localização ou palavra-chave','Location or keyword')}"></label>${select('type',t('Utilização','Use'))}${select('transaction',t('Operação','Transaction'))}</div><p role="status">${items.length} ${t('resultados','matches')} · ${Math.min(spaceLimit,items.length)} ${t('apresentados','shown')} · ${catalogue.items.length} ${t('anúncios no catálogo','catalogue listings')}</p><div class="space-grid">${items.slice(0,spaceLimit).map(r=>{
+ const title=lang==='pt'?r.title:`${spaceLabel(r.type,'en')||'Property'} · ${r.area?r.area+' m² · ':''}${r.parish}`;
+ const price=r.price?new Intl.NumberFormat(lang==='pt'?'pt-PT':'en-GB',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(r.price)+(r.transaction==='Arrendamento'?t(' / mês',' / month'):''):t('Preço por confirmar','Price unconfirmed');
+ return `<article class="space-card"><div class="space-tags"><span>${esc(spaceLabel(r.type,lang))}</span><span>${esc(spaceLabel(r.transaction,lang))}</span></div><h3>${esc(title)}</h3><p>${esc(r.parish)}</p><dl><div><dt>${t('Área anunciada','Advertised area')}</dt><dd>${r.area?new Intl.NumberFormat(lang==='pt'?'pt-PT':'en-GB').format(r.area)+' m²':t('Por confirmar','Unconfirmed')}</dd></div><div><dt>${t('Preço anunciado','Advertised price')}</dt><dd>${price}</dd></div></dl><p class="source">${esc(r.source)} · ${t('Última confirmação','Last confirmed')}: ${dateLabel(r.confirmed)}</p><p class="space-status">${r.recent?t('Verificação recente; confirmar disponibilidade','Recently checked; confirm availability'):t('Requer nova confirmação na fonte','Requires a new check with the source')}</p>${lang==='en'?`<details><summary>Original listing title (Portuguese)</summary><p lang="pt">${esc(r.title)}</p></details>`:''}<div class="edition-actions"><a class="secondary" href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${t('Ver anúncio original','View original listing')}</a><button class="primary" data-property="${esc(r.sourceUrl)}">${t('Pedir informação','Enquire about this space')}</button></div></article>`;
+ }).join('')}</div>${items.length?'':`<p>${t('Sem resultados. Altere os filtros.','No matches. Change your filters.')}</p>`}`:`<p role="status">${catalogueError?t('Não foi possível carregar os espaços. Pode abrir o catálogo ou fazer um pedido sem selecionar imóvel.','Unable to load properties. You can open the catalogue or submit an enquiry without choosing a property.'):t('A carregar os espaços…','Loading properties…')}</p>`}
+ <div class="edition-actions">${items.length>spaceLimit?`<button class="secondary" id="more-spaces">${t('Mostrar mais espaços','Show more properties')}</button>`:''}<button class="secondary" id="reload-spaces" ${catalogueLoading?'disabled':''}>${t('Atualizar consulta','Refresh listings')}</button><a class="secondary" href="${tenant.catalogueUrl}" target="_blank" rel="noopener noreferrer">${t('Abrir CaldasEspaços','Open CaldasEspaços')}</a></div>${catalogueError&&catalogue?`<p role="status">${t('A atualização falhou. Mantêm-se os dados anteriores e a sua data.','Refresh failed. Previously loaded data and its date are preserved.')}</p>`:''}`;
+}
+function renderSpaces(){const section=document.querySelector('#espacos');if(!section)return;section.innerHTML=spacesHtml();section.querySelectorAll('[data-space-filter]').forEach(el=>el.onchange=()=>{spaceFilters[el.dataset.spaceFilter]=el.value;spaceLimit=6;renderSpaces()});section.querySelectorAll('[data-property]').forEach(b=>b.onclick=()=>{if(busy||submitted)return;capture();draft.propertySource=b.dataset.property;draft.kind='information';render();location.hash='pedido';document.querySelector('[name=title]').focus()});section.querySelector('#reload-spaces').onclick=loadSpaces;const more=section.querySelector('#more-spaces');if(more)more.onclick=()=>{spaceLimit+=6;renderSpaces()}}
+function mountSpaces(){
+ const section=document.createElement('section');section.id='espacos';section.className='portal-section';document.querySelector('#pedido').before(section);
+ const link=document.querySelector('.portal-nav a[href^="https://espacos."]');if(link){link.href='#espacos';link.removeAttribute('target')}
+ renderSpaces();
+ if(draft.propertySource){
+  const f=document.querySelector('#investor-request'),row=catalogue?.items.find(r=>r.sourceUrl===draft.propertySource);
+  const box=document.createElement('div');box.className='selected-property';box.innerHTML=`<p><strong>${t('Imóvel associado ao pedido','Property attached to this enquiry')}</strong></p><p>${esc(row?.title||draft.propertySource)}</p><a href="${esc(draft.propertySource)}" target="_blank" rel="noopener noreferrer">${t('Consultar anúncio','View listing')}</a> <button type="button" id="remove-property">${t('Retirar seleção','Remove selection')}</button><input type="hidden" name="propertySource" value="${esc(draft.propertySource)}">`;
+  f.prepend(box);document.querySelector('[name=spaceNeeds]').maxLength=propertyNeedsLimit(draft.propertySource);
+  box.querySelector('button').onclick=()=>{capture();delete draft.propertySource;render()};
+ }
+ if(!catalogue&&!catalogueLoading&&!catalogueError)loadSpaces();
+}
+async function loadSpaces(){if(catalogueLoading)return;catalogueLoading=true;renderSpaces();try{
+ const r=await fetch(`${config.url}/rest/v1/municipal_public_snapshots?select=payload&municipality_id=eq.${encodeURIComponent(tenant.id)}`,{headers:{apikey:config.key,Authorization:`Bearer ${config.key}`},signal:AbortSignal.timeout(20000),cache:'no-store'});
+ if(!r.ok)throw Error('Unavailable');const rows=await r.json();catalogue=readCatalogue(rows[0]?.payload?.datasets?.spaces,tenant);catalogueError=false;
+ }catch{catalogueError=true}finally{catalogueLoading=false;renderSpaces()}}
 render();
