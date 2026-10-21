@@ -1,7 +1,17 @@
 /* Self-hosted reader: no analytics, accounts, remote assets or storage. */
 (() => {
   'use strict';
-  const docs = window.INVESTOR_CATALOG || [];
+  // catalog-index.js holds the index only; each publication's pages (images, text, links) load from
+  // data/<id>.json when opened. Search covers the open publication, so it only needs that file.
+  // A page still cached with the legacy full catalog.js already carries pages and skips the fetch.
+  const V = '20261022';
+  const docs = window.INVESTOR_CATALOG || [], editions = window.INVESTOR_EDITIONS || {};
+  const loaded = new Map();
+  const pages = doc => doc.pages ? Promise.resolve(doc) : (loaded.get(doc.id) || loaded.set(doc.id, fetch(`data/${encodeURIComponent(doc.id)}.json?v=${V}`)
+    .then(r => { if (!r.ok) throw Error(r.status); return r.json(); })
+    .then(data => { if (data.id !== doc.id || !Array.isArray(data.pages)) throw Error('Invalid data'); doc.pages = data.pages; return doc; })
+    .catch(error => { loaded.delete(doc.id); throw error; })).get(doc.id));
+  let opening = 0;
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
   const aliases = {facts:'facts-pt',assets:'assets-pt',sectors:'sectors-pt',welcome:'welcome-pt'};
@@ -11,9 +21,17 @@
   let page = 0, flip = null, textMode = false, resizeTimer;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const normal = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const count = doc => doc.pages?.length || doc.pageCount || 1;
   function number(value) {
     const n = Number(value);
-    return Number.isFinite(n) ? Math.max(0, Math.min(current.pages.length - 1, Math.floor(n) - 1)) : 0;
+    return Number.isFinite(n) ? Math.max(0, Math.min(count(current) - 1, Math.floor(n) - 1)) : 0;
+  }
+  // «PDF · 6,3 MB» / «PDF · 6.3 MB», from sizes measured at build time.
+  const size = bytes => bytes >= 1e6 ? new Intl.NumberFormat(t('pt-PT','en-GB'), {maximumFractionDigits:1}).format(bytes / 1e6) + ' MB' : Math.max(1, Math.round(bytes / 1e3)) + ' kB';
+  const meta = (href, bytes) => href.split('.').pop().toUpperCase() + (bytes ? ` · ${size(bytes)}` : '');
+  function label(el, before, visible, after = '') {
+    const hidden = text => { const s = document.createElement('span'); s.className = 'visually-hidden'; s.textContent = text; return s; };
+    el.replaceChildren(...[before && hidden(before), visible, after && hidden(after)].filter(Boolean));
   }
   function message(text) { $('status').textContent = text; }
   const mobile = () => innerWidth <= 760;
@@ -39,6 +57,7 @@
   // After choosing a result or chapter, reading continues in the main area.
   function toReading() { if (mobile()) setSidebar(false, 'main'); else $('main').focus(); }
   function sync() {
+    if (!current.pages) return;
     $('page-input').value = page + 1;
     $('page-input').max = current.pages.length;
     $('page-total').textContent = `/ ${current.pages.length}`;
@@ -64,6 +83,7 @@
     }
   }
   function go(index, animate = false) {
+    if (!current.pages) return;
     page = Math.max(0, Math.min(current.pages.length - 1, index));
     if (flip && !textMode) {
       if (animate && !reduced.matches) flip.flip(page);
@@ -72,7 +92,7 @@
     sync();
   }
   function buildBook() {
-    if (!current || textMode || !$('stage').clientHeight) return;
+    if (!current?.pages || textMode || !$('stage').clientHeight) return;
     const requestedPage = page;
     const mount = $('book-mount');
     if (flip) { flip.destroy(); flip = null; }
@@ -87,9 +107,10 @@
     const spread = availableW > 700 && ratio < 1;
     const width = Math.floor(Math.min(availableH * ratio, availableW / (spread ? 2 : 1)));
     const height = Math.floor(width / ratio);
+    if (width < 1 || height < 1) return; // hidden or collapsed area: rebuilt on the next resize
     for (const [i, p] of current.pages.entries()) {
       const el = document.createElement('div'); el.className = 'page'; el.dataset.number = i;
-      const im = document.createElement('img'); im.src = p.image;
+      const im = document.createElement('img'); im.src = p.image; im.decoding = 'async';
       im.alt = `${current.title} — ${t('página','page')} ${i + 1}. ${t('Transcrição disponível no modo Texto.','Transcript available in Text mode.')}`;
       im.loading = i < 3 || Math.abs(i - page) < 3 ? 'eager' : 'lazy'; im.draggable = false;
       el.append(im);
@@ -111,6 +132,15 @@
     page = requestedPage;
     sync();
   }
+  // Fetches the publication's pages (once) before showing it; the latest choice wins.
+  async function open(doc, initial = 0) {
+    const ticket = ++opening;
+    if (!doc.pages) message(doc.language === 'EN' ? 'Loading publication…' : 'A carregar a publicação…');
+    try { await pages(doc); }
+    catch { if (ticket === opening) message(doc.language === 'EN' ? 'The publication could not be loaded. Please try again.' : 'Não foi possível carregar a publicação. Tente novamente.'); return false; }
+    if (ticket !== opening) return false;
+    loadDocument(doc, initial); return true;
+  }
   function loadDocument(doc, initial = 0) {
     current = doc; page = initial;
     const en = doc.language === 'EN';
@@ -126,12 +156,14 @@
     for (const d of docs.filter(d => d.language === doc.language)) {
       const o = document.createElement('option'); o.value = d.id; o.textContent = d.title; $('publication').append(o);
     }
-    $('download-dossier').href = `assets/dossier-${doc.language.toLowerCase()}/document.pdf`;
+    const edition = editions[doc.language] || {}, lower = doc.language.toLowerCase();
+    const dossier = edition.dossier || {href:`assets/dossier-${lower}/document.pdf`}, kit = edition.kit || {href:`assets/dossier-${lower}/Kit_Caldas_${doc.language}.zip`};
+    $('download-dossier').href = dossier.href;
     $('download-dossier').download = `Dossier_Caldas_Investidor_${doc.language}.pdf`;
-    $('download-dossier').textContent = t('Dossier completo PDF','Complete dossier PDF');
-    $('download-package').href = `assets/dossier-${doc.language.toLowerCase()}/Kit_Caldas_${doc.language}.zip`;
-    $('download-package').textContent = t('Pacote em português ZIP','English package ZIP');
-    for (const [id,pt,english] of [['toggle-sidebar','Índice','Contents'],['zoom','Ampliar','Zoom'],['share','Partilhar','Share'],['download','Descarregar PDF','Download PDF'],['fullscreen','Ecrã inteiro','Full screen'],['previous','Anterior','Previous'],['next','Seguinte','Next'],['close-sidebar','Fechar','Close'],['zoom-close','Fechar ampliação','Close zoom']]) $(id).textContent=t(pt,english);
+    $('download-dossier').textContent = `${t('Dossier completo','Complete dossier')} · ${meta(dossier.href, dossier.bytes)}`;
+    $('download-package').href = kit.href;
+    $('download-package').textContent = `${t('Pacote em português','English package')} · ${meta(kit.href, kit.bytes)}`;
+    for (const [id,pt,english] of [['toggle-sidebar','Índice','Contents'],['zoom','Ampliar','Zoom'],['share','Partilhar','Share'],['fullscreen','Ecrã inteiro','Full screen'],['previous','Anterior','Previous'],['next','Seguinte','Next'],['close-sidebar','Fechar','Close'],['zoom-close','Fechar ampliação','Close zoom']]) $(id).textContent=t(pt,english);
     $('mode').textContent = textMode ? t('Folhear','Browse') : t('Texto','Text');
     document.querySelector('#sidebar h1').textContent=t('Uma cidade. Muitas possibilidades.','One city. Many possibilities.');
     document.querySelector('#sidebar .intro').textContent=t('Edição portuguesa. Sete publicações para conhecer o território e investir.','English edition. Seven publications to explore the area and invest.');
@@ -146,6 +178,7 @@
     $('title').textContent = doc.title; $('language').textContent = doc.language;
     $('document-info').textContent = `${doc.pages.length} ${t('páginas','pages')} · ${doc.language} · ${t('Edição','Edition')} 19.10.2026`;
     $('download').href = doc.pdf;
+    label($('download'), t('Descarregar ','Download '), meta(doc.pdf, doc.bytes), `: ${doc.title}`);
     document.title = `${doc.title} · Caldas da Rainha`;
     $('chapters').replaceChildren();
     for (const c of doc.chapters) {
@@ -158,15 +191,16 @@
     $('thumbnails').replaceChildren();
     for (const [i,p] of doc.pages.entries()) {
       const b = document.createElement('button'); b.dataset.page = i; b.setAttribute('aria-label', `${t('Ir para página','Go to page')} ${i+1}`);
-      const im = document.createElement('img'); im.src = p.thumb; im.alt = ''; im.loading = 'lazy';
+      const im = document.createElement('img'); im.src = p.thumb; im.alt = ''; im.loading = 'lazy'; im.decoding = 'async';
+      if (doc.thumb) [im.width, im.height] = doc.thumb;
       const n = document.createElement('span'); n.textContent = i + 1;
       b.append(im,n); b.onclick = () => go(i); $('thumbnails').append(b);
     }
     $('search').value = ''; $('search-results').replaceChildren();
     buildBook(); sync();
   }
-  $('edition-language').onchange = e => loadDocument(docs.find(d => d.language === e.target.value && d.group === current.group) || docs.find(d => d.language === e.target.value));
-  $('publication').onchange = e => {loadDocument(docs.find(d=>d.id===e.target.value)); if(mobile())setSidebar(false,'main');};
+  $('edition-language').onchange = async e => {if(!await open(docs.find(d => d.language === e.target.value && d.group === current.group) || docs.find(d => d.language === e.target.value)))e.target.value = current.language;};
+  $('publication').onchange = async e => {if(await open(docs.find(d=>d.id===e.target.value))){if(mobile())setSidebar(false,'main');}else e.target.value = current.id;};
   $('toggle-sidebar').onclick = () => setSidebar(document.body.classList.contains('sidebar-off'));
   $('close-sidebar').onclick = () => setSidebar(false);
   $('sidebar-backdrop').onclick = () => setSidebar(false);
@@ -180,7 +214,7 @@
   };
   $('search').oninput = e => {
     const q = normal(e.target.value.trim()); const box = $('search-results'); box.replaceChildren();
-    if(q.length<2)return;
+    if(q.length<2||!current.pages)return;
     const found = current.pages.filter(p=>normal(p.text).includes(q));
     const count = document.createElement('p'); count.textContent = `${found.length} ${t('página(s) encontrada(s)','page(s) found')}`; box.append(count);
     for(const p of found){
@@ -190,6 +224,7 @@
     }
   };
   $('zoom').onclick=()=>{
+    if(!current.pages)return;
     $('zoom-image').src=current.pages[page].image;$('zoom-image').alt=`${current.title}, ${t('página','page')} ${page+1}`;
     $('zoom-label').textContent=`${current.title} · ${page+1} / ${current.pages.length}`;
     $('zoom-dialog').showModal();$('zoom-dialog').scrollTop=0;$('zoom-dialog').scrollLeft=0;
@@ -207,6 +242,6 @@
   });
   window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{sidebarMode();buildBook();},180);});
   if(innerWidth<=760){document.body.classList.add('sidebar-off');$('toggle-sidebar').setAttribute('aria-expanded','false');}
-  if(current)loadDocument(current,number(params.get('page')||1));
+  if(current)open(current,number(params.get('page')||1));
   else message('Publicações indisponíveis. Volte a carregar a página.');
 })();

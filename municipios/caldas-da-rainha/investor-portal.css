@@ -39,3 +39,4 @@ html{scroll-behavior:smooth;scroll-padding-top:25px}button,input,textarea,select
 .space-card:focus,#selected-property:focus,#receipt:focus,.error-summary:focus{outline:3px solid #b77d27;outline-offset:3px}
 @media(max-width:520px){.receipt-summary div{grid-template-columns:1fr;gap:2px}}
 @media print{body *{visibility:hidden}#receipt,#receipt *{visibility:visible}#receipt{position:absolute;inset:0 auto auto 0;width:100%;border:0}#receipt .receipt-actions{display:none}}
+.library-layout>img,.area-detail img{height:auto}.area-detail picture{display:block}

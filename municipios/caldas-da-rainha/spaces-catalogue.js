@@ -1,4 +1,4 @@
-import {safePropertyUrl} from './property-interest.js?v=20261021';
+import {safePropertyUrl} from './property-interest.js?v=20261022';
 const clean=(s,n=240)=>typeof s==='string'?s.replace(/[\u0000-\u001f]/g,' ').trim().slice(0,n):'';
 const num=n=>typeof n==='number'&&Number.isFinite(n)&&n>0?n:null;
 const fold=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
