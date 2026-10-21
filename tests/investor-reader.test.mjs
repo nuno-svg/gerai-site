@@ -123,7 +123,7 @@ function runReader(search, {legacy = false} = {}) {
 test('reader fetches only the opened publication, keeps deep links, aliases and search', async () => {
   const r = runReader('?doc=facts&page=3');
   await r.settle();
-  assert.deepEqual(r.fetched, ['data/facts-pt.json?v=20261022']);
+  assert.deepEqual(r.fetched, ['data/facts-pt.json?v=20261023']);
   assert.equal(r.$('page-input').value, 3); assert.equal(r.$('title').textContent, 'O concelho e os apoios');
   assert.match(r.location.href, /doc=facts-pt&page=3&lang=PT/);
   assert.equal(r.$('download').textContent, 'Descarregar PDF · 616 kB: O concelho e os apoios');
@@ -135,7 +135,7 @@ test('reader fetches only the opened publication, keeps deep links, aliases and 
   r.$('search').oninput({target: {value: 'economia@mcr'}});
   assert.match(r.$('search-results').children[0].textContent, /^[1-9]\d* página/);
   r.$('edition-language').value = 'EN'; await r.$('edition-language').onchange({target: r.$('edition-language')});
-  assert.deepEqual(r.fetched, ['data/facts-pt.json?v=20261022', 'data/facts-en.json?v=20261022']);
+  assert.deepEqual(r.fetched, ['data/facts-pt.json?v=20261023', 'data/facts-en.json?v=20261023']);
   assert.equal(r.$('download-dossier').textContent, 'Complete dossier · PDF · 16.4 MB');
   assert.equal(r.$('download-package').textContent, 'English package · ZIP · 27 MB');
   assert.match(r.$('download').textContent, /^Download PDF · 632 kB: Municipality and support$/);

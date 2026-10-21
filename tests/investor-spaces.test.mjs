@@ -8,6 +8,17 @@ import {validateRequest} from '../municipios/caldas-da-rainha/intake-model.js';
 const sourceUrl='https://www.idealista.pt/imovel/123/';
 const row={sourceUrl,municipality:'Caldas da Rainha',title:'Loja central',functionType:'Comércio',transactionType:'Venda',parish:'Centro',priceEur:0,areaSqm:40,verificationStatus:'recent',lastConfirmedAt:'2026-10-01T00:00:00Z',email:'private@example.invalid'};
 const data={municipalityId:tenant.id,sourceUrl:tenant.catalogueSource,retrievedAt:'2026-10-19T12:00:00Z',listings:[row]};
+for(const outcome of ['failed','error'])for(const [when,recent] of [['2026-10-21T10:00:00Z',false],['2026-10-19T10:00:00Z',true],['2026-10-20T12:00:00Z',true]])test(`${outcome} at ${when}: recent=${recent}, listing retained`,()=>{
+ const r=readCatalogue({...data,listings:[{...row,lastConfirmedAt:'2026-10-20T12:00:00Z',lastAttemptAt:when,lastAttemptOutcome:outcome}]},tenant,Date.parse('2026-10-21T12:00:00Z'));
+ assert.equal(r.items.length,1);assert.equal(r.items[0].recent,recent);assert.equal(r.items[0].checkOutcome,'failed');assert.equal(r.items[0].confirmed,'2026-10-20T12:00:00.000Z');
+});
+test('UTC dates, seven-day boundary, future dates and editorial status match the application',()=>{
+ for(const [lastConfirmedAt,recent] of [['2026-10-14 12:00:00',true],['2026-10-14 11:59:59',false],['2026-10-22T12:00:00Z',false],[null,false]]) {
+  const r=readCatalogue({...data,listings:[{...row,lastConfirmedAt}]},tenant,Date.parse('2026-10-21T12:00:00Z'));
+  assert.equal(r.items[0].recent,recent);
+ }
+ assert.equal(readCatalogue({...data,listings:[{...row,lastConfirmedAt:'2026-10-20T00:00:00Z',confirmationKind:'unverified'}]},tenant,Date.parse('2026-10-21T12:00:00Z')).items[0].recent,false);
+});
 test('property reference round trips through the existing server field without extra permissions',()=>{
  const raw=encodePropertyInterest(sourceUrl,'Need loading access');assert.deepEqual(decodePropertyInterest(raw),{sourceUrl,needs:'Need loading access'});
  assert.equal(encodePropertyInterest(sourceUrl,'a'.repeat(propertyNeedsLimit(sourceUrl))).length,600);

@@ -1,8 +1,8 @@
-import config from './public-config.js?v=20261022';
-import {validateRequest,textBudget} from './intake-model.js?v=20261022';
-import tenant from './tenant-config.js?v=20261022';
-import {readCatalogue,filterSpaces,spaceLabel,findCatalogueProperty} from './spaces-catalogue.js?v=20261022';
-import {header,hero,nav} from './portal-shell.js?v=20261022';
+import config from './public-config.js?v=20261023';
+import {validateRequest,textBudget} from './intake-model.js?v=20261023';
+import tenant from './tenant-config.js?v=20261023';
+import {readCatalogue,filterSpaces,spaceLabel,findCatalogueProperty} from './spaces-catalogue.js?v=20261023';
+import {header,hero,nav} from './portal-shell.js?v=20261023';
 let catalogue=null,catalogueError=false,catalogueLoading=false,spaceFilters={},spaceLimit=6;
 const base=new URL('.',import.meta.url),root=document.querySelector('main');
 // The first screen renders at once; areas, documents and the form follow when data.json arrives (preloaded in index.html).
@@ -100,7 +100,7 @@ function paintErrors(){const f=document.querySelector('#investor-request');if(!f
 // Chave publicável (sb_publishable_…) só em apikey; a chave anon antiga (JWT) também em Authorization.
 const keyHeaders=()=>({apikey:config.key,...(String(config.key).startsWith('eyJ')?{Authorization:`Bearer ${config.key}`}:{})});
 async function rpc(name,args){const response=await fetch(`${config.url}/rest/v1/rpc/${name}`,{method:'POST',headers:{...keyHeaders(),'Content-Type':'application/json'},body:JSON.stringify(args),signal:AbortSignal.timeout(25000)});const result=await response.json().catch(()=>null);if(!response.ok)throw Object.assign(Error(result?.message||'Request failed'),{code:result?.code,status:response.status});return result}
-function solve(challenge){return new Promise((resolve,reject)=>{const w=new Worker(new URL('intake-worker.js?v=20261022',import.meta.url));const timer=setTimeout(()=>{w.terminate();reject(Error('Timeout'))},90000);w.onmessage=({data})=>{clearTimeout(timer);w.terminate();data.solution?resolve(data.solution):reject(Error('Proof failed'))};w.onerror=()=>{clearTimeout(timer);w.terminate();reject(Error('Worker unavailable'))};w.postMessage(challenge)})}
+function solve(challenge){return new Promise((resolve,reject)=>{const w=new Worker(new URL('intake-worker.js?v=20261023',import.meta.url));const timer=setTimeout(()=>{w.terminate();reject(Error('Timeout'))},90000);w.onmessage=({data})=>{clearTimeout(timer);w.terminate();data.solution?resolve(data.solution):reject(Error('Proof failed'))};w.onerror=()=>{clearTimeout(timer);w.terminate();reject(Error('Worker unavailable'))};w.postMessage(challenge)})}
 const challengeRejected=e=>e?.code==='22023'&&/challenge/i.test(e.message||'');
 // Each challenge is single-use: request a fresh one for every attempt, retrying once if the server rejects it.
 async function send(value){for(let attempt=0;;attempt++){let challenge,solution;

@@ -1,5 +1,5 @@
-import {encodePropertyInterest,propertyNeedsLimit} from './property-interest.js?v=20261022';
-import tenant from './tenant-config.js?v=20261022';
+import {encodePropertyInterest,propertyNeedsLimit} from './property-interest.js?v=20261023';
+import tenant from './tenant-config.js?v=20261023';
 export const areaIds=['cidade','tornada','santa-cecilia','sao-gregorio-i','sao-gregorio-ii','santa-catarina','zambujeiro','mouraria','casal-do-rei'];
 export const textLimits={name:160,email:254,organisation:160,country:160,sector:160,title:200,message:4000,spaceNeeds:600,timeline:160,businessAreaId:40};
 const minimums={name:2,country:2,title:3,message:10};

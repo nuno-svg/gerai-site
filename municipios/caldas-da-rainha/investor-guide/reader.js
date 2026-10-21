@@ -4,7 +4,7 @@
   // catalog-index.js holds the index only; each publication's pages (images, text, links) load from
   // data/<id>.json when opened. Search covers the open publication, so it only needs that file.
   // A page still cached with the legacy full catalog.js already carries pages and skips the fetch.
-  const V = '20261022';
+  const V = '20261023';
   const docs = window.INVESTOR_CATALOG || [], editions = window.INVESTOR_EDITIONS || {};
   const loaded = new Map();
   const pages = doc => doc.pages ? Promise.resolve(doc) : (loaded.get(doc.id) || loaded.set(doc.id, fetch(`data/${encodeURIComponent(doc.id)}.json?v=${V}`)
