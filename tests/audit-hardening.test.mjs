@@ -74,10 +74,10 @@ test('download sizes in data.json match the published files',()=>{
  for(const a of data.areas)assert.ok(data.downloads[a.pdf],a.pdf);
  assert.doesNotMatch(read('investor-portal.js'),/19\/10\/2026/);
 });
-test('public pages carry a restrictive CSP and the legacy dashboard pins its CDN script',()=>{
+test('public pages carry a restrictive CSP and the internal PTO dashboard is no longer published',()=>{
  for(const p of ['../municipios/index.html','../legal.html']){const html=fs.readFileSync(new URL(p,import.meta.url),'utf8');for(const d of ["script-src 'self'","object-src 'none'","base-uri 'none'","form-action 'none'","connect-src 'none'"])assert.ok(html.includes(d),`${p}: ${d}`)}
- const dash=fs.readFileSync(new URL('../dashboard-pto.html',import.meta.url),'utf8');
- assert.match(dash,/chart\.umd\.min\.js" integrity="sha384-[A-Za-z0-9+/]{64}" crossorigin="anonymous"/);assert.match(dash,/<meta name="robots" content="noindex">/);
+ // Material interno de um cliente (dados financeiros por empresa): não pode voltar ao site público.
+ assert.ok(!fs.existsSync(new URL('../dashboard-pto.html',import.meta.url)));
 });
 test('reader starts in Portuguese, links back to the enquiry and leaves Home/End to text mode',()=>{
  const html=read('investor-guide/index.html'),js=read('investor-guide/reader.js');
