@@ -94,7 +94,9 @@ function paintErrors(){const f=document.querySelector('#investor-request');if(!f
  const h=document.createElement('h3');h.textContent=t('Corrija os seguintes campos:','Please correct the following:');const ul=document.createElement('ul');
  for(const [el,k,text] of list){const li=document.createElement('li'),a=document.createElement('a');a.href='#'+el.id;a.textContent=`${labels()[k]}: ${text}`;a.onclick=e=>{e.preventDefault();el.focus()};li.append(a);ul.append(li)}
  box.append(h,ul)}
-async function rpc(name,args){const response=await fetch(`${config.url}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:config.key,Authorization:`Bearer ${config.key}`,'Content-Type':'application/json'},body:JSON.stringify(args),signal:AbortSignal.timeout(25000)});const result=await response.json().catch(()=>null);if(!response.ok)throw Object.assign(Error(result?.message||'Request failed'),{code:result?.code,status:response.status});return result}
+// Chave publicável (sb_publishable_…) só em apikey; a chave anon antiga (JWT) também em Authorization.
+const keyHeaders=()=>({apikey:config.key,...(String(config.key).startsWith('eyJ')?{Authorization:`Bearer ${config.key}`}:{})});
+async function rpc(name,args){const response=await fetch(`${config.url}/rest/v1/rpc/${name}`,{method:'POST',headers:{...keyHeaders(),'Content-Type':'application/json'},body:JSON.stringify(args),signal:AbortSignal.timeout(25000)});const result=await response.json().catch(()=>null);if(!response.ok)throw Object.assign(Error(result?.message||'Request failed'),{code:result?.code,status:response.status});return result}
 function solve(challenge){return new Promise((resolve,reject)=>{const w=new Worker(new URL('intake-worker.js?v=20261021',import.meta.url));const timer=setTimeout(()=>{w.terminate();reject(Error('Timeout'))},90000);w.onmessage=({data})=>{clearTimeout(timer);w.terminate();data.solution?resolve(data.solution):reject(Error('Proof failed'))};w.onerror=()=>{clearTimeout(timer);w.terminate();reject(Error('Worker unavailable'))};w.postMessage(challenge)})}
 const challengeRejected=e=>e?.code==='22023'&&/challenge/i.test(e.message||'');
 // Each challenge is single-use: request a fresh one for every attempt, retrying once if the server rejects it.
@@ -151,7 +153,7 @@ function mountSpaces(){
  if(!catalogue&&!catalogueLoading&&!catalogueError)loadSpaces();
 }
 async function loadSpaces(){if(catalogueLoading)return;catalogueLoading=true;renderSpaces();try{
- const r=await fetch(`${config.url}/rest/v1/municipal_public_snapshots?select=payload&municipality_id=eq.${encodeURIComponent(tenant.id)}`,{headers:{apikey:config.key,Authorization:`Bearer ${config.key}`},signal:AbortSignal.timeout(20000),cache:'no-store'});
+ const r=await fetch(`${config.url}/rest/v1/municipal_public_snapshots?select=payload&municipality_id=eq.${encodeURIComponent(tenant.id)}`,{headers:{...keyHeaders()},signal:AbortSignal.timeout(20000),cache:'no-store'});
  if(!r.ok)throw Error('Unavailable');const rows=await r.json();catalogue=readCatalogue(rows[0]?.payload?.datasets?.spaces,tenant);catalogueError=false;
  }catch{catalogueError=true}finally{catalogueLoading=false;renderSpaces()}
  const title=document.querySelector('.selected-property-title'),row=catalogue?.items.find(r=>r.sourceUrl===draft.propertySource);if(title&&row?.title)title.textContent=row.title;
