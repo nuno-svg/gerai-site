@@ -8,10 +8,12 @@ const MAX_URL=440;
 // Private/non-public suffixes and wildcard-DNS services that resolve to arbitrary (incl. private) IPs.
 const BLOCKED_SUFFIX=/(^|\.)(local|localhost|localdomain|internal|intranet|corp|lan|home|test|invalid|example|arpa|nip\.io|sslip\.io|xip\.io|localtest\.me|lvh\.me)$/;
 const DOTTED_QUAD=/(^|\.)\d{1,3}(\.\d{1,3}){3}(\.|$)/;
+// IDN homographs (A-15): URL() converts Unicode hosts to punycode, so any xn-- label is rejected.
+const PUNYCODE_LABEL=/(^|\.)xn--/;
 export function safePropertyUrl(value){
  if(typeof value!=='string'||value.length>MAX_URL||/[\u0000-\u001f\u007f]/.test(value))return null;
  try{const u=new URL(value);const h=u.hostname.toLowerCase();
-  if(u.protocol!=='https:'||u.username||u.password||u.port||!h.includes('.')||h.endsWith('.')||h.includes(':')||DOTTED_QUAD.test(h)||BLOCKED_SUFFIX.test(h)||u.href.length>MAX_URL)return null;
+  if(u.protocol!=='https:'||u.username||u.password||u.port||!h.includes('.')||h.endsWith('.')||h.includes(':')||DOTTED_QUAD.test(h)||PUNYCODE_LABEL.test(h)||BLOCKED_SUFFIX.test(h)||u.href.length>MAX_URL)return null;
   return u.href;
  }catch{return null}
 }
