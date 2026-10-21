@@ -16,11 +16,28 @@
     return Number.isFinite(n) ? Math.max(0, Math.min(current.pages.length - 1, Math.floor(n) - 1)) : 0;
   }
   function message(text) { $('status').textContent = text; }
-  function setSidebar(open) {
+  const mobile = () => innerWidth <= 760;
+  const sidebarOpen = () => !document.body.classList.contains('sidebar-off');
+  // On small screens the contents panel behaves as a modal dialog: backdrop, Esc, focus in and back.
+  function sidebarMode() {
+    const modal = sidebarOpen() && mobile(), aside = $('sidebar');
+    if (modal) { aside.setAttribute('role', 'dialog'); aside.setAttribute('aria-modal', 'true'); }
+    else { aside.removeAttribute('role'); aside.removeAttribute('aria-modal'); }
+    $('sidebar-backdrop').hidden = !modal;
+    for (const el of [document.querySelector('main'), document.querySelector('.topbar'), document.querySelector('.skip')]) el.inert = modal;
+    return modal;
+  }
+  function setSidebar(open, focusTo = 'toggle') {
     document.body.classList.toggle('sidebar-off', !open);
     $('toggle-sidebar').setAttribute('aria-expanded', String(open));
+    const modal = sidebarMode();
+    if (open && modal) $('close-sidebar').focus();
+    else if (!open && focusTo === 'toggle' && mobile()) $('toggle-sidebar').focus();
+    else if (!open && focusTo === 'main') $('main').focus();
     setTimeout(buildBook, 0);
   }
+  // After choosing a result or chapter, reading continues in the main area.
+  function toReading() { if (mobile()) setSidebar(false, 'main'); else $('main').focus(); }
   function sync() {
     $('page-input').value = page + 1;
     $('page-input').max = current.pages.length;
@@ -120,7 +137,8 @@
     document.querySelector('#sidebar .intro').textContent=t('Edição portuguesa. Sete publicações para conhecer o território e investir.','English edition. Seven publications to explore the area and invest.');
     document.querySelector('.text-note').textContent=t('Transcrição de leitura. Consulte a página ou o PDF para ver tabelas, imagens e disposição original.','Reading transcript. View the page or PDF for tables, images and the original layout.');
     document.querySelector('label[for="page-input"]').firstChild.nodeValue=t('Página ','Page ');
-    document.querySelector('.support').firstChild.nodeValue=t('Quer falar sobre o seu projeto?','Would you like to discuss your project?');
+    $('project-link').textContent=t('Quer falar sobre o seu projeto?','Would you like to discuss your project?');
+    $('project-link').href=en?'../?lang=en#pedido':'../#pedido';
     document.querySelector('.privacy').textContent=t('Sem publicidade ou cookies de análise. Leitor independente; não utiliza o serviço iPaper.','No advertising or analytics cookies. Independent reader; does not use the iPaper service.');
     $('search').placeholder=t('Ex.: talento, comércio, energia','E.g. talent, retail, energy');
     message(t('Use as setas ou deslize para folhear.','Use the arrows or swipe to browse.'));
@@ -134,7 +152,7 @@
       const b = document.createElement('button'); b.dataset.page = c.page;
       const title = document.createElement('span'); title.textContent = c.title;
       const n = document.createElement('span'); n.textContent = String(c.page).padStart(2,'0');
-      b.append(title,n); b.onclick = () => {go(c.page - 1); if (innerWidth <= 760) setSidebar(false);};
+      b.append(title,n); b.onclick = () => {go(c.page - 1); toReading();};
       $('chapters').append(b);
     }
     $('thumbnails').replaceChildren();
@@ -148,9 +166,10 @@
     buildBook(); sync();
   }
   $('edition-language').onchange = e => loadDocument(docs.find(d => d.language === e.target.value && d.group === current.group) || docs.find(d => d.language === e.target.value));
-  $('publication').onchange = e => {loadDocument(docs.find(d=>d.id===e.target.value)); if(innerWidth<=760)setSidebar(false);};
+  $('publication').onchange = e => {loadDocument(docs.find(d=>d.id===e.target.value)); if(mobile())setSidebar(false,'main');};
   $('toggle-sidebar').onclick = () => setSidebar(document.body.classList.contains('sidebar-off'));
   $('close-sidebar').onclick = () => setSidebar(false);
+  $('sidebar-backdrop').onclick = () => setSidebar(false);
   $('previous').onclick = () => {if(textMode)go(page-1);else if(reduced.matches)flip?.turnToPrevPage();else flip?.flipPrev();};
   $('next').onclick = () => {if(textMode)go(page+1);else if(reduced.matches)flip?.turnToNextPage();else flip?.flipNext();};
   $('page-input').onchange = e => go(number(e.target.value));
@@ -167,7 +186,7 @@
     for(const p of found){
       const b=document.createElement('button');const i=normal(p.text).indexOf(q);
       b.textContent=`P. ${p.number} · …${p.text.slice(Math.max(0,i-25),i+90).replace(/\s+/g,' ')}…`;
-      b.onclick=()=>{go(p.number-1);message(t(`Resultado na página ${p.number}. Use Ampliar ou Texto para ler.`,`Result on page ${p.number}. Use Zoom or Text to read.`));if(innerWidth<=760)setSidebar(false);};box.append(b);
+      b.onclick=()=>{go(p.number-1);message(t(`Resultado na página ${p.number}. Use Ampliar ou Texto para ler.`,`Result on page ${p.number}. Use Zoom or Text to read.`));toReading();};box.append(b);
     }
   };
   $('zoom').onclick=()=>{
@@ -179,12 +198,14 @@
   $('share').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);message(t('Ligação para esta publicação e página copiada.','Link to this publication and page copied.'));}catch{message(t('Copie o endereço do navegador para partilhar esta página.','Copy the browser address to share this page.'));}};
   $('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{message(t('Ecrã inteiro indisponível neste navegador.','Full screen is unavailable in this browser.'));}};
   document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&sidebarOpen()&&mobile()&&!$('zoom-dialog').open){setSidebar(false);e.preventDefault();return;}
     if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||$('zoom-dialog').open)return;
     if(e.key==='ArrowRight'){$('next').click();e.preventDefault();}
     if(e.key==='ArrowLeft'){$('previous').click();e.preventDefault();}
+    if(textMode)return; // Home/End keep their native scrolling in the transcript.
     if(e.key==='Home'){go(0);e.preventDefault();}if(e.key==='End'){go(current.pages.length-1);e.preventDefault();}
   });
-  window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(buildBook,180);});
+  window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{sidebarMode();buildBook();},180);});
   if(innerWidth<=760){document.body.classList.add('sidebar-off');$('toggle-sidebar').setAttribute('aria-expanded','false');}
   if(current)loadDocument(current,number(params.get('page')||1));
   else message('Publicações indisponíveis. Volte a carregar a página.');

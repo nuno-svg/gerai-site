@@ -13,7 +13,7 @@ test('opening prioritises a project enquiry while preserving guide and space rou
  assert.match(hero,/href="#pedido" data-kind="information"/);
  assert.match(hero,/hero-guide/);assert.match(hero,/Descarregar PDF','Download PDF/);
  assert.doesNotMatch(hero,/↗|48h|14 days/);
- assert.match(source,/if\(busy\|\|submitted\)return;document.querySelector\(`input\[name=kind\]/);
+ assert.match(source,/if\(busy\|\|submitted\)return;if\(!kindChosen\)\{document.querySelector\(`input\[name=kind\]/);
 });
 test('intake validates both languages and optional figures without inventing zero',()=>{for(const language of ['pt','en']){const r=validateRequest({...valid,language});assert.equal(r.valid,true);assert.equal(r.value.forecastValue,1200.5)}assert.equal(validateRequest({...valid,forecastValue:'',estimatedJobs:''}).value.forecastValue,null)});
 test('intake rejects missing consent, bad email, invalid numbers and unknown areas',()=>{for(const change of [{privacyAccepted:false},{email:'bad'},{message:'short'},{businessAreaId:'other'},{estimatedJobs:2.5},{forecastValue:-1},{website:'spam'},{name:'x'.repeat(161)},{language:'xx'},{kind:'licensing'}])assert.equal(validateRequest({...valid,...change}).valid,false,JSON.stringify(change))});

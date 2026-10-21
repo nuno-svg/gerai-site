@@ -198,6 +198,33 @@
   ],
   "limitations": {
     "pt": "Áreas de planeamento, não terrenos disponíveis. A revisão do PDM é apresentada como proposta na documentação recebida. Disponibilidade, preços, lotes, infraestruturas e viabilidade não confirmados. Distâncias e tempos são aproximações da fonte, não percursos calculados. Mapas originais em português; fichas e navegação em PT/EN. Não existem polígonos georreferenciados neste conjunto.",
-    "en": "Planning areas, not available plots. The PDM revision is labelled as a proposal in the supplied documentation. Availability, prices, plots, infrastructure and feasibility are unconfirmed. Distances and times are source estimates, not calculated routes. Original maps are in Portuguese; factsheets and navigation are available in PT/EN. No georeferenced polygons were supplied."
+    "en": "Planning areas, not available plots. The Municipal Master Plan (PDM) revision is labelled as a proposal in the supplied documentation. Availability, prices, plots, infrastructure and feasibility are unconfirmed. Distances and times are source estimates, not calculated routes. Original maps are in Portuguese; factsheets and navigation are available in PT/EN. No georeferenced polygons were supplied."
+  },
+  "downloads": {
+    "areas/assets/a3_geral.pdf": 2119270,
+    "areas/assets/a4_caldas.pdf": 3137873,
+    "areas/assets/a4_casal_rei.pdf": 1002705,
+    "areas/assets/a4_s_gregorio.pdf": 1711199,
+    "areas/assets/a4_sta_catarina.pdf": 1569171,
+    "areas/assets/a4_sta_cecilia.pdf": 1281160,
+    "areas/assets/a4_tornada.pdf": 3286862,
+    "investor-guide/assets/guide-pt/document.pdf": 6270260,
+    "investor-guide/assets/guide/document.pdf": 6594927,
+    "investor-guide/assets/facts-pt/document.pdf": 616482,
+    "investor-guide/assets/facts-en/document.pdf": 632114,
+    "investor-guide/assets/assets-pt/document.pdf": 656036,
+    "investor-guide/assets/assets-en/document.pdf": 674241,
+    "investor-guide/assets/industrial-pt/document.pdf": 125189,
+    "investor-guide/assets/industrial-en/document.pdf": 123204,
+    "investor-guide/assets/sectors-pt/document.pdf": 1738876,
+    "investor-guide/assets/sectors-en/document.pdf": 1803872,
+    "investor-guide/assets/pitch/document.pdf": 5910010,
+    "investor-guide/assets/pitch-en/document.pdf": 3227020,
+    "investor-guide/assets/welcome-pt/document.pdf": 584660,
+    "investor-guide/assets/welcome-en/document.pdf": 832827,
+    "investor-guide/assets/dossier-pt/document.pdf": 18606302,
+    "investor-guide/assets/dossier-en/document.pdf": 16362324,
+    "investor-guide/assets/dossier-pt/Kit_Caldas_PT.zip": 31360368,
+    "investor-guide/assets/dossier-en/Kit_Caldas_EN.zip": 27002910
   }
 }

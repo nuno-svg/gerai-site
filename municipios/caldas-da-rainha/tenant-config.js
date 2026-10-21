@@ -5,5 +5,7 @@ export default Object.freeze({
  catalogueUrl:'https://espacos.caldasreadytoinvest.pt/',
  catalogueSource:'https://espacos.caldasreadytoinvest.pt/api/listings',
  privacyEmail:'nuno@gerai.pt', languages:['pt','en'],
+ // Privacy notice: a definir pela Câmara (D-3). Lines are shown only when filled; keep {pt,en} or a plain string.
+ privacyController:'', retention:'',
  themeStylesheet:'tenant-theme.css', brandLogo:null,
 });
